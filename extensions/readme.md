@@ -1,0 +1,1 @@
+file chứa các code về extensions cho Chrome hay FireFox

@@ -1,0 +1,1 @@
+Thư mục chứa các file để client có thể download hoặc các code javascript

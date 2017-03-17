@@ -1,5 +1,5 @@
 doctype html
-html
+html(ng-app='FConf')
   head
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
     title= title
@@ -8,6 +8,11 @@ html
 
     script(src='/javascripts/jquery-3.2.0.min.js')
     script(src='/bootstraps/js/bootstrap.min.js')
+    script(src='/angular/angular.min.js')
+    script(src='/lib/angular-route.min.js')
+
+    script(src='/app.js')
+    script(src='/home/home.controller.js')
   
   body
    .navbar.navbar-default.navbar-fixed-top
@@ -23,7 +28,7 @@ html
             li
               a(href='/') About
 
-    .container(data-ng-view="")
+    .container
       block content
 
       footer

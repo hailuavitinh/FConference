@@ -1,4 +1,4 @@
-
+<!-- header -->
 <nav class="navbar navbar-default navbar-fixed-top header">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -33,25 +33,3 @@
 
   </div>
 </nav>
-
-<div class="body-content">
-  <div class="container row main-link">
-    <div class="col-xs-12">
-      <input class="form-control" style="width: initial; float: left;" type="text"></input> <button class="btn">Join</button>
-    </div> 
-  </div>
-</div>
-
-<footer class="footer">
-    <p>&copy; FConference</p>
-</footer>
-<script type="text/javascript">
-$(document).ready(function() {
-  $('.body-content').height( $(window).height() - $('.header').outerHeight() - $('.footer').outerHeight() - 45);
-  
-  var mid = $('.body-content').height()/2 - 40;
-  console.log(mid);
-  $('.main-link').css("margin-top", mid + 'px');
-});
-  
-</script>

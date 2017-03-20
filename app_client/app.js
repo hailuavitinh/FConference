@@ -11,11 +11,11 @@
         controller: 'homeCtrl',
         controllerAs: 'vm'
       })
-      // .when('/about', {
-      //   templateUrl: '/common/views/genericText.view.html',
-      //   controller: 'aboutCtrl',
-      //   controllerAs: 'vm'
-      // })
+      .when('/room', {
+        templateUrl: '/room/room.view.html',
+        controller: 'roomCtrl',
+        controllerAs: 'vm'
+      })
       // .when('/location/:locationid', {
       //   templateUrl: '/locationDetail/locationDetail.view.html',
       //   controller: 'locationDetailCtrl',
@@ -34,10 +34,10 @@
       .otherwise({redirectTo: '/'});
 
     // use the HTML5 History API    
-    $locationProvider.html5Mode({
-	  enabled: true,
-	  requireBase: false
-	});
+ //    $locationProvider.html5Mode({
+	//   enabled: true,
+	//   requireBase: false
+	// });
   }
 
   angular

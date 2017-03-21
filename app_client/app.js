@@ -16,6 +16,11 @@
         controller: 'roomCtrl',
         controllerAs: 'vm'
       })
+      .when('/admin/rooms', {
+        templateUrl: '/admin/rooms/admin.rooms.view.html',
+        controller: 'adminRoomCtrl',
+        controllerAs: 'vm'
+      })
       // .when('/location/:locationid', {
       //   templateUrl: '/locationDetail/locationDetail.view.html',
       //   controller: 'locationDetailCtrl',
@@ -34,7 +39,7 @@
       .otherwise({redirectTo: '/'});
 
     // use the HTML5 History API    
- //    $locationProvider.html5Mode({
+ 	//$locationProvider.html5Mode({
 	//   enabled: true,
 	//   requireBase: false
 	// });

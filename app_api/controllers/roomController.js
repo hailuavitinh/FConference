@@ -1,8 +1,8 @@
 var Room = require("../models/roomModel");
-var abc = require("../models/abcModel");
+//var abc = require("../models/abcModel");
 var appRoot = require('app-root-path');
 var N = require(appRoot+"/libs/nuve.js");
-var config = require(appRoot+"/config/licode_config");
+var config = require(appRoot+"/configs/licode_config");
 
 N.API.init(config.nuve.superserviceID, config.nuve.superserviceKey,  'http://192.168.1.23:3000/'); // //'http://118.69.135.101:3000/'
 

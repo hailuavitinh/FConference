@@ -4,8 +4,8 @@
     .module('FConf')
     .controller('roomCtrl', roomCtrl);
 
-  roomCtrl.$inject = ['$scope'];
-  function roomCtrl ($scope) {
+  roomCtrl.$inject = ['$scope', "$timeout", "$routeParams", "svRooms", "svLocalStream"];
+  function roomCtrl ($scope, $timeout, $routeParams, svRooms, svLocalStream) {
     
     console.log('room controller');
 

@@ -25,23 +25,7 @@
     };
     vm.message = "Checking your location";
 
-    vm.getData = function (position) {
-      var lat = position.coords.latitude,
-          lng = position.coords.longitude;
-      vm.message = "Searching for nearby places";      
-    };
-
-    vm.showError = function (error) {
-      $scope.$apply(function() {
-        vm.message = error.message;
-      });
-    };
-
-    vm.noGeo = function () {
-      $scope.$apply(function() {
-        vm.message = "Geolocation is not supported by this browser.";
-      });
-    };    
+     
 
   }
 

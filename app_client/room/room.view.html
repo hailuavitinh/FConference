@@ -1,3 +1,35 @@
+<style>
+    /*.streamVideo{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction:row;
+        flex-wrap:wrap;
+        justify-content: space-around;
+    }*/
+
+    .itemStreamVideo{
+         width:30vw;
+         height:40vh;
+         float: left;
+         /*-webkit-transition: width 2s;  For Safari 3.1 to 6.0 */
+         transition: 1s;
+    }
+
+    .itemRemoveStreamVideo{
+        border-color: crimson; 
+         border-style: solid
+    }
+
+    .itemScreenStream{
+        border-color: red;
+        border-style: solid;
+        width: 60vw;
+        height: 60vh;
+        margin: 0 auto 3px;
+        transition: 1s;
+    }    
+</style>
 <nav class="navbar navbar-default navbar-fixed-top header">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -45,8 +77,21 @@
       </ul>
   </div>
   <div class="col-sm-12 right-content" style="min-height: 500px">
-
-          <div class="item-video" ng-repeat="n in [1,2,3]">
+          
+              <div class="col-sm-12">
+                  <div ng-show="vm.my.isShowEnterUserName">
+                      <input type="text" id="inpUserName" />
+                      <button type="button" ng-click="vm.accessRoom()">Join</button>
+                     
+                  </div>
+                  <!--<button type="button"  ng-click="test()">Test</button>-->
+                  <button id="btnShareScreen" type="button" ng-cloak ng-show="vm.my.isShowButtonShareScreen" ng-click="vm.Share()">Share Screen</button>
+              </div>
+              <div class="alert alert-danger" id="errorDiv" role="alert" ng-cloak ng-show="vm.my.isShowError">
+                  {{vm.error}}
+              </div>
+          
+         <!--  <div class="item-video" ng-repeat="n in [1,2,3]">
               <span class="item-video-name">User n</span>
               <span class="item-video-expand"><i class="fa fa-expand"></i></span>
               <video></video>
@@ -54,6 +99,17 @@
                   <button ng-click="Mute(n)"><i class="fa fa-microphone"></i></button>
                   <button ng-click="Vol(n)"><i class="fa fa-volume-up"></i></button>
               </div>
+          </div> -->
+
+          <div class="col-sm-12" id="showShareScreen" ng-cloak ng-show="my.isShowShareScreen">
+              <div id="screen_stream" class="itemScreenStream">
+                  
+              </div>
+          </div>
+          <div class="col-sm-12" id="showVideoConfernce" ng-cloak ng-show="vm.my.isShowVideoConfernce">
+              <div class="streamVideo" >
+                  <div id="localStream" style="border-color:#f4aa42 ; border-style: solid" class="itemStreamVideo"></div>
+              </div> 
           </div>
 
     </div>  

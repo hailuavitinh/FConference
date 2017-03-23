@@ -11,7 +11,12 @@
         controller: 'homeCtrl',
         controllerAs: 'vm'
       })
-      .when('/room', {
+      .when('/r/:roomID', {
+        templateUrl: '/home/home.view.html',
+        controller: 'homeCtrl',
+        controllerAs: 'vm'
+      })
+      .when('/room/:roomID', {
         templateUrl: '/room/room.view.html',
         controller: 'roomCtrl',
         controllerAs: 'vm'

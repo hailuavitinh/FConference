@@ -1,10 +1,25 @@
 #!/usr/bin/env node
-var debug = require('debug')('Express4');
+var debug = require('debug')('Express4'), 
+	https = require("https");;
 var app = require('../app');
+var path = require('path'),
+	fs = require('fs');
+
 
 app.set('port', process.env.PORT || 3000);
 
-var server = app.listen(app.get('port'), function() {
-  debug('Express server listening on port ' + server.address().port);
-  console.log('running on port: ' + server.address().port);
+var options = {
+    key: fs.readFileSync(path.join(__dirname, '../certs/privatekey.pem')),
+    cert: fs.readFileSync(path.join(__dirname, '../certs/certificate.pem')),
+    requestCert: false,
+    rejectUnauthorized: false
+};
+
+// var server = app.listen(app.get('port'), function() {
+//   debug('Express server listening on port ' + server.address().port);
+//   console.log('running on port: ' + server.address().port);
+// });
+var port = process.env.PORT || 3000;
+var server = https.createServer(options, app).listen(port, function(){
+    console.log("Server HTTPS listening with port ....",port);
 });

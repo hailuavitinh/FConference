@@ -21,33 +21,40 @@
     vm.my = {isShowVideoConfernce:false,isShowError:false,isShowEnterUserName:true,isShowShareScreen:false,isShowButtonShareScreen:false};
 
     var roomID = $routeParams.roomID;
-    $("#inpUserName").val(roomID);
+    //$("#inpUserName").val(roomID);
     console.log("Angular Join: ",roomID);
     var roomJson;
     svRooms.getRoomByID(roomID).then(function(success){
         console.log("API Room: ", success);
+        alertify.success("Connect room successful");
         roomJson = success.data;
         vm.roomJson = roomJson;
         connectRoom(roomJson._id, "dat");
     },function(error){
         console.log("API Room Error: ",error);
-        $(".header-join").css('display','none');
-        $("#inpUserName").css('display','none');
-        vm.my.isShowError = true;
+        //$(".header-join").css('display','none');
+        //$("#inpUserName").css('display','none');
+        //vm.my.isShowError = true;
+        alertify.error("Connect room fail");
+        alert(error.data);
         vm.error = error.data;
     });
 
 
-    function connectRoom(roomID, username) {
-      if(stringNullOrEmpty(username)) {
+  function connectRoom(roomID, username) {
+      if(stringNullOrEmpty(username)) {          
           vm.error = "User in empty!";
-          vm.my.isShowError = true;
+          alertify.error("User in empty!");
+          //redirect to home 
           vm.my.isShowVideoConfernce = false;
           return;
       }
       if(stringNullOrEmpty(roomID)){
            vm.error = "This room not exists!";
-           vm.my.isShowError = true;
+           alertify.error("This room not exists!");
+           //redirect to home
+
+           //vm.my.isShowError = true;
            vm.my.isShowVideoConfernce = false;
            return;
       } else {
@@ -60,66 +67,28 @@
               DetectHasCamera_Audio_Speaker(function(result){
                   console.log("Device Kind: ",result);
                   if(result.IsEnumerateDevices){
+                      
                       vm.my.isShowVideoConfernce = true;
                       vm.my.isShowButtonShareScreen = true;
-                      //vm.my.isShowEnterUserName = false;
-                      vm.my.isShowError = false;
+
                       $scope.$apply();
                       InitLocalStream(userName, roomJson._id, success.data.Token, result.IsSpeaker, result.IsCamera);
                   } else {
                       vm.error = result.content;
-                      vm.my.isShowError = true;
+                      alertify.error(result.content);
+                      //vm.my.isShowError = true;
                       vm.my.isShowVideoConfernce = false;
                       $scope.$apply();
                   }
               }) 
           },function(error){
               vm.error = error.data;
-              vm.my.isShowError = false;
+              alertify.error(error.data);
+              
               $scope.$apply();
           });
        }
-    }
-
-    vm.accessRoom = function(){       
-       userName = $("#inpUserName").val();
-       console.log("Click accessRoom: ", userName);
-
-       if(userName === null || userName === "" || userName === undefined){
-           vm.error = "Please enter roomID to start talking !!!!"
-           vm.my.isShowError = true;
-           vm.my.isShowVideoConfernce = false;
-       } else {
-           var obj = {roomID: roomJson._id, username:userName, p2p: true};
-
-           svRooms.createToken(obj).then(function(success){
-               console.log("Token: ",success);
-               console.log(" InitLocalStream RoomID: ",roomJson._id);
-               console.log(" InitLocalStream Token: ",success.data.Token);
-               DetectHasCamera_Audio_Speaker(function(result){
-                   console.log("Device Kind: ",result);
-                   if(result.IsEnumerateDevices){
-                       vm.my.isShowVideoConfernce = true;
-                       vm.my.isShowButtonShareScreen = true;
-                       //vm.my.isShowEnterUserName = false;
-                       vm.my.isShowError = false;
-                       $scope.$apply();
-                       InitLocalStream(userName, roomJson._id, success.data.Token, result.IsSpeaker, result.IsCamera);
-                   } else {
-                        vm.error = result.content;
-                        vm.my.isShowError = true;
-                        vm.my.isShowVideoConfernce = false;
-                        $scope.$apply();
-                   }
-               }) 
-           },function(error){
-                vm.error = error.data;
-                vm.my.isShowError = false;
-                $scope.$apply();
-           });
-       }
-   }
-
+  }
 
    vm.Share = function(){
         if(vm.my.isShowShareScreen == false){// Event Share Screen

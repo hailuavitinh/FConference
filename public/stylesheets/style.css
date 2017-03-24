@@ -125,3 +125,7 @@ button, control-btn {
     border: 1px solid #ccc;
     border-radius: 4px;
 }
+
+.footer {
+	padding: 10px;
+}

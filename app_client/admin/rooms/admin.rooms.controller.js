@@ -41,11 +41,10 @@
 
     vm.message='rooms Controller';
 
-    vm.deleteRoom = function (roomID) {     
-      console.log(roomID);
-      var r = confirm("Are you sure?");
-      if (r == true) {
-          svRooms.deleteRoom(roomID).then(function(success){
+    vm.deleteRoom = function (roomID) {
+
+      alertify.confirm('Delete room?', 'Are you sure?', function(){ 
+        svRooms.deleteRoom(roomID).then(function(success){
               console.log("API Room: ",success);
               alert('delete success');
               $route.reload();
@@ -53,7 +52,8 @@
               console.log("API Room Error: ",error);
               alert('delete fail');
           });
-      }      
+      }, function(){ });
+      
     };
 
     vm.createRoom = function() {

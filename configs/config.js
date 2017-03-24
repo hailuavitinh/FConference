@@ -1,6 +1,7 @@
 var FConfDB =  {
     "mongodb": {
         "host":"118.69.135.101",
+        //"host":"192.168.1.23",
         "port":"27017",
         "database":"FConf",
         "user":"",

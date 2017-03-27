@@ -4,8 +4,8 @@
     .module('FConf')
     .controller('roomCtrl', roomCtrl);
 
-  roomCtrl.$inject = ['$scope', "$timeout", "$routeParams", "svRooms", "svLocalStream"];
-  function roomCtrl ($scope, $timeout, $routeParams, svRooms, svLocalStream) {
+  roomCtrl.$inject = ['$scope', "$timeout", "$routeParams", "svRooms", "svLocalStream", "svShare"];
+  function roomCtrl ($scope, $timeout, $routeParams, svRooms, svLocalStream, svShare) {
     
     console.log('room controller');
 
@@ -17,6 +17,7 @@
     console.log(window.location);    
 
     var room,screen_stream,localStream,userName;
+    svShare.showLoading(true, 'Join room');
 
     vm.my = {isShowVideoConfernce:false,isShowError:false,isShowEnterUserName:true,isShowShareScreen:false,isShowButtonShareScreen:false};
 
@@ -30,11 +31,13 @@
         roomJson = success.data;
         vm.roomJson = roomJson;
         connectRoom(roomJson._id, "dat");
+        svShare.showLoading(false);
     },function(error){
         console.log("API Room Error: ",error);
         //$(".header-join").css('display','none');
         //$("#inpUserName").css('display','none');
         //vm.my.isShowError = true;
+        svShare.showLoading(false);
         alertify.error("Connect room fail");
         alert(error.data);
         vm.error = error.data;
@@ -42,14 +45,14 @@
 
 
   function connectRoom(roomID, username) {
-      if(stringNullOrEmpty(username)) {          
+      if(svShare.isNullOrEmpty(username)) {          
           vm.error = "User in empty!";
           alertify.error("User in empty!");
           //redirect to home 
           vm.my.isShowVideoConfernce = false;
           return;
       }
-      if(stringNullOrEmpty(roomID)){
+      if(svShare.isNullOrEmpty(roomID)){
            vm.error = "This room not exists!";
            alertify.error("This room not exists!");
            //redirect to home
@@ -84,7 +87,7 @@
           },function(error){
               vm.error = error.data;
               alertify.error(error.data);
-              
+
               $scope.$apply();
           });
        }
@@ -115,14 +118,7 @@
        autoResizeItemContainer();
    }
 
-  //add method
-
-  function stringNullOrEmpty(str) {
-    if(str === null || str === "" || str === undefined){
-      return true;
-    }
-    return false;
-  }
+  //add method  
 
   function autoResizeItemContainer(){
      var i  = $(".itemStreamVideo").length;

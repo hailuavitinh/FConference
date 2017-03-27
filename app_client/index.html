@@ -6,8 +6,8 @@
     <link rel="stylesheet" href="/bootstraps/css/bootstrap.css">
     <link rel="stylesheet" href="/stylesheets/font-awesome.css">
     <link rel="stylesheet" href="/plugins/alertifyjs/css/alertify.css">
-    <link rel="stylesheet" href="/stylesheets/style.css">
-    
+    <link rel="stylesheet" href="/stylesheets/loading-css.css">
+    <link rel="stylesheet" href="/stylesheets/style.css">   
 
 
     <script src="/javascripts/jquery-3.2.0.min.js"></script>
@@ -44,6 +44,7 @@
 
     <script src="/app.js"></script>
     <script src="/common/services/room.service.js"></script>
+    <script src="/common/services/share.service.js"></script>
     <script src="/common/services/localStream.service.js"></script>
 
     <script src="/home/home.controller.js"></script>
@@ -52,7 +53,11 @@
     <script src="/admin/rooms/admin.rooms.controller.js"></script>
    
   </head>
-  <body ng-view>
-    
+  <body >
+    <div ng-view></div>
+    <div class="loading">
+      <span class="cssload-loader"><span class="cssload-loader-inner"></span></span>
+      <span class="text-loading">Loading...</span>
+    </div>
   </body>
 </html>

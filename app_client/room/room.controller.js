@@ -4,8 +4,8 @@
     .module('FConf')
     .controller('roomCtrl', roomCtrl);
 
-  roomCtrl.$inject = ['$scope', "$timeout", "$routeParams", "svRooms", "svLocalStream", "svShare"];
-  function roomCtrl ($scope, $timeout, $routeParams, svRooms, svLocalStream, svShare) {
+  roomCtrl.$inject = ['$scope', "$timeout", "$routeParams", "svRooms", "svLocalStream", "svShare", "$location"];
+  function roomCtrl ($scope, $timeout, $routeParams, svRooms, svLocalStream, svShare, $location) {
     
     console.log('room controller');
 
@@ -14,15 +14,15 @@
       window.location.href = '/#' + window.location.pathname;
     }
     var vm = this;
-    console.log(window.location);    
+    console.log(window.location);
 
     var room,screen_stream,localStream,userName;
     svShare.showLoading(true, 'Join room');
 
     vm.my = {isShowVideoConfernce:false,isShowError:false,isShowEnterUserName:true,isShowShareScreen:false,isShowButtonShareScreen:false};
-
+    vm.ListUser = [];
     var roomID = $routeParams.roomID;
-    //$("#inpUserName").val(roomID);
+    
     console.log("Angular Join: ",roomID);
     var roomJson;
     svRooms.getRoomByID(roomID).then(function(success){
@@ -30,17 +30,26 @@
         alertify.success("Connect room successful");
         roomJson = success.data;
         vm.roomJson = roomJson;
-        connectRoom(roomJson._id, "dat");
+        connectRoom(roomJson._id, "dat"); //get user name from authen service
         svShare.showLoading(false);
+
+        //get list user 
+        svRooms.getListUser(roomID).then(function(success) {
+          console.log('ListUser: ',success);
+          vm.ListUser = success.data;
+          //$scope.$apply();
+        },function(error) {
+
+        });
+
     },function(error){
-        console.log("API Room Error: ",error);
-        //$(".header-join").css('display','none');
-        //$("#inpUserName").css('display','none');
-        //vm.my.isShowError = true;
+        console.log("API Room Error: ", error);
         svShare.showLoading(false);
-        alertify.error("Connect room fail");
-        alert(error.data);
+        alertify.error("Connect room fail: " + error.data);
+        alert('Room Error: '+ error.data);
         vm.error = error.data;
+
+        $location.url('/#');
     });
 
 

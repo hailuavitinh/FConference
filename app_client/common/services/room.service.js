@@ -16,6 +16,9 @@ app.factory("svRooms",["$http",function($http){
         },
         createRoom: function(name) {
             return $http.get('/api/rooms/create/' + name);
+        },
+        getListUser: function(id) {
+            return $http.get('/api/rooms/listUser/' + id);
         }
     }
 }])

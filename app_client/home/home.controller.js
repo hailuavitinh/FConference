@@ -25,7 +25,7 @@
       var rid = $('#roomID').val();
 
       if(rid === null || rid === "" || rid === undefined){
-           alertify.error('enter roomID');
+           alertify.error('Please enter RoomID');
        } else {
           $location.url('/room/' + rid);
        }

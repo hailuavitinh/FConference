@@ -4,7 +4,7 @@ var jwt = require('express-jwt');
 var auth = jwt({
   secret: 'JWT_SECRET',
   userProperty: 'payload'
-});
+});	
 
 //var ctrlRoom = require('../controllers/roomComtroller');
 var ctrlAuth = require('../controllers/authen');

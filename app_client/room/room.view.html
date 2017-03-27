@@ -14,6 +14,8 @@
          float: left;
          /*-webkit-transition: width 2s;  For Safari 3.1 to 6.0 */
          transition: 1s;
+         margin-left: 20px;
+         margin-top: 20px;
     }
 
     .itemRemoveStreamVideo{
@@ -45,10 +47,11 @@
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#" target="_self">Help</a></li>
+        <li><a href="#" target="_self">Introduce</a></li>
         <li><a href="#" target="_self">Guide</a></li>
       </ul>      
       <ul class="nav navbar-nav navbar-right">
+        <li><a>Room: <b>{{vm.roomJson.name}}</b></a></li>
         <li class="dropdown">
           <a href="#" target="_self" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Acount <span class="caret"></span></a>
           <ul class="dropdown-menu">
@@ -70,7 +73,7 @@
       <ul>
           <li class="menu_header">User in group</li>
           <li><i class="fa fa-user"></i> <i class="fa fa-map-marker text-success"></i> User <span ng-bind="userID"></span></li>
-          <li ng-repeat="user in ListUser"><i class="fa fa-user"></i> User {{user}}</li>
+          <li ng-repeat="user in vm.ListUser"><i class="fa fa-user"></i> User {{user}}</li>
           <li class="menu_header">Setting</li>
           <li ng-click="SwitchInputOpen()"><i class="fa fa-plug"></i> Camera/Audio setting </li>
           <li><i class="fa fa-unlock"></i> Log out</li>
@@ -115,14 +118,10 @@
     </div>  
 </div>
 
-<footer class="footer">
-    <p>&copy; FConference</p>
-</footer>
-
 <script type="text/javascript">
 
   $(document).ready(function() {
-    var main_height = $(window).height() - $('.header').outerHeight() - $('.footer').outerHeight() - 15;
+    var main_height = $(window).height() - $('.header').outerHeight() - $('.footer').outerHeight() - 5;
     $('.body-content').height(main_height);
     
     var mid = $('.body-content').height()/2 - 40;

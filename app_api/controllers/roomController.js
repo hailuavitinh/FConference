@@ -48,7 +48,6 @@ var getRoomByID = function(callback){
 }
 
 
-
 var createToken = function (callback){
     var roomID = arguments[1];
     var username = arguments[2];
@@ -108,11 +107,28 @@ var deleteRoom = function (callback) {
     });
 }
 
+var getUserInRoom = function(callback) {
+    var roomID = arguments[1];
+    var res = arguments[2];
+
+    N.API.getUsers(roomID, function(resp) {
+      console.log(' >>>>> getlist user');
+      var usersList = JSON.parse(resp);
+      console.log('This room has ', usersList.length, 'users');
+      callback(usersList);
+
+    }, function(err){
+        console.log("Error Nuve",err);
+        res.status(404).send(err);
+    });
+
+}
+
 module.exports = function(app) {
     app.get("/api/rooms",function(req,res){
         getRooms(function(rooms){
             res.send(rooms);
-        },res)
+        },res);
     });
 
     app.get("/api/rooms/:id",function(req,res){
@@ -124,7 +140,7 @@ module.exports = function(app) {
             } else{
                 res.send(room);
             }
-        },roomID,res)
+        },roomID,res);
     });
 
     app.get("/api/rooms/create/:id",function(req,res){
@@ -136,7 +152,7 @@ module.exports = function(app) {
             } else{
                 res.send(room);
             }
-        },roomID,res)
+        },roomID,res);
     });
 
     app.get("/api/rooms/delete/:id",function(req,res){
@@ -169,6 +185,11 @@ module.exports = function(app) {
         }
     });
 
-
+    app.get("/api/rooms/listUser/:id",function(req,res){
+        var roomID = req.params.id;
+        getUserInRoom(function(users){                  
+            res.send(users);
+        }, roomID, res);
+    });
 
 }

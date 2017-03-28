@@ -81,8 +81,19 @@ var getRoomsFromFConf= function(res,roomList){
 
 var createRoom = function (callback) {
     var roomID = arguments[1];
+    var isPass = arguments[2] || false;
+    var password = arguments[3] || '';
+    var user = arguments[4];
     console.log('function createRoom: ', roomID);
-    var res = arguments[2];
+
+    if(roomID == null || roomID == undefined){
+
+    }
+    if(roomID == null || roomID == undefined){
+        
+    }
+
+    var res = arguments[5];
     N.API.createRoom(roomID, function(resp) {
         console.log(resp);
         //var room= JSON.parse(resp);
@@ -91,7 +102,7 @@ var createRoom = function (callback) {
     }, function(err){
         console.log("Error Nuve",err);
         res.status(404).send(err);
-    });
+    },  {data: {isPass: isPass, password: password, user: user}});
 }
 
 var deleteRoom = function (callback) {

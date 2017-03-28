@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html ng-app="FConf">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Conference</title>
+    <link rel="stylesheet" href="/bootstraps/css/bootstrap.css">
+    <link rel="stylesheet" href="/stylesheets/font-awesome.css">
+    <link rel="stylesheet" href="/plugins/alertifyjs/css/alertify.css">
+    <link rel="stylesheet" href="/stylesheets/loading-css.css">
+    <link rel="stylesheet" href="/stylesheets/style.css">   
+
+
+    <script src="/javascripts/jquery-3.2.0.min.js"></script>
+    <script src="/bootstraps/js/bootstrap.min.js"></script>    
+    <script src="/angularjs/angular.min.js"></script>
+    <script src="/lib/angular-route.min.js"></script>
+    <script src="/plugins/alertifyjs/alertify.js"></script>
+    <!-- <script src="/lib/angular-sanitize.min.js"></script> -->
+    <!-- <script src="/lib/ui-bootstrap-custom-0.12.0.min.js"></script> -->
+    <!-- <script src="/lib/ui-bootstrap-custom-tpls-0.12.0.min.js"></script>  -->
+    <!-- <script src="/angularjs/FConf.js"></script> -->
+
+    
+    <script src="/javascripts/socket.io.js"></script>
+    <!-- erizo client -->
+    <script src="./licode/src/Events.js" type="text/javascript"></script>
+    <script src="./licode/src/webrtc-stacks/FcStack.js" type="text/javascript"></script>
+    <script src="./licode/src/webrtc-stacks/BowserStack.js" type="text/javascript"></script>
+    <script src="./licode/src/webrtc-stacks/FirefoxStack.js" type="text/javascript"></script>
+    <script src="./licode/src/webrtc-stacks/ChromeStableStack.js" type="text/javascript"></script>
+    <script src="./licode/src/webrtc-stacks/ChromeCanaryStack.js" type="text/javascript"></script>
+    <script src="./licode/src/Connection.js" type="text/javascript"></script>
+    <script src="./licode/src/Stream.js" type="text/javascript"></script>
+    <script src="./licode/src/Room.js" type="text/javascript"></script>
+    <script src="./licode/src/utils/L.Logger.js" type="text/javascript"></script>
+    <script src="./licode/src/utils/L.Base64.js" type="text/javascript"></script>
+    <script src="./licode/src/utils/L.Resizer.new.js" type="text/javascript"></script>
+    <script src="./licode/src/views/View.js" type="text/javascript"></script>
+    <script src="./licode/src/views/VideoPlayer.js" type="text/javascript"></script>
+    <script src="./licode/src/views/AudioPlayer.js" type="text/javascript"></script>
+    <script src="./licode/src/views/Bar.js" type="text/javascript"></script>
+    <script src="./licode/src/views/Speaker.js" type="text/javascript"></script>
+    <!-- end erizo client -->
+
+    <script src="/app.js"></script>
+    <script src="/common/services/room.service.js"></script>
+    <script src="/common/services/share.service.js"></script>
+    <script src="/common/services/localStream.service.js"></script>
+
+    <script src="/home/home.controller.js"></script>
+    <script src="/room/room.controller.js"></script>
+
+    <script src="/admin/rooms/admin.rooms.controller.js"></script>
+   
+  </head>
+  <body >
+    <div ng-view></div>
+    <div class="loading">
+      <span class="cssload-loader"><span class="cssload-loader-inner"></span></span>
+      <span class="text-loading">Loading...</span>
+    </div>
+    <footer class="footer">
+      <p style="margin-top: 10px">&copy; FConference</p>
+    </footer>
+  </body>
+</html>

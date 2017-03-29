@@ -3,6 +3,7 @@ var Room = require("../models/roomModel");
 var appRoot = require('app-root-path');
 var N = require(appRoot+"/libs/nuve.js");
 var config = require(appRoot+"/configs/licode_config");
+var crypto = require('crypto');
 
 N.API.init(config.nuve.superserviceID, config.nuve.superserviceKey,  'http://192.168.1.23:3000/'); // //'http://118.69.135.101:3000/'
 
@@ -91,7 +92,9 @@ var createRoom = function (callback) {
     if(roomID == null || roomID == undefined){
         
     }
-
+    if(password !== '' && password !== undefined) {
+        password = crypto.createHash('md5').update(password).digest('hex');
+    }
     
     N.API.createRoom(roomID, function(resp) {
         console.log(resp);

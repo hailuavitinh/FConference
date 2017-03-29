@@ -36,7 +36,8 @@
       var modalLogin = $uibModal.open({
         templateUrl:"/loginModal/loginModal.view.html",
         controller:"loginModalCtrl",
-        controllerAs: "vm"
+        controllerAs: "vm",
+        size:"m"
       });
     }//end vm.Login
  

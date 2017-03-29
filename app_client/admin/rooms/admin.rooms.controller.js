@@ -58,16 +58,27 @@
 
     vm.createRoom = function() {
       var ro = $('#roomNew').val();
+      var us = $('#user').val();
+
       if(ro == '') {
         alert('Name is empty!');
         return;
       }
 
+      if(us == '') {
+        alert('User is empty!');
+        return;
+      }
+
       var isPass = $('#isPass:checked').val();
       var pass = '';
-      var us = $('#user').val();
+      
       if(isPass !== undefined) {
+        isPass = true;
         pass = $('#password').val();
+      } else {
+        isPass = false;
+        pass = '';
       }
 
       // svRooms.createRoom(ro).then(function(success) {

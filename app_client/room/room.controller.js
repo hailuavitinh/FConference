@@ -25,22 +25,21 @@
     
     console.log("Angular Join: ",roomID);
     var roomJson;
+
+    var username = 'u' + Math.floor(Math.random() * 1000000000);
+
     svRooms.getRoomByID(roomID).then(function(success){
+        
         console.log("API Room: ", success);
-        alertify.success("Connect room successful");
+        svShare.showLoading(false);
         roomJson = success.data;
         vm.roomJson = roomJson;
-        connectRoom(roomJson._id, "dat"); //get user name from authen service
-        svShare.showLoading(false);
+        if(success.data.isPass) {          
+          askJoinPassword(true, success);
 
-        //get list user 
-        svRooms.getListUser(roomID).then(function(success) {
-          console.log('ListUser: ',success);
-          vm.ListUser = success.data;
-          //$scope.$apply();
-        },function(error) {
-
-        });
+        } else {
+          askJoinPassword(false, success);          
+        }
 
     },function(error){
         console.log("API Room Error: ", error);
@@ -52,8 +51,73 @@
         $location.url('/#');
     });
 
+  function askJoinPassword(isask, success) {
+    if(isask) {
+      // alertify.prompt( 'Password protect', 'This room protect by password, Please enter password to join', 'Password'
+      //          , function(evt, value) { 
+      //             if(value == success.data.password) {
+      //               alertify.success("Connect room successful");                    
+
+      //               connectRoom(roomJson._id, username); //get user name from authen service
+      //               svShare.showLoading(false);
+
+      //               //get list user 
+      //               svRooms.getListUser(roomID).then(function(ss) {
+      //                 console.log('ListUser: ',ss);
+      //                 vm.ListUser = ss.data;
+      //                 //$scope.$apply();
+      //               },function(error) {
+
+      //               });
+      //             } else {
+      //               askJoinPassword(true, success);
+      //             }
+
+      //         }
+      //         , function() { 
+      //           console.log("Cancel");
+      //           $location.url('/#'); 
+      //         });
+
+      var value = prompt("This room protect by password, Please enter password to join?", "Password");
+      if(value == success.data.password) {
+          alertify.success("Connect room successful");                    
+
+          connectRoom(roomJson._id, username); //get user name from authen service
+          svShare.showLoading(false);
+
+          //get list user 
+          svRooms.getListUser(roomID).then(function(ss) {
+            console.log('ListUser: ',ss);
+            vm.ListUser = ss.data;
+            //$scope.$apply();
+          },function(error) {
+
+          });
+        } else {
+          askJoinPassword(true, success);
+        }
+
+    } else {
+      alertify.success("Connect room successful");      
+
+      connectRoom(roomJson._id, username); //get user name from authen service
+      svShare.showLoading(false);
+
+      //get list user 
+      svRooms.getListUser(roomID).then(function(ss) {
+        console.log('ListUser: ',ss);
+        vm.ListUser = ss.data;
+        //$scope.$apply();
+      },function(error) {
+        
+      });
+    }
+  }
 
   function connectRoom(roomID, username) {
+
+      svShare.showLoading(true,'Join room');
       if(svShare.isNullOrEmpty(username)) {          
           vm.error = "User in empty!";
           alertify.error("User in empty!");
@@ -85,7 +149,9 @@
 
                       $scope.$apply();
                       InitLocalStream(userName, roomJson._id, success.data.Token, result.IsSpeaker, result.IsCamera);
+                      svShare.showLoading(false);
                   } else {
+                      svShare.showLoading(false);
                       vm.error = result.content;
                       alertify.error(result.content);
                       //vm.my.isShowError = true;
@@ -94,7 +160,9 @@
                   }
               }) 
           },function(error){
+              svShare.showLoading(false);
               vm.error = error.data;
+              console.log(error.data);
               alertify.error(error.data);
 
               $scope.$apply();

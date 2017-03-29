@@ -80,8 +80,8 @@
       //         });
 
       var value = prompt("This room protect by password, Please enter password to join?", "Password");
-      if(value == success.data.password) {
-          alertify.success("Connect room successful");                    
+      if(svShare.md5(value) == success.data.password) {
+          alertify.success("Connect room successful");
 
           connectRoom(roomJson._id, username); //get user name from authen service
           svShare.showLoading(false);
@@ -99,7 +99,7 @@
         }
 
     } else {
-      alertify.success("Connect room successful");      
+      alertify.success("Connect room successful");
 
       connectRoom(roomJson._id, username); //get user name from authen service
       svShare.showLoading(false);

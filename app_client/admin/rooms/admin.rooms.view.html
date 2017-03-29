@@ -47,29 +47,25 @@
   <div class="col-sm-12 right-content" style="min-height: 500px">
 <div class="block-content">
     <div class="col-md-12">
-      <table>
+      <table style="width: 100%">
         <tr>
           <td>
             <input type="text" style="width: initial; float: left;" class="form-control" id="roomNew" placeholder="Enter new room name!" /> 
           </td>
-        </tr>
-        <tr>
           <td>
-            <label>Set password?</label> <input type="checkbox" id="isPass" value="1" checked /> 
+             <input type="text"  style="width: initial; float: left;" class="form-control" id="user" placeholder="Enter user!"/>
           </td>
         </tr>
         <tr>
+          <td>
+            <label for="isPass">Set password?</label> <input type="checkbox" id="isPass" name="isPass" value="1" /> 
+          </td>
           <td>
             <input type="password"  style="width: initial; float: left;" class="form-control" id="password" placeholder="Enter password!"/>
           </td>
-        </tr>
+        </tr>        
         <tr>
-          <td>
-            <input type="text"  style="width: initial; float: left;" class="form-control" id="user" placeholder="Enter user!"/>
-          </td>
-        </tr>
-        <tr>
-          <td>
+          <td colspan="2" style="text-align: center;">
             <button class="btn btn-default" ng-click="vm.createRoom()">Create Room</button>    
           </td>
         </tr>
@@ -135,15 +131,16 @@
             _open_left_menu = false;
         }
     });
-  $(document).on("click", "body", function (event) {
-        event.preventDefault();
-        //$(event.target).is('.open_left_menu')
 
-        if (_open_left_menu) {
-            //$('.right-content').css('margin-right', '0px');
-            $('.right-content').animate({ "width": '+=230' });
-            $('.left-menu').animate({ "margin-left": '-=230' });
-            _open_left_menu = false;
-        }
-    });
+  // $(document).on("click", "body", function (event) {
+  //       event.preventDefault();
+  //       //$(event.target).is('.open_left_menu')
+
+  //       if (_open_left_menu) {
+  //           //$('.right-content').css('margin-right', '0px');
+  //           $('.right-content').animate({ "width": '+=230' });
+  //           $('.left-menu').animate({ "margin-left": '-=230' });
+  //           _open_left_menu = false;
+  //       }
+  //   });
 </script>

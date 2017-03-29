@@ -9,10 +9,10 @@ var auth = jwt({
   userProperty: 'payload'
 });	
 
-var ctrlRoom = require('../controllers/roomComtroller');
+//var ctrlRoom = require('../controllers/roomComtroller');
 var ctrlAuth = require('../controllers/authentication');
 
-router.post('/api/rooms/', ctrlRoom.getRooms);
+//router.post('/api/rooms/', ctrlRoom.getRooms);
 
 //router.post('/register', ctrlAuth.register);
 router.post('/login', ctrlAuth.login);

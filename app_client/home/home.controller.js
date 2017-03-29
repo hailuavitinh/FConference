@@ -5,7 +5,7 @@
     .controller('homeCtrl', homeCtrl);
 
   homeCtrl.$inject = ['$scope', "$routeParams", '$location','$uibModal'];
-  function homeCtrl ($scope, $routeParams, $location) {
+  function homeCtrl ($scope, $routeParams, $location,$uibModal) {
     
     console.log('home controller');
 
@@ -33,7 +33,11 @@
 
 
     vm.Login = function(){
-      alert("LogIn");
+      var modalLogin = $uibModal.open({
+        templateUrl:"/loginModal/loginModal.view.html",
+        controller:"loginModalCtrl",
+        controllerAs: "vm"
+      });
     }//end vm.Login
  
   }

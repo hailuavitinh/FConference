@@ -13,5 +13,8 @@ module.exports = {
     getMongoConnectString:function(){
         //return `mongodb://${FConfDB.mongodb.user}:${FConfDB.mongodb.password}@${FConfDB.mongodb.host}:${FConfDB.mongodb.port}/${FConfDB.mongodb.database}`;
         return `mongodb://${FConfDB.mongodb.host}:${FConfDB.mongodb.port}/${FConfDB.mongodb.database}`;
-    }
+    },
+    getJWT_SECRET:function(){
+        return process.env.JWT_SECRET || "FConf";
+    } 
 };

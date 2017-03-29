@@ -4,7 +4,7 @@
     .module('FConf')
     .controller('homeCtrl', homeCtrl);
 
-  homeCtrl.$inject = ['$scope', "$routeParams", '$location'];
+  homeCtrl.$inject = ['$scope', "$routeParams", '$location','$uibModal'];
   function homeCtrl ($scope, $routeParams, $location) {
     
     console.log('home controller');
@@ -29,7 +29,12 @@
        } else {
           $location.url('/room/' + rid);
        }
-    }
+    }// end vm.Join
+
+
+    vm.Login = function(){
+      alert("LogIn");
+    }//end vm.Login
  
   }
 

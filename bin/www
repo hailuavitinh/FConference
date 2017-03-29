@@ -22,4 +22,5 @@ var options = {
 var port = process.env.PORT || 3000;
 var server = https.createServer(options, app).listen(port, function(){
     console.log("Server HTTPS listening with port ....",port);
+    console.log("Process ENV:",process.env.JWT_SECRET);
 });

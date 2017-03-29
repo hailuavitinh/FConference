@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var appRoot = require('app-root-path');
+var passport = require("passport");
 
 var roomController = require(appRoot+"/app_api/controllers/roomController");
 
@@ -30,6 +31,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'app_client')));
+
+app.use(passport.initialize());
 
 //api
 roomController(app);

@@ -62,7 +62,24 @@
         alert('Name is empty!');
         return;
       }
-      svRooms.createRoom(ro).then(function(success) {
+
+      var isPass = $('#isPass:checked').val();
+      var pass = '';
+      var us = $('#user').val();
+      if(isPass !== undefined) {
+        pass = $('#password').val();
+      }
+
+      // svRooms.createRoom(ro).then(function(success) {
+      //   console.log("API Room: ",success);
+      //   alert('create success');
+      //   $route.reload();
+      // }, function(error) {
+      //   console.log("API Room Error: ",error);              
+      //   alert('create fail');
+      // });
+
+      svRooms.createRoomP(ro, isPass, pass, us).then(function(success) {
         console.log("API Room: ",success);
         alert('create success');
         $route.reload();

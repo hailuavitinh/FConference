@@ -81,8 +81,18 @@ var getRoomsFromFConf= function(res,roomList){
 
 var createRoom = function (callback) {
     var roomID = arguments[1];
+    var isPass = arguments[2] || false;
+    var password = arguments[3] || '';
+    var user = arguments[4];
+    var res = arguments[5];
+
     console.log('function createRoom: ', roomID);
-    var res = arguments[2];
+    
+    if(roomID == null || roomID == undefined){
+        
+    }
+
+    
     N.API.createRoom(roomID, function(resp) {
         console.log(resp);
         //var room= JSON.parse(resp);
@@ -91,7 +101,7 @@ var createRoom = function (callback) {
     }, function(err){
         console.log("Error Nuve",err);
         res.status(404).send(err);
-    });
+    },  {data: {isPass: isPass, password: password, user: user}});
 }
 
 var deleteRoom = function (callback) {
@@ -153,6 +163,21 @@ module.exports = function(app) {
                 res.send(room);
             }
         },roomID,res);
+    });
+
+    app.post("/api/rooms/createroom/",function(req,res){
+        var roomID = req.body.roomID;
+        var isPass = req.body.isPass;
+        var password = req.body.password;
+        var user = req.body.user;
+        console.log("Acess API createroom ",roomID);
+        createRoom(function(room){
+            if(room == null || room == undefined){
+                res.status(404).send("Room doesn't have exists. Please check again !!");
+            } else{
+                res.send(room);
+            }
+        },roomID, isPass, password, user, res);
     });
 
     app.get("/api/rooms/delete/:id",function(req,res){

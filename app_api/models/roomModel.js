@@ -8,7 +8,8 @@ var roomSchema = new Schema({
     numberOfRoom:Number,
     description:String,
     isPass:Boolean,
-    password:String
+    password:String,
+    user: String
 },{collection:"Rooms"});
 
 var room = mongoose.model("Room",roomSchema);

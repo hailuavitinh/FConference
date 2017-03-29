@@ -17,6 +17,15 @@ app.factory("svRooms",["$http",function($http){
         createRoom: function(name) {
             return $http.get('/api/rooms/create/' + name);
         },
+        createRoomP: function(name, isPass, password, user) {
+            var data = {
+                roomID: name,
+                isPass: isPass,
+                password: password,
+                user: user
+            };
+            return $http.post("/api/rooms/createroom", data);
+        },
         getListUser: function(id) {
             return $http.get('/api/rooms/listUser/' + id);
         }

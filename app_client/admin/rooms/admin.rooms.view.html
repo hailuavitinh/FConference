@@ -55,7 +55,7 @@
         </tr>
         <tr>
           <td>
-            <label>Set password?</label> <input type="checkbox" value="1" checked /> 
+            <label>Set password?</label> <input type="checkbox" id="isPass" value="1" checked /> 
           </td>
         </tr>
         <tr>
@@ -81,8 +81,10 @@
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>ID</th>
+                    <!-- <th>ID</th> -->
                     <th>Room</th>
+                    <th>Has password</th>
+                    <th>Admin user</th>
                     <th>Description</th>
                     <th>Link</th>
                     <th>Delete</th>
@@ -91,9 +93,11 @@
             <tbody ng-repeat="item in vm.rooms">
                 <tr>
                     <td>{{$index}}</td>
-                    <td>{{item._id}}</td>
+                    <!-- <td>{{item._id}}</td> -->
                     <td>{{item.name}}</td>
-                    <td></td>
+                    <td>{{item.isPass}}</td>
+                    <td>{{item.user}}</td>
+                    <td>{{item.data}}</td>
                     <td> <a href="#!/room/{{item._id}}">Go to room {{item.name}}</a></td>
                     <td> <a style="cursor: pointer;" ng-click="vm.deleteRoom(item._id)"> <i class="fa fa-trash"></i> Delete</a> </td>
                 </tr>

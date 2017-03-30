@@ -10,7 +10,7 @@ var passport = require("passport");
 var roomController = require(appRoot+"/app_api/controllers/roomController");
 
 //requre model
-require('./app_api/models/db');
+//require('./app_api/models/db');
 require('./app_api/config/passport');
 
 var routes = require('./app_server/routes/index');

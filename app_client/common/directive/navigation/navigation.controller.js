@@ -11,6 +11,7 @@
 
         vm.isLoggedIn = authentication.isLoggedIn();
         vm.currentUser = authentication.currentUser();
+        vm.isAdmin = authentication.isAdmin();
 
         vm.logOut = function(){
             authentication.logout();
@@ -29,6 +30,7 @@
                 if(isLoggedOk){
                     vm.isLoggedIn = authentication.isLoggedIn();
                     vm.currentUser = authentication.currentUser();
+                    vm.isAdmin = authentication.isAdmin();
                 }
             },function(){
                 console.log("Login Error")

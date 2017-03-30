@@ -15,6 +15,7 @@ var generateJwt = function(dataUser){
 
   return jwt.sign({
     username:dataUser.username,
+    permission:dataUser.permission,
     exp:parseInt(expiry.getTime()/1000)
   },JWT_SECRET)
 }

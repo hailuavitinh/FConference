@@ -24,23 +24,9 @@
       .when('/admin/rooms', {
         templateUrl: '/admin/rooms/admin.rooms.view.html',
         controller: 'adminRoomCtrl',
-        controllerAs: 'vm'
+        controllerAs: 'vm',
+        isAdmin: true
       })
-      // .when('/location/:locationid', {
-      //   templateUrl: '/locationDetail/locationDetail.view.html',
-      //   controller: 'locationDetailCtrl',
-      //   controllerAs: 'vm'
-      // })
-      // .when('/register', {
-      //   templateUrl: '/auth/register/register.view.html',
-      //   controller: 'registerCtrl',
-      //   controllerAs: 'vm'
-      // })
-      // .when('/login', {
-      //   templateUrl: '/auth/login/login.view.html',
-      //   controller: 'loginCtrl',
-      //   controllerAs: 'vm'
-      // })
       .otherwise({redirectTo: '/'});
 
     // use the HTML5 History API    
@@ -53,5 +39,22 @@
   angular
     .module('FConf')
     .config(['$routeProvider', '$locationProvider', config]);
+
+   angular.module('FConf')
+      .run(['$rootScope','$location','authentication',authRoute]);
+
+  function authRoute($rootScope,$location,authentication){
+    $rootScope.$on("$routeChangeStart",function(event,next,current){
+      if(next.$$route.isAdmin){
+        var isAdmin = authentication.isAdmin();
+        if(!isAdmin){
+          $location.path("/");
+        }
+      }
+    });
+  } //end authRoute
+
+  
+
 
 })();

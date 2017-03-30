@@ -32,9 +32,26 @@
         var token = getToken();
         var payload = JSON.parse($window.atob(token.split('.')[1]));
         return {
-          username : payload.username
+          username : payload.username,
+          permission: payload.permission
         };
       }
+    };
+
+    var isAdmin = function(){
+      var user = currentUser();
+      if(user && user.permission){
+          var permission = user.permission.split(',');
+          var indexAdmin = permission.indexOf("admin");
+          if(indexAdmin > -1){
+            return true;
+          } else {
+            return false;
+          }
+      } else {
+        return false;
+      }
+      
     };
 
     
@@ -52,7 +69,8 @@
       getToken : getToken,
       isLoggedIn : isLoggedIn,
       login : login,
-      logout : logout
+      logout : logout,
+      isAdmin:isAdmin
     };
   }
 

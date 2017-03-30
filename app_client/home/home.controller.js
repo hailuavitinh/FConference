@@ -4,8 +4,8 @@
     .module('FConf')
     .controller('homeCtrl', homeCtrl);
 
-  homeCtrl.$inject = ['$scope', "$routeParams", '$location','$uibModal'];
-  function homeCtrl ($scope, $routeParams, $location,$uibModal) {
+  homeCtrl.$inject = ['$scope', "$routeParams", '$location','$uibModal','authentication'];
+  function homeCtrl ($scope, $routeParams, $location,$uibModal,authentication) {
     
     console.log('home controller');
 
@@ -40,6 +40,8 @@
         size:"m"
       });
     }//end vm.Login
+
+    
  
   }
 

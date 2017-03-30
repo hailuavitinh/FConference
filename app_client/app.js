@@ -11,15 +11,11 @@
         controller: 'homeCtrl',
         controllerAs: 'vm'
       })
-      .when('/r/:roomID', {
-        templateUrl: '/home/home.view.html',
-        controller: 'homeCtrl',
-        controllerAs: 'vm'
-      })
       .when('/room/:roomID', {
         templateUrl: '/room/room.view.html',
         controller: 'roomCtrl',
-        controllerAs: 'vm'
+        controllerAs: 'vm',
+        isAuthentication:true
       })
       .when('/admin/rooms', {
         templateUrl: '/admin/rooms/admin.rooms.view.html',
@@ -41,14 +37,23 @@
     .config(['$routeProvider', '$locationProvider', config]);
 
    angular.module('FConf')
-      .run(['$rootScope','$location','authentication',authRoute]);
+      .run(['$rootScope','$location','authentication','$uibModal',authRoute]);
 
-  function authRoute($rootScope,$location,authentication){
+  function authRoute($rootScope,$location,authentication,$uibModal){
     $rootScope.$on("$routeChangeStart",function(event,next,current){
       if(next.$$route.isAdmin){
         var isAdmin = authentication.isAdmin();
         if(!isAdmin){
           $location.path("/");
+        }
+      }
+
+      if(next.$$route.isAuthentication){
+        var isLogged = authentication.isLoggedIn();
+        if(!isLogged){
+          console.log("Location Path:",$location.path());
+          var returnUrl = $location.path();
+          $location.path("/").search({auth:false,returnPage:returnUrl});
         }
       }
     });

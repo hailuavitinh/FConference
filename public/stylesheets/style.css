@@ -157,3 +157,10 @@ button, control-btn {
 .footer {
 	padding: 10px;
 }
+
+.form-table {
+
+}
+.form-table tr td {
+	border-top: none !important;
+}

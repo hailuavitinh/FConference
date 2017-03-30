@@ -37,5 +37,20 @@
             })
 
         } // end vm.Login
+
+        var _open_left_menu = false;
+        vm.leftMenu = function() {            
+            if (!_open_left_menu) {
+                $('.left-menu').animate({ "margin-left": '+=230' });
+                //$('.right-content').css('margin-right', '-230px');
+                $('.right-content').animate({ "width": '-=230' });
+                _open_left_menu = true;
+            } else {
+                //$('.right-content').css('margin-right', '0px');
+                $('.right-content').animate({ "width": '+=230' });
+                $('.left-menu').animate({ "margin-left": '-=230' });
+                _open_left_menu = false;
+            }
+        }
     }
 })();

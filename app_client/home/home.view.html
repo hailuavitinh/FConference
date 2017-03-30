@@ -1,21 +1,10 @@
 
 <navigation></navigation>
 
-<div class="body-content main-page" >
+<div class="body-content main-page" style="padding: 0">
   <div class="container row main-link">
     <div class="col-xs-12">
       <input class="form-control" id="roomID" style="width: initial; float: left;margin-left: 20px" type="text"></input> <button ng-click="vm.Join()" class="btn btn-default"> Join </button>
     </div> 
   </div>
 </div>
-
-<script type="text/javascript">
-$(document).ready(function() {
-  $('.body-content').height( $(window).height() - $('.header').outerHeight() - $('.footer').outerHeight() - 30);
-  
-  var mid = $('.body-content').height()/2 - 40;
-  console.log(mid);
-  $('.main-link').css("margin-top", mid + 'px');
-});
-  
-</script>

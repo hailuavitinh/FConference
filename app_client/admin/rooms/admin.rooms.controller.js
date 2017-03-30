@@ -6,7 +6,7 @@
 
   adminRoomCtrl.$inject = ['$scope', "svRooms","$location", "svLocalStream", "$route", "svShare" ];
   function adminRoomCtrl ($scope, svRooms,$location,svLocalStream, $route, svShare) {
-    
+
     console.log('adminRoomCtrl controller');
 
     // Nasty IE9 redirect hack (not recommended)

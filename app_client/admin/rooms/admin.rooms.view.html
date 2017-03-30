@@ -95,7 +95,9 @@
                     <td>{{item.user}}</td>
                     <!-- <td>{{item.data}}</td> -->
                     <td> <a href="#!/room/{{item._id}}">Go to room {{item.name}}</a></td>
-                    <td class="text-danger"> <a style="cursor: pointer;" ng-click="vm.deleteRoom(item._id)"> <i class="fa fa-trash"></i> Delete</a> </td>
+                    <td class="text-danger"> <a style="cursor: pointer;" ng-click="vm.deleteRoom(item._id)"> <i class="fa fa-trash"></i> Delete</a> 
+                      <a style="cursor: pointer;" ng-click="vm.updateRoom(item._id)"> <i class="fa fa-edit"></i> Edit</a> 
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -103,6 +105,43 @@
     </div>  
   </div>
 </div>
+
+
+<div id="e_update" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Update room</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table form-table" style="width: 100%">
+        <tr>
+          <td>
+            <input type="text" style="width: initial; float: left;" class="form-control" id="e_name" placeholder="Enter new room name!" /> 
+          </td>
+          <td>
+             <input type="text"  style="width: initial; float: left;" class="form-control" id="e_user" placeholder="Enter user!"/>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="e_isPass">Set password?</label> <input type="checkbox" id="e_isPass" name="e_isPass" value="1" /> 
+          </td>
+          <td>
+            <input type="password"  style="width: initial; float: left;" class="form-control" id="e_password" placeholder="Enter password!"/>
+          </td>
+        </tr>        
+      </table> 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" ng-click="vm.saveUpdate()">Save changes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 
 <script type="text/javascript">
 

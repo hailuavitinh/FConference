@@ -4,8 +4,8 @@
     .module('FConf')
     .controller('adminRoomCtrl', adminRoomCtrl);
 
-  adminRoomCtrl.$inject = ['$scope', "svRooms","$location", "svLocalStream", "$route" ];
-  function adminRoomCtrl ($scope, svRooms,$location,svLocalStream, $route) {
+  adminRoomCtrl.$inject = ['$scope', "svRooms","$location", "svLocalStream", "$route", "svShare" ];
+  function adminRoomCtrl ($scope, svRooms,$location,svLocalStream, $route, svShare) {
     
     console.log('adminRoomCtrl controller');
 
@@ -46,8 +46,7 @@
       alertify.confirm('Delete room?', 'Are you sure?', function(){ 
         svRooms.deleteRoom(roomID).then(function(success){
               console.log("API Room: ",success);
-              alertify.alert('Delete Room', 'Delete room successful!', function(){ 
-                $route.reload(); });
+              alertify.alert('Delete Room', 'Delete room successful!', function(){ $route.reload(); });
               
           },function(error){
               console.log("API Room Error: ",error);
@@ -61,12 +60,12 @@
       var ro = $('#roomNew').val();
       var us = $('#user').val();
 
-      if(ro == '') {
+      if(svShare.isNullOrEmpty(ro)) {
         alert('Name is empty!');
         return;
       }
 
-      if(us == '') {
+      if(svShare.isNullOrEmpty(us)) {
         alert('User is empty!');
         return;
       }
@@ -77,6 +76,11 @@
       if(isPass !== undefined) {
         isPass = true;
         pass = $('#password').val();
+        if(svShare.isNullOrEmpty(pass)) {
+          alert('Password is empty!');
+          return;
+        }
+
       } else {
         isPass = false;
         pass = '';
@@ -93,16 +97,89 @@
 
       svRooms.createRoomP(ro, isPass, pass, us).then(function(success) {
         console.log("API Room: ",success);
-        alertify.alert('Create Room', 'Create room successful!', function(){ 
-                $route.reload(); });
-        $route.reload();
+        alertify.alert('Create Room', 'Create room successful!', function() { $route.reload(); });        
       }, function(error) {
         console.log("API Room Error: ",error);              
         alertify.error('Create fail: ' + error);
       });
             
     };
+    var current_roomid = '';
+    vm.updateRoom = function(roomID) {
+      $('#e_name').val('');
+      $('#e_user').val('');
+      $('#e_isPass').prop("checked", false);
+      $('#e_password').val('');
 
+      if(svShare.isNullOrEmpty(roomID)) {
+        alertify.warning("Invalid Room");
+        retrun;
+      }
+      current_roomid = roomID;
+      svShare.showLoading(true);
+      svRooms.getRoomByID(roomID).then(function(data) {
+        $('#e_name').val(data.data.name);
+        $('#e_isPass').prop("checked",data.data.isPass );
+        $('#e_user').val(data.data.user);        
+        
+        svShare.showLoading(false);
+
+        $('#e_update').modal('show');
+      },function(error){
+            svShare.showLoading(false);
+            console.log("API Room Error: ",error);
+            alertify.error('Load fail: ' + error);
+      });
+      
+    }
+
+   vm.saveUpdate = function () {
+      if(svShare.isNullOrEmpty(current_roomid)) {
+        alert('Invalid Room!');
+        return;
+      }
+      var ro = $('#e_name').val();
+      var us = $('#e_user').val();
+
+      if(svShare.isNullOrEmpty(ro)) {
+        alert('Name is empty!');
+        return;
+      }
+
+      if(svShare.isNullOrEmpty(us)) {
+        alert('User is empty!');
+        return;
+      }
+
+      var isPass = $('#e_isPass:checked').val();
+      var pass = '';
+      
+      if(isPass !== undefined) {
+        isPass = true;
+        pass = $('#e_password').val();
+        if(svShare.isNullOrEmpty(pass)) {
+          alert('Password is empty!');
+          return;
+        }
+      } else {
+        isPass = false;
+        pass = '';
+      }
+       svShare.showLoading(true);
+       svRooms.updateRoom(current_roomid, ro, isPass, pass, us).then (function(success) {
+        svShare.showLoading(false);
+        $('#e_update').modal('hide');
+        console.log("API Room: ",success);
+          alertify.alert('Update Room', 'Update room successful!', function(){ $route.reload(); });
+       },function(error){
+          svShare.showLoading(false);
+          console.log("API Room Error: ",error);
+          alertify.error('Update fail: ' + error);
+        });
+
+    }
   }
+
+ 
 
 })();

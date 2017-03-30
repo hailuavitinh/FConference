@@ -107,6 +107,34 @@ var createRoom = function (callback) {
     },  {data: {isPass: isPass, password: password, user: user}});
 }
 
+var updateRoom = function (callback) {
+    var roomID = arguments[1];
+    var name = arguments[2];
+    var isPass = arguments[3] || false;
+    var password = arguments[4] || '';
+    var user = arguments[5];
+    var res = arguments[6];
+
+    console.log('function createRoom: ', roomID);
+    
+    if(roomID == null || roomID == undefined){
+        
+    }
+    if(password !== '' && password !== undefined) {
+        password = crypto.createHash('md5').update(password).digest('hex');
+    }
+    
+    N.API.updateRoom(roomID, name, function(resp) {
+        console.log(resp);
+        //var room= JSON.parse(resp);
+        console.log('Room update with id: ', resp._id);
+        callback(resp);
+    }, function(err){
+        console.log("Error Nuve",err);
+        res.status(404).send(err);
+    },  {data: {isPass: isPass, password: password, user: user}});
+}
+
 var deleteRoom = function (callback) {
     var roomID = arguments[1];
     console.log('function deleteRoom: ', roomID);
@@ -166,6 +194,22 @@ module.exports = function(app) {
                 res.send(room);
             }
         },roomID,res);
+    });
+
+    app.post("/api/rooms/update/",function(req,res){
+        var roomID = req.body.id;
+        var name = req.body.name;
+        var isPass = req.body.isPass;
+        var password = req.body.password;
+        var user = req.body.user;
+        console.log("Acess API updateroom/ ",roomID);
+        updateRoom(function(room){
+            if(room == null || room == undefined){
+                res.status(404).send("Room doesn't have exists. Please check again !!");
+            } else{
+                res.send(room);
+            }
+        },roomID, name, isPass, password, user, res);
     });
 
     app.post("/api/rooms/createroom/",function(req,res){

@@ -46,11 +46,12 @@
       alertify.confirm('Delete room?', 'Are you sure?', function(){ 
         svRooms.deleteRoom(roomID).then(function(success){
               console.log("API Room: ",success);
-              alert('delete success');
-              $route.reload();
+              alertify.alert('Delete Room', 'Delete room successful!', function(){ 
+                $route.reload(); });
+              
           },function(error){
               console.log("API Room Error: ",error);
-              alert('delete fail');
+              alertify.error('Delete fail: ' + error);
           });
       }, function(){ });
       
@@ -92,11 +93,12 @@
 
       svRooms.createRoomP(ro, isPass, pass, us).then(function(success) {
         console.log("API Room: ",success);
-        alert('create success');
+        alertify.alert('Create Room', 'Create room successful!', function(){ 
+                $route.reload(); });
         $route.reload();
       }, function(error) {
         console.log("API Room Error: ",error);              
-        alert('create fail');
+        alertify.error('Create fail: ' + error);
       });
             
     };

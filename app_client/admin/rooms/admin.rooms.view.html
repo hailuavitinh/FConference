@@ -47,7 +47,7 @@
   <div class="col-sm-12 right-content" style="min-height: 500px">
 <div class="block-content">
     <div class="col-md-12">
-      <table style="width: 100%">
+      <table class="table form-table" style="width: 100%">
         <tr>
           <td>
             <input type="text" style="width: initial; float: left;" class="form-control" id="roomNew" placeholder="Enter new room name!" /> 
@@ -66,7 +66,7 @@
         </tr>        
         <tr>
           <td colspan="2" style="text-align: center;">
-            <button class="btn btn-default" ng-click="vm.createRoom()">Create Room</button>    
+            <button class="btn btn-primary" ng-click="vm.createRoom()">Create Room</button>    
           </td>
         </tr>
       </table>       
@@ -81,7 +81,7 @@
                     <th>Room</th>
                     <th>Has password</th>
                     <th>Admin user</th>
-                    <th>Description</th>
+                    <!-- <th>Description</th> -->
                     <th>Link</th>
                     <th>Delete</th>
                 </tr>
@@ -91,11 +91,11 @@
                     <td>{{$index}}</td>
                     <!-- <td>{{item._id}}</td> -->
                     <td>{{item.name}}</td>
-                    <td>{{item.isPass}}</td>
+                    <td> <i class="fa fa-{{item.isPass ? 'check' : 'ban'}}"></i></td>
                     <td>{{item.user}}</td>
-                    <td>{{item.data}}</td>
+                    <!-- <td>{{item.data}}</td> -->
                     <td> <a href="#!/room/{{item._id}}">Go to room {{item.name}}</a></td>
-                    <td> <a style="cursor: pointer;" ng-click="vm.deleteRoom(item._id)"> <i class="fa fa-trash"></i> Delete</a> </td>
+                    <td class="text-danger"> <a style="cursor: pointer;" ng-click="vm.deleteRoom(item._id)"> <i class="fa fa-trash"></i> Delete</a> </td>
                 </tr>
             </tbody>
         </table>

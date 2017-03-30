@@ -32,23 +32,15 @@
         var token = getToken();
         var payload = JSON.parse($window.atob(token.split('.')[1]));
         return {
-          email : payload.email,
-          name : payload.name
+          username : payload.username
         };
       }
     };
 
-    register = function(user) {
-      return $http.post('/api/register', user).success(function(data){
-        saveToken(data.token);
-      });
-    };
-
+    
     login = function(user) {
-      return $http.post('/api/login', user).success(function(data) {
-        saveToken(data.token);
-      });
-    };
+      return $http.post('/api/login', user);
+    }
 
     logout = function() {
       $window.localStorage.removeItem('fcon-token');
@@ -59,7 +51,6 @@
       saveToken : saveToken,
       getToken : getToken,
       isLoggedIn : isLoggedIn,
-      register : register,
       login : login,
       logout : logout
     };

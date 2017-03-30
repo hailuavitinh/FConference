@@ -118,6 +118,27 @@
     </div>  
 </div>
 
+<div id="askPassword" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">        
+        <h4 class="modal-title"><i class="fa fa-lock"></i> Password protect </h4>
+      </div>
+      <div class="modal-body">
+        <p>This room protect by password, Please enter password to join &hellip;</p>
+        <p>
+          <input type="password" class="form-control" placeholder="Password" id="passToJoin"></input>
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="vm.canlcepass()"> <i class="fa fa-reply"></i> Back</button>
+        <button type="button" class="btn btn-primary" ng-click="vm.verify()"><i class="fa fa-check"></i> OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <script type="text/javascript">
 
   $(document).ready(function() {

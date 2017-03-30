@@ -52,51 +52,8 @@
     });
 
   function askJoinPassword(isask, success) {
-    if(isask) {
-      // alertify.prompt( 'Password protect', 'This room protect by password, Please enter password to join', 'Password'
-      //          , function(evt, value) { 
-      //             if(value == success.data.password) {
-      //               alertify.success("Connect room successful");                    
-
-      //               connectRoom(roomJson._id, username); //get user name from authen service
-      //               svShare.showLoading(false);
-
-      //               //get list user 
-      //               svRooms.getListUser(roomID).then(function(ss) {
-      //                 console.log('ListUser: ',ss);
-      //                 vm.ListUser = ss.data;
-      //                 //$scope.$apply();
-      //               },function(error) {
-
-      //               });
-      //             } else {
-      //               askJoinPassword(true, success);
-      //             }
-
-      //         }
-      //         , function() { 
-      //           console.log("Cancel");
-      //           $location.url('/#'); 
-      //         });
-
-      var value = prompt("This room protect by password, Please enter password to join?", "Password");
-      if(svShare.md5(value) == success.data.password) {
-          alertify.success("Connect room successful");
-
-          connectRoom(roomJson._id, username); //get user name from authen service
-          svShare.showLoading(false);
-
-          //get list user 
-          svRooms.getListUser(roomID).then(function(ss) {
-            console.log('ListUser: ',ss);
-            vm.ListUser = ss.data;
-            //$scope.$apply();
-          },function(error) {
-
-          });
-        } else {
-          askJoinPassword(true, success);
-        }
+    if(isask) {      
+      $("#askPassword").modal('show');
 
     } else {
       alertify.success("Connect room successful");
@@ -168,6 +125,42 @@
               $scope.$apply();
           });
        }
+  }
+
+  vm.verify = function() {
+    
+    var pass = $('#passToJoin').val();
+    if(svShare.isNullOrEmpty(pass)) {
+      alertify.warning('Please enter password!');
+      return;
+    }
+    if(svShare.md5(pass) == roomJson.password) {
+      alertify.success("Connect room successful");
+
+      connectRoom(roomJson._id, username); //get user name from authen service
+      svShare.showLoading(false);
+
+      //get list user 
+      svRooms.getListUser(roomID).then(function(ss) {
+        console.log('ListUser: ',ss);
+        vm.ListUser = ss.data;
+        //$scope.$apply();
+      },function(error) {
+
+      });
+
+      $("#askPassword").modal('hide');
+    } else {
+      alertify.error('Wrong password!');
+      return;
+    }
+
+  }
+
+  vm.canlcepass = function() {
+    svShare.showLoading(false);
+    $("#askPassword").modal('hide');
+    setTimeout(function() { window.location.href = '/#'; }, 500);    
   }
 
    vm.Share = function(){

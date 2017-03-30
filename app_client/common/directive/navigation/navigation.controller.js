@@ -52,10 +52,8 @@
             },function(){
                 console.log("Login Error");
             })
-<<<<<<< HEAD
-=======
 
-        } // end vm.Login
+        } // end showLoginModal
 
         var _open_left_menu = false;
         vm.leftMenu = function() {            
@@ -70,7 +68,7 @@
                 $('.left-menu').animate({ "margin-left": '-=230' });
                 _open_left_menu = false;
             }
->>>>>>> 42fa866c6f0bd97891aef060494c42b872205bf4
+
         }
     }
 })();

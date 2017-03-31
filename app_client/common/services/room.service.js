@@ -37,7 +37,7 @@ app.factory("svRooms",["$http",function($http){
             return $http.post("/api/rooms/update", data);
         },
         getListUser: function(id) {
-            return $http.get('/api/rooms/listUser/' + id);
+            return $http.post('/api/rooms/listUser/', { id: id});
         }
     }
 }])

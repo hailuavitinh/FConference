@@ -62,13 +62,13 @@
       svShare.showLoading(false);
 
       //get list user 
-      svRooms.getListUser(roomID).then(function(ss) {
-        console.log('ListUser: ',ss);
-        vm.ListUser = ss.data;
-        //$scope.$apply();
-      },function(error) {
+      // svRooms.getListUser(roomID).then(function(ss) {
+      //   console.log('ListUser: ',ss);
+      //   vm.ListUser = ss.data;
+      //   //$scope.$apply();
+      // },function(error) {
         
-      });
+      // });
     }
   }
 
@@ -141,13 +141,13 @@
       svShare.showLoading(false);
 
       //get list user 
-      svRooms.getListUser(roomID).then(function(ss) {
-        console.log('ListUser: ',ss);
-        vm.ListUser = ss.data;
-        //$scope.$apply();
-      },function(error) {
+      // svRooms.getListUser(roomID).then(function(ss) {
+      //   console.log('ListUser: ',ss);
+      //   vm.ListUser = ss.data;
+      //   //$scope.$apply();
+      // },function(error) {
 
-      });
+      // });
 
       $("#askPassword").modal('hide');
     } else {

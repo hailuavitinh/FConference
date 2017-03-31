@@ -5,7 +5,7 @@ var N = require(appRoot+"/libs/nuve.js");
 var config = require(appRoot+"/configs/licode_config");
 var crypto = require('crypto');
 
-N.API.init(config.nuve.superserviceID, config.nuve.superserviceKey,  'http://192.168.1.23:3000/'); // //'http://118.69.135.101:3000/'
+N.API.init(config.nuve.superserviceID, config.nuve.superserviceKey, 'http://192.168.1.23:3000/' ); // //'http://118.69.135.101:3000/'
 
 // var getRoomsFromNuve = function(res,callback){
 //     N.API.getRooms(function(roomList){
@@ -257,8 +257,8 @@ module.exports = function(app) {
         }
     });
 
-    app.get("/api/rooms/listUser/:id",function(req,res){
-        var roomID = req.params.id;
+    app.post("/api/rooms/listUser",function(req,res){
+        var roomID = req.body.id;
         getUserInRoom(function(users){                  
             res.send(users);
         }, roomID, res);

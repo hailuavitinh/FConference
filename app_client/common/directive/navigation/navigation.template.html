@@ -21,7 +21,7 @@
             <a href="" ng-click="navvm.Login()">Sign in</a>
         </li>
         <li ng-show="navvm.isLoggedIn" class="dropdown">
-          <a href="#ac" target="_self" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{navvm.currentUser.username}} <span class="caret"></span></a>
+          <a href="#ac" target="_self" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Hi <b>{{navvm.currentUser.username}}</b> <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li ng-show="navvm.isAdmin"><a href="#!/admin/rooms">Admin Page</a></li>
             <li><a href="#">Something else here</a></li>

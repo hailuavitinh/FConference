@@ -20,13 +20,6 @@
     var roomID = $routeParams.roomID;
     $('#roomID').val(roomID);
 
-    //check device on first time
-    DetectHasCamera_Audio_Speaker(function(result){
-        console.log("Device Kind: ",result);
-        if(!result.IsEnumerateDevices){
-            alertify.alert(result.content);
-        }
-    });
 
     vm.Join = function() {
       var rid = $('#roomID').val();
@@ -47,37 +40,6 @@
         size:"m"
       });
     }//end vm.Login
-
-
-    function DetectHasCamera_Audio_Speaker(callback){
-      var result = {IsEnumerateDevices: false,IsAudio: false,IsSpeaker:false,IsCamera:false,content:""};
-      if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) {
-            result.content = "Please switch Chorme or FireFox browser to use this function !";
-            callback(result);
-      }
-      result.IsEnumerateDevices = true;
-
-      navigator.mediaDevices.enumerateDevices().then(function(devices){
-          devices.forEach(function(itemDevice){
-              if(itemDevice.kind === "audioinput"){
-                  result.IsAudio = true;
-              }
-              
-              if(itemDevice.kind === "videoinput"){
-                  result.IsCamera = true;
-              }
-
-              if(itemDevice.kind === "audiooutput"){
-                  result.IsSpeaker = true;  
-            }
-          });
-          callback(result);
-      }).catch(function(err) {
-          result.IsEnumerateDevices = false;
-          result.content = "Error: " + err.name + " - " + err.message;
-          callback(result);
-      });
-    }
  
   }
 

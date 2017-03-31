@@ -13,12 +13,24 @@
         vm.currentUser = authentication.currentUser();
         vm.isAdmin = authentication.isAdmin();
 
+        if(!vm.isLoggedIn){
+            var auth = $location.search().auth;
+            if(auth == false){
+                showLoginModal();
+            }
+        }
+
         vm.logOut = function(){
             authentication.logout();
             $location.path("/");
         }
 
         vm.Login = function(){
+            showLoginModal();
+        } // end vm.Login
+
+
+        showLoginModal = function(){
             var modalLogin = $uibModal.open({
                 templateUrl:"/loginModal/loginModal.view.html",
                 controller:"loginModalCtrl",
@@ -31,12 +43,17 @@
                     vm.isLoggedIn = authentication.isLoggedIn();
                     vm.currentUser = authentication.currentUser();
                     vm.isAdmin = authentication.isAdmin();
+                    
+                    var returnPage = $location.search().returnPage;
+                    if(returnPage){
+                        $location.path(returnPage).search({auth:null,returnPage:null});    
+                    }
                 }
             },function(){
-                console.log("Login Error")
+                console.log("Login Error");
             })
 
-        } // end vm.Login
+        } // end showLoginModal
 
         var _open_left_menu = false;
         vm.leftMenu = function() {            
@@ -51,6 +68,7 @@
                 $('.left-menu').animate({ "margin-left": '-=230' });
                 _open_left_menu = false;
             }
+
         }
     }
 })();

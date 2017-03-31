@@ -188,6 +188,13 @@
        autoResizeItemContainer();
    }
 
+
+   $('#passToJoin').keyup(function(event) {
+      if ( event.which == 13 ) {
+        vm.verify();
+      }
+    });
+
   //add method  
 
   function autoResizeItemContainer(){

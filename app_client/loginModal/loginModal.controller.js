@@ -7,6 +7,7 @@
     loginModalCtrl.$inject=['$uibModalInstance','authentication'];
     function loginModalCtrl($uibModalInstance,authentcation){
         var vm = this;
+        $('#username').focus();
         vm.modal = {
             cancel:function(){
                 $uibModalInstance.dismiss('cancel');
@@ -39,6 +40,18 @@
                 vm.formError = err;
             });
         }
+
+        $('#username').keyup(function(event) {
+          if ( event.which == 13 ) {
+            $('#password').focus();
+          }
+        });
+
+        $('#password').keyup(function(event) {
+          if ( event.which == 13 ) {
+            vm.doLogin();
+          }
+        });
 
         
     };//end function loginModalCtrl

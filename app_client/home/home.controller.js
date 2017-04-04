@@ -40,7 +40,43 @@
         size:"m"
       });
     }//end vm.Login
- 
+      
+    DetectHasCamera_Audio_Speaker(function(result){
+        console.log("Device Kind: ",result);
+        if(!result.IsEnumerateDevices){
+            alertify.alert(result.content);
+        }
+    });
+
+    function DetectHasCamera_Audio_Speaker(callback){
+      var result = {IsEnumerateDevices: false,IsAudio: false,IsSpeaker:false,IsCamera:false,content:""};
+      if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) {
+            result.content = "Please switch Chorme or FireFox browser to use this function !";
+            callback(result);
+      }
+      result.IsEnumerateDevices = true;
+
+      navigator.mediaDevices.enumerateDevices().then(function(devices){
+          devices.forEach(function(itemDevice){
+              if(itemDevice.kind === "audioinput"){
+                  result.IsAudio = true;
+              }
+              
+              if(itemDevice.kind === "videoinput"){
+                  result.IsCamera = true;
+              }
+
+              if(itemDevice.kind === "audiooutput"){
+                  result.IsSpeaker = true;  
+            }
+          });
+          callback(result);
+      }).catch(function(err) {
+          result.IsEnumerateDevices = false;
+          result.content = "Error: " + err.name + " - " + err.message;
+          callback(result);
+      });
+    }
   }
 
 })();

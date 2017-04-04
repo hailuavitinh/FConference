@@ -4,8 +4,8 @@
     .module('FConf')
     .controller('roomCtrl', roomCtrl);
 
-  roomCtrl.$inject = ['$scope', "$timeout", "$routeParams", "svRooms", "svLocalStream", "svShare", "$location"];
-  function roomCtrl ($scope, $timeout, $routeParams, svRooms, svLocalStream, svShare, $location) {
+  roomCtrl.$inject = ['$scope', "$timeout", "$routeParams", "svRooms", "svLocalStream", "svShare", "$location", "authentication"];
+  function roomCtrl ($scope, $timeout, $routeParams, svRooms, svLocalStream, svShare, $location, authentication) {
     
     console.log('room controller');
 
@@ -27,6 +27,9 @@
     var roomJson;
 
     var username = 'u' + Math.floor(Math.random() * 1000000000);
+    if(authentication.isLoggedIn()) {
+      username = authentication.currentUser().username;
+    }
 
     svRooms.getRoomByID(roomID).then(function(success){
         

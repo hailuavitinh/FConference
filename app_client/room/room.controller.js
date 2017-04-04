@@ -4,8 +4,8 @@
     .module('FConf')
     .controller('roomCtrl', roomCtrl);
 
-  roomCtrl.$inject = ['$scope', "$timeout", "$routeParams", "svRooms", "svLocalStream", "svShare", "$location"];
-  function roomCtrl ($scope, $timeout, $routeParams, svRooms, svLocalStream, svShare, $location) {
+  roomCtrl.$inject = ['$scope', "$timeout", "$routeParams", "svRooms", "svLocalStream", "svShare", "$location", "authentication"];
+  function roomCtrl ($scope, $timeout, $routeParams, svRooms, svLocalStream, svShare, $location, authentication) {
     
     console.log('room controller');
 
@@ -27,6 +27,9 @@
     var roomJson;
 
     var username = 'u' + Math.floor(Math.random() * 1000000000);
+    if(authentication.isLoggedIn()) {
+      username = authentication.currentUser().username;
+    }
 
     svRooms.getRoomByID(roomID).then(function(success){
         
@@ -57,7 +60,7 @@
 
     } else {
       alertify.success("Connect room successful");
-
+      console.log("User name", username);
       connectRoom(roomJson._id, username); //get user name from authen service
       svShare.showLoading(false);
 
@@ -105,7 +108,7 @@
                       vm.my.isShowButtonShareScreen = true;
 
                       $scope.$apply();
-                      InitLocalStream(userName, roomJson._id, success.data.Token, result.IsSpeaker, result.IsCamera);
+                      InitLocalStream(username, roomJson._id, success.data.Token, result.IsSpeaker, result.IsCamera);
                       svShare.showLoading(false);
                   } else {
                       svShare.showLoading(false);
@@ -188,6 +191,13 @@
        autoResizeItemContainer();
    }
 
+
+   $('#passToJoin').keyup(function(event) {
+      if ( event.which == 13 ) {
+        vm.verify();
+      }
+    });
+
   //add method  
 
   function autoResizeItemContainer(){
@@ -224,7 +234,7 @@
   }
 
   function InitShareScreenStream(username){
-      var screenName = "Screen: " + userName;
+      var screenName = "Screen: " + username;
       screen_stream = Erizo.Stream({screen: true,attributes:{name: screenName}});
       screen_stream.init();
       screen_stream.addEventListener("access-accepted",function(){

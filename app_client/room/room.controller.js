@@ -65,13 +65,13 @@
       svShare.showLoading(false);
 
       //get list user 
-      // svRooms.getListUser(roomID).then(function(ss) {
-      //   console.log('ListUser: ',ss);
-      //   vm.ListUser = ss.data;
-      //   //$scope.$apply();
-      // },function(error) {
+      svRooms.getListUser(roomID).then(function(ss) {
+        console.log('ListUser: ',ss);
+        vm.ListUser = ss.data;
+        setTimeout(function() { $scope.$apply(); }, 1500);
+      },function(error) {
         
-      // });
+      });
     }
   }
 
@@ -125,7 +125,7 @@
               console.log(error.data);
               alertify.error(error.data);
 
-              $scope.$apply();
+              setTimeout(function() { $scope.$apply(); }, 1500);
           });
        }
   }
@@ -144,13 +144,13 @@
       svShare.showLoading(false);
 
       //get list user 
-      // svRooms.getListUser(roomID).then(function(ss) {
-      //   console.log('ListUser: ',ss);
-      //   vm.ListUser = ss.data;
-      //   //$scope.$apply();
-      // },function(error) {
+      svRooms.getListUser(roomID).then(function(ss) {
+        console.log('ListUser: ',ss);
+        vm.ListUser = ss.data;
+        //$scope.$apply();
+      },function(error) {
 
-      // });
+      });
 
       $("#askPassword").modal('hide');
     } else {

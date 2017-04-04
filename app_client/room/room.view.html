@@ -41,8 +41,8 @@
   <div class="left-menu bottom-right">
       <ul>
           <li class="menu_header">User in group</li>
-          <li><i class="fa fa-user"></i> <i class="fa fa-map-marker text-success"></i> User <span ng-bind="userID"></span></li>
-          <li ng-repeat="user in vm.ListUser"><i class="fa fa-user"></i> User {{user}}</li>
+          <!-- <li><i class="fa fa-user"></i> <i class="fa fa-map-marker text-success"></i> User <span ng-bind="userID"></span></li> -->
+          <li ng-repeat="user in vm.ListUser"><i class="fa fa-user"></i> User {{user.name}}</li>
           <li class="menu_header">Setting</li>
           <li ng-click="SwitchInputOpen()"><i class="fa fa-plug"></i> Camera/Audio setting </li>
           <li><i class="fa fa-unlock"></i> Log out</li>

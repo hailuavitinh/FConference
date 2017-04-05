@@ -1,0 +1,23 @@
+{
+    "manifest_version":2,
+    "name":"Share Sharing",
+    "version": "0.1",
+    // "content_scripts":[
+    //     {
+    //         "matches":["https://localhost:3000/*","https://118.69.135.101:3000/*","https://thanhdc.xyz/*"],
+    //         "js":["content.js"]
+    //     }
+    // ],
+    "browser_action":{
+        "default_icon":"FPT_logo.png"
+    },
+    "background":{
+        "scripts":["background.js"]
+    },
+    "permissions":["management","desktopCapture"],
+    "externally_connectable":{
+        "matches":["https://localhost:3000/*","https://118.69.135.101:3000/*","https://thanhdc.xyz/*"]
+    },
+    "key":""
+
+}

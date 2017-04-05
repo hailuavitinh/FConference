@@ -33,7 +33,8 @@
         var payload = JSON.parse($window.atob(token.split('.')[1]));
         return {
           username : payload.username,
-          permission: payload.permission
+          permission: payload.permission,
+          role: payload.role
         };
       }
     };

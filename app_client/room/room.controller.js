@@ -27,8 +27,12 @@
     var roomJson;
 
     var username = 'u' + Math.floor(Math.random() * 1000000000);
+    var role = "viewer";
+    var currentUser;
     if(authentication.isLoggedIn()) {
-      username = authentication.currentUser().username;
+      currentUser = authentication.currentUser();
+      username = currentUser.username;
+      role = currentUser.role || "viewer";      
     }
 
     svRooms.getRoomByID(roomID).then(function(success){
@@ -41,7 +45,7 @@
           askJoinPassword(true, success);
 
         } else {
-          askJoinPassword(false, success);          
+          askJoinPassword(false, success);
         }
 
     },function(error){
@@ -64,21 +68,14 @@
       connectRoom(roomJson._id, username); //get user name from authen service
       svShare.showLoading(false);
 
-      //get list user 
-      svRooms.getListUser(roomID).then(function(ss) {
-        console.log('ListUser: ',ss);
-        vm.ListUser = ss.data;
-        setTimeout(function() { $scope.$apply(); }, 1500);
-      },function(error) {
-        
-      });
+      LoadListUser();
     }
   }
 
   function connectRoom(roomID, username) {
 
       svShare.showLoading(true,'Join room');
-      if(svShare.isNullOrEmpty(username)) {          
+      if(svShare.isNullOrEmpty(username)) {
           vm.error = "User in empty!";
           alertify.error("User in empty!");
           //redirect to home 
@@ -94,7 +91,7 @@
            vm.my.isShowVideoConfernce = false;
            return;
       } else {
-          var obj = {roomID: roomJson._id, username:username, p2p: true};
+          var obj = {roomID: roomJson._id, username: username, role: role};
 
           svRooms.createToken(obj).then(function(success){
               console.log("Token: ", success);
@@ -143,14 +140,7 @@
       connectRoom(roomJson._id, username); //get user name from authen service
       svShare.showLoading(false);
 
-      //get list user 
-      svRooms.getListUser(roomID).then(function(ss) {
-        console.log('ListUser: ',ss);
-        vm.ListUser = ss.data;
-        //$scope.$apply();
-      },function(error) {
-
-      });
+      LoadListUser();
 
       $("#askPassword").modal('hide');
     } else {
@@ -199,6 +189,15 @@
     });
 
   //add method  
+
+  function LoadListUser()
+  {
+    svRooms.getListUser(roomID).then(function(ss) {
+      console.log('ListUser: ',ss);
+      vm.ListUser = ss.data;
+      setTimeout(function() { $scope.$apply(); }, 1500);
+    },function(error) { });
+  }
 
   function autoResizeItemContainer(){
      var i  = $(".itemStreamVideo").length;
@@ -428,6 +427,9 @@
 
           room.addEventListener("stream-removed",function(streamEvent){
             console.log('stream-removed');
+
+              LoadListUser();
+
               var stream = streamEvent.stream;
               if(stream.elementID !== undefined){
                   remoteDiv_RemoteStream(stream.elementID,stream.getID(),stream.hasScreen());
@@ -445,5 +447,7 @@
   }
 
   }
+
+  
 
 })();

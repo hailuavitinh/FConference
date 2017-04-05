@@ -40,8 +40,7 @@ Erizo.Bar = function (spec) {
     that.link.setAttribute('target', '_blank');
 
     that.logo = document.createElement('img');
-    that.logo.setAttribute('style', 'width: 100%; height: 100%; max-width: 30px; ' +
-                                    'position: absolute; top: 0; left: 2px;');
+    that.logo.setAttribute('style', 'width: 100%; height: 100%; max-width: 30px; position: absolute; top: 0; left: 2px;');
     that.logo.setAttribute('class', 'logo');
     that.logo.setAttribute('alt', 'Lynckia');
     that.logo.setAttribute('src', that.url + '/images/FPT_logo.png');
@@ -54,8 +53,7 @@ Erizo.Bar = function (spec) {
             clearTimeout(waiting);
         }
 
-        that.div.setAttribute('style', 'width: 100%; height: 100%; position: relative; ' +
-                                       'bottom: 0; right: 0; display:' + displaying);
+        that.div.setAttribute('style', 'width: 100%; height: 100%; position: relative; bottom: 0; right: 0; display:' + displaying);
     };
 
     // Public functions

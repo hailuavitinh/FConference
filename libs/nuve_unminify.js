@@ -560,9 +560,9 @@ N.API = function(e) {
         deleteRoom: function(b, e, c, d) {
             f(e, c, "DELETE", void 0, "rooms/" + b, d)
         },
-        createToken: function(b, e, c, d, g, a) {
+        createToken: function(b, e, c, x, d, g, a) {
             f(d, g,
-                "POST", void 0, "rooms/" + b + "/tokens", a, e, c)
+                "POST", void 0, "rooms/" + b + "/tokens", a, e, c, x)
         },
         createService: function(b, e, c, d, g) {
             f(c, d, "POST", {

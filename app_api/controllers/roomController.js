@@ -242,7 +242,7 @@ module.exports = function(app) {
     app.post("/api/createToken",function(req,res){
         var roomID = req.body.roomID;
         var username = req.body.username;
-        var role = req.body.role || "viewer"; //presenter - viewer - viewerWithData
+        var role = req.body.role || "presenter"; //presenter - viewer - viewerWithData
         console.log("API create token - roomID: "+roomID + " - username: "+username);
 
         if(checkStringNullOrEmty(roomID) || checkStringNullOrEmty(username)){

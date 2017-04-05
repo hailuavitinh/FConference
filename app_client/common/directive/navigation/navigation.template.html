@@ -15,11 +15,43 @@
       <ul class="nav navbar-nav">
         <li><a href="#" target="_self">Introduce</a></li>
         <li><a href="#" target="_self">Guide</a></li>
-      </ul>      
+      </ul>
+
       <ul class="nav navbar-nav navbar-right">
+        
+        <li class="dropdown">
+          <a href="#" target="_self" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-bell-o"></i> <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>            
+          </ul>
+        </li>
+
         <li ng-hide="navvm.isLoggedIn">
             <a href="" ng-click="navvm.Login()">Sign in</a>
         </li>
+
         <li ng-show="navvm.isLoggedIn" class="dropdown">
           <a href="#ac" target="_self" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Hi <b>{{navvm.currentUser.username}}</b> <span class="caret"></span></a>
           <ul class="dropdown-menu">

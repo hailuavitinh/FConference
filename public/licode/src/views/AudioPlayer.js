@@ -61,8 +61,7 @@ Erizo.AudioPlayer = function (spec) {
         that.div = document.createElement('div');
         that.div.setAttribute('id', 'player_' + that.id);
         that.div.setAttribute('class', 'player');
-        that.div.setAttribute('style', 'width: 100%; height: 100%; position: relative; ' +
-                              'overflow: hidden;');
+        that.div.setAttribute('style', 'width: 100%; height: 100%; position: relative; overflow: hidden;');
 
         // Check for a passed DOM node.
         if (typeof that.elementID === 'object' &&

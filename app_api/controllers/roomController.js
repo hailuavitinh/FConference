@@ -1,7 +1,7 @@
 var Room = require("../models/roomModel");
 //var abc = require("../models/abcModel");
 var appRoot = require('app-root-path');
-var N = require(appRoot+"/libs/nuve.js");
+var N = require(appRoot+"/libs/nuve_unminify.js");
 var config = require(appRoot+"/configs/licode_config");
 var crypto = require('crypto');
 
@@ -53,10 +53,11 @@ var createToken = function (callback){
     var roomID = arguments[1];
     var username = arguments[2];
     var role = arguments[3];
-    var res = arguments[4];
+    var isowner = arguments[4];
+    var res = arguments[5];
 
     console.log("Access createToken -- RoomID: "+roomID + " - User: "+username + " - Role: "+role);
-    N.API.createToken(roomID, username, role, function(token) {
+    N.API.createToken(roomID, username, role, isowner, function(token) {
         console.log("token: ",token);
         callback(token);
     },function(err){
@@ -243,6 +244,7 @@ module.exports = function(app) {
         var roomID = req.body.roomID;
         var username = req.body.username;
         var role = req.body.role || "presenter"; //presenter - viewer - viewerWithData
+        var isOwner = req.body.isowner || false;
         console.log("API create token - roomID: "+roomID + " - username: "+username);
 
         if(checkStringNullOrEmty(roomID) || checkStringNullOrEmty(username)){

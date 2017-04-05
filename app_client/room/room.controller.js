@@ -29,6 +29,7 @@
     var username = 'u' + Math.floor(Math.random() * 1000000000);
     var role = "presenter";
     var currentUser;
+    var isOwner = false;
     if(authentication.isLoggedIn()) {
       currentUser = authentication.currentUser();
       username = currentUser.username;
@@ -40,6 +41,10 @@
       console.log("API Room: ", success);
       svShare.showLoading(false);
       roomJson = success.data;
+      if(username == roomJson.username) {
+        isOwner = true;
+      }
+
       vm.roomJson = roomJson;
       if(success.data.isPass) {          
         askJoinPassword(true, success);
@@ -91,7 +96,7 @@
            vm.my.isShowVideoConfernce = false;
            return;
          } else {
-          var obj = {roomID: roomJson._id, username: username, role: role};
+          var obj = {roomID: roomJson._id, username: username, role: role, isowner: isOwner};
 
           svRooms.createToken(obj).then(function(success){
             console.log("Token: ", success);
@@ -328,7 +333,11 @@ function DetectHasCamera_Audio_Speaker(callback){
 
 function InitLocalStream(username,roomID, token,isSpeaker,isCamera){
     
-     localStream = Erizo.Stream({audio: isSpeaker, video: isCamera, data: true, attributes : {name: username}});
+     var _isOwner = false;
+     if(username == roomJson.user) {
+        _isOwner = true;
+     }
+     localStream = Erizo.Stream({audio: isSpeaker, video: isCamera, data: true, attributes : {name: username, isOwner: _isOwner}});
      //localStream = Erizo.Stream({audio: isSpeaker, video: isCamera, url:"file:///tmp/true.mkv" });
 
      console.log("LocalStream Init:", localStream);

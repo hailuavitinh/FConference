@@ -2,17 +2,16 @@
     angular.module("FConf")
         .controller("navigationCtrl",navigationCtrl);
 
-    navigationCtrl.$inject = ["$location","authentication","$uibModal"];
-    function navigationCtrl($location,authentication,$uibModal){
+    navigationCtrl.$inject = ["$location","authentication","$uibModal","svLocalStream"];
+    function navigationCtrl($location,authentication,$uibModal,svLocalStream){
         var vm = this;
 
         vm.currentPath = $location.path();
         console.log("vm.currentPath",vm.currentPath);
-        var stringUrl = vm.currentPath.split('/');
-        console.log("String Url",stringUrl);
-        if((stringUrl.indexOf("room")> -1)&&stringUrl.indexOf("admin")=== -1){
-            console.log("Access Room---------");
-        
+        var stream = svLocalStream.getLocalStream();
+        if(stream){
+            console.log("-----------Access Camera----------");
+            window.location.reload();
         }
 
         vm.isLoggedIn = authentication.isLoggedIn();

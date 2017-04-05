@@ -9,7 +9,7 @@ app.factory("svRooms",["$http",function($http){
             return $http.get("/api/rooms/"+roomID);
         },
         createToken : function(data){
-            return $http.post("/api/createToken",data);
+            return $http.post("/api/createToken", data);
         },
         deleteRoom: function(id) {
             return $http.get('/api/rooms/delete/' + id);

@@ -7,7 +7,13 @@
         var vm = this;
 
         vm.currentPath = $location.path();
-        console.log("vm.currentPath");
+        console.log("vm.currentPath",vm.currentPath);
+        var stringUrl = vm.currentPath.split('/');
+        console.log("String Url",stringUrl);
+        if((stringUrl.indexOf("room")> -1)&&stringUrl.indexOf("admin")=== -1){
+            console.log("Access Room---------");
+        
+        }
 
         vm.isLoggedIn = authentication.isLoggedIn();
         vm.currentUser = authentication.currentUser();

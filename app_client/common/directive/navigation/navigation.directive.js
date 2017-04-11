@@ -14,9 +14,9 @@
 		        		//console.log($(window).height(),$('.header').outerHeight(),$('.footer').outerHeight(), main_height);
 				        $('.body-content').height(main_height);
 				        
-				        var mid = $('.body-content').height()/2 - 40;        
+				        //var mid = $('.body-content').height()/2 - 40;        
 				        //console.log(mid);
-				        $('.main-link').css("padding-top", mid + 'px');
+				        //$('.main-link').css("padding-top", mid + 'px');
 				    // });
 		       }
         }

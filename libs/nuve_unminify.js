@@ -561,8 +561,10 @@ N.API = function(e) {
             f(e, c, "DELETE", void 0, "rooms/" + b, d)
         },
         createToken: function(b, e, c, x, d, g, a) {
-            f(d, g,
-                "POST", void 0, "rooms/" + b + "/tokens", a, e, c, x)
+            console.log( " ----------- isowner", x);
+            var body = { "isowner": x };
+
+            f(d, g, "POST", body, "rooms/" + b + "/tokens", a, e, c)
         },
         createService: function(b, e, c, d, g) {
             f(c, d, "POST", {

@@ -7,16 +7,10 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand open_left_menu" ng-click="navvm.leftMenu()"><i class="fa fa-list"></i></a>
-      <a class="navbar-brand" href="#">FConf</a>
+      <a class="navbar-brand open_left_menu" ng-click="navvm.leftMenu()"><i class="fa fa-list"></i></a>      
     </div>
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li><a href="#" target="_self">Introduce</a></li>
-        <li><a href="#" target="_self">Guide</a></li>
-      </ul>
-
       <ul class="nav navbar-nav navbar-right">
         
         <li class="dropdown">
@@ -66,3 +60,51 @@
 
   </div>
 </nav>
+
+<!-- <nav class="navbar navbar-default navbar-fixed-top header">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand open_left_menu" ng-click="navvm.leftMenu()"><i class="fa fa-list"></i></a>
+      <a class="navbar-brand" href="#">FConf</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a href="#" target="_self">Introduce</a></li>
+        <li><a href="#" target="_self">Guide</a></li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        
+        <li class="dropdown">
+          <a href="#" target="_self" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-bell-o"></i> <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>            
+          </ul>
+        </li>
+
+        <li ng-hide="navvm.isLoggedIn">
+            <a href="" ng-click="navvm.Login()">Sign in</a>
+        </li>
+
+        <li ng-show="navvm.isLoggedIn" class="dropdown">
+          <a href="#ac" target="_self" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Hi <b>{{navvm.currentUser.username}}</b> <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li ng-show="navvm.isAdmin"><a href="#!/admin/rooms">Admin Page</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#" ng-click="navvm.logOut()">Logout</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</nav> -->

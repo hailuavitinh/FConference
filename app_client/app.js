@@ -23,6 +23,11 @@
         controllerAs: 'vm',
         isAdmin: true
       })
+      .when('/knockRoom/:roomID', {
+        templateUrl: '/knockRoom/knockRoom.view.html',
+        controller: 'knockRoomCtrl',
+        controllerAs: 'vm'
+      })
       .otherwise({redirectTo: '/'});
 
     // use the HTML5 History API    

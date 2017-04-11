@@ -2890,6 +2890,19 @@ Erizo.Room = function(b) {
                 });
             d.dispatchEvent(b)
         });
+
+        //ThanhDC3: socket received knock-room
+        a.socket.on("knockRoom",function(b){
+            var msg = {
+                username:b.username,
+                socket:b.socket
+            };
+            //If event is stream, use stream
+            //if event is messafe, use message
+            knockEvent = Erizo.RoomEvent({type: 'knock-room', message: msg});
+            a.dispatchEvent(knockEvent);
+        });
+
         a.socket.on("onUpdateAttributeStream", function(b) {
             var d = a.remoteStreams[b.id],
                 e = Erizo.StreamEvent({

@@ -404,6 +404,11 @@ function InitLocalStream(username,roomID, token,isSpeaker,isCamera){
                 subscribeToStream(event.streams);
               });
 
+              //ThanhDC3: received event from Room.js
+              room.addEventListener("knock-room",function(event){
+                  console.log("------------Received Knock Knock:",event);
+              });
+
               room.addEventListener("stream-subscribed", function(streamEvent) {
                 console.log('stream-subscribed');
                 console.log("stream subscribed: ",streamEvent);

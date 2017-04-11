@@ -41,7 +41,7 @@
       console.log("API Room: ", success);
       svShare.showLoading(false);
       roomJson = success.data;
-      if(username == roomJson.username) {
+      if(username == roomJson.user) {
         isOwner = true;
       }
 

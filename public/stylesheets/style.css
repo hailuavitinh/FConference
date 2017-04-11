@@ -13,9 +13,9 @@ body {
 .body-content {
     min-height: 500px;
     /*background-color:#efefef;*/
-    background: linear-gradient(to bottom right, rgba(240,240,240, 0.5) 0%, rgba(200,200,200, 0.5) 100%);
+    /*background: linear-gradient(to bottom right, rgba(240,240,240, 0.5) 0%, rgba(200,200,200, 0.5) 100%);
    background: -webkit-linear-gradient(left top, rgba(240,240,240, 0.5) 0%, rgba(200,200,200, 0.5) 100%);
-   background: -moz-linear-gradient(bottom right, rgba(240,240,240, 0.5) 0%, rgba(200,200,200, 0.5) 100%);   
+   background: -moz-linear-gradient(bottom right, rgba(240,240,240, 0.5) 0%, rgba(200,200,200, 0.5) 100%);   */
 }
 .block-content {
 	background-color: #fff;
@@ -33,7 +33,7 @@ body {
     top: 0;
     left: 0;
     background-image: url(../images/bg.jpg); 
-    background-position: center;
+    background-position: center center;
 	background-size: cover;
     width: 100%;
     height: 100%;
@@ -42,7 +42,7 @@ body {
 }
 
 .left-menu {
-    background-color: #fdfdfd; /*rgba(128,128,128,0.2);*/
+    background-color: #fdfdfd; /*rgba(128,128,128,0.2); #BCEAF7 */
     margin-left: -230px;
     left:0;
     width: 230px;
@@ -132,7 +132,7 @@ button, control-btn {
     position: absolute;
     left: 0;
     top: 0;
-    padding:5px 10px;    
+    padding:5px 10px;
     cursor: pointer;
     background-color: rgba(200,200,200,0.2);
     z-index:10;
@@ -163,4 +163,40 @@ button, control-btn {
 }
 .form-table tr td {
 	border-top: none !important;
+}
+.box-home {
+    margin-top: 100px;
+}
+.logo-img {
+
+}
+.logo-img img {
+    box-shadow: 10px 10px 8px #999;
+}
+.logo-text {
+    font-size: 44pt;
+    margin-bottom: 60px;
+    margin-top: 30px;
+}
+.logo-join {
+    background-color: #5EF0E6;
+    padding:7px 7px 7px 8px;
+}
+.logo-join button {
+    background: #5EF0E6;
+    padding: 15px 25px;
+    font-weight: bold;
+    text-transform: uppercase;
+    box-shadow: none;
+    border-radius: 0;
+}
+.logo-join input {
+    padding: 25px 20px;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+}
+.navbar-default {
+    background: transparent;
+    border: none;
 }

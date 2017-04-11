@@ -1,10 +1,33 @@
 
 <navigation></navigation>
 
-<div class="body-content main-page" style="padding: 0">
+<div class="body-content-home main-page" style="padding: 0; margin-top: 0">
   <div class="container row main-link">
-    <div class="col-xs-12">
-      <input class="form-control" id="roomID" style="width: initial; float: left;margin-left: 20px" type="text"></input> <button ng-click="vm.Join()" class="btn btn-default"> Join </button>
-    </div> 
+  	<div class="row">
+  		<div class="text-center col-xs-12 col-sm-8 col-md-8 col-sm-offset-3 col-md-offset-3 box-home">
+  			<div class="logo-img">
+  				<img src="/images/logo.jpg" style="box-shadow: 10px 10px 8px #999;"></img>
+  			</div>
+  			<div class="logo-text">
+  				Fconference
+  			</div>
+  			<div class="logo-join">
+  				<input class="form-control" id="roomID" placeholder="Enter link to join FConferent" style="width: 100%; float: left; margin-right: -85px" type="text"></input> <button ng-click="vm.Join()" style="width: 85px" class="btn"> Join </button>
+  			</div>
+  		</div>
+  	</div>  
+
   </div>
 </div>
+<script type="text/javascript">
+	$(document).ready(function() {
+        var main_height = $(window).height();
+        $('footer').hide();
+		//console.log($(window).height(),$('.header').outerHeight(),$('.footer').outerHeight(), main_height);
+        $('.body-content-home').height(main_height);
+        
+        //var mid = $('.body-content').height()/2 - 40;        
+        //console.log(mid);
+        //$('.main-link').css("padding-top", mid + 'px');
+    });
+</script>

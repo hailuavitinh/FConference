@@ -56,7 +56,7 @@ var createToken = function (callback){
     var isowner = arguments[4];
     var res = arguments[5];
 
-    console.log("Access createToken -- RoomID: "+roomID + " - User: "+username + " - Role: "+role);
+    console.log("Access createToken -- RoomID: "+roomID + " - User: "+username + " - Role: "+role + " - Isowner: " + isowner);
     N.API.createToken(roomID, username, role, isowner, function(token) {
         console.log("token: ",token);
         callback(token);
@@ -255,7 +255,7 @@ module.exports = function(app) {
                     res.status(500).send(JSON.stringify({error:"The Erizo have problem."}));
                 }
                 res.send(JSON.stringify({Token:token})); 
-            },roomID,username,role,res);
+            },roomID,username,role,isOwner,res);
         }
     });
 

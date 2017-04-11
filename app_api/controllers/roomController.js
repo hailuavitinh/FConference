@@ -241,10 +241,12 @@ module.exports = function(app) {
     });
 
     app.post("/api/createToken",function(req,res){
+        console.log("Requets Body: ",req.body);
         var roomID = req.body.roomID;
         var username = req.body.username;
         var role = req.body.role || "presenter"; //presenter - viewer - viewerWithData
         var isOwner = req.body.isowner || false;
+        console.log("Requets Body -- isOwner: ",isOwner);
         console.log("API create token - roomID: "+roomID + " - username: "+username);
 
         if(checkStringNullOrEmty(roomID) || checkStringNullOrEmty(username)){

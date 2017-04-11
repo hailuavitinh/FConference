@@ -196,6 +196,11 @@ button, control-btn {
     border-radius: 0;
     box-shadow: none;
 }
+.logo-join input:focus {    
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+}
 .navbar-default {
     background: transparent;
     border: none;

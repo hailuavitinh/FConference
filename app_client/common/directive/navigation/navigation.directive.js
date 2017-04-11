@@ -10,7 +10,7 @@
             link: function(scope, element){ 
 		      
 		      		//$(window).load(function() {
-		                var main_height = $(window).height() - $('.header').outerHeight() - $('.footer').outerHeight() - 5;
+		                var main_height = $(window).height();
 		        		//console.log($(window).height(),$('.header').outerHeight(),$('.footer').outerHeight(), main_height);
 				        $('.body-content').height(main_height);
 				        

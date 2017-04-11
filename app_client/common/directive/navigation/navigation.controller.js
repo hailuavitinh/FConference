@@ -13,11 +13,15 @@
             console.log("-----------Access Camera----------");
             window.location.reload();
         }
-
+        
+        vm.isNotShowMenu = false;
         vm.isLoggedIn = authentication.isLoggedIn();
         vm.currentUser = authentication.currentUser();
         vm.isAdmin = authentication.isAdmin();
-
+        
+        if( vm.currentPath == "/") {
+            vm.isNotShowMenu = true;
+        }
 
         function showLoginModal(){
             

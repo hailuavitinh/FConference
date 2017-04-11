@@ -41,7 +41,8 @@
       console.log("API Room: ", success);
       svShare.showLoading(false);
       roomJson = success.data;
-      if(username == roomJson.username) {
+      console.log("------- Room JSON: ---",roomJson);
+      if(username == roomJson.user) {
         isOwner = true;
       }
 
@@ -102,6 +103,7 @@
             console.log("Token: ", success);
             console.log(" InitLocalStream RoomID: ", roomJson._id);
             console.log(" InitLocalStream Token: ", success.data.Token);
+            console.log("token decode:",L.Base64.decodeBase64(success.data.Token));
             DetectHasCamera_Audio_Speaker(function(result){
               //result.IsSpeaker = false;
               console.log("Device Kind: ",result);

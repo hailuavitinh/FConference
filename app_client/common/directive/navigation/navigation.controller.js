@@ -44,9 +44,10 @@
             })
         } // end function showLoginModal
 
+        console.log("--Logged In--:",vm.isLoggedIn);
         if(!vm.isLoggedIn){
             var auth = $location.search().auth;
-            if(auth === "false"){
+            if(auth === "false" || auth === false){
                 showLoginModal();
             }
         }

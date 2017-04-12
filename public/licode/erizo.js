@@ -2903,6 +2903,17 @@ Erizo.Room = function(b) {
             a.dispatchEvent(knockEvent);
         });
 
+        //ThanhDC3: socket allowJoinRoom
+        a.socket.on("allowJoinRoom",function(b){
+            var msg = {
+                isAllow: b.message
+            };
+            //If event is stream, use stream
+            //if event is messafe, use message
+            allowJoinRoomEvent = Erizo.RoomEvent({type: 'allow-join-room', message: msg});
+            a.dispatchEvent(allowJoinRoomEvent);
+        });
+
         a.socket.on("onUpdateAttributeStream", function(b) {
             var d = a.remoteStreams[b.id],
                 e = Erizo.StreamEvent({

@@ -13,30 +13,44 @@
     if (window.location.pathname !== '/') {
       window.location.href = '/#' + window.location.pathname;
     }
-    var vm = this;    
+    var vm = this;
+    vm.UsersKnock=[];
+    console.log(window.location);
 
-    var screen_stream, localStream;
-    
+    var room,screen_stream,localStream,userName;
     svShare.showLoading(true, 'Join room');
 
-    vm.my = { isShowVideoConfernce:false, isShowError:false, isShowEnterUserName:true, isShowShareScreen:false, isShowButtonShareScreen:false};
+    vm.my = {isShowVideoConfernce:false,isShowError:false,isShowEnterUserName:true,isShowShareScreen:false,isShowButtonShareScreen:false};
     vm.ListUser = [];
-
     var roomID = $routeParams.roomID;
     
     console.log("Angular Join: ",roomID);
-    
     var roomJson;
 
     var username = 'u' + Math.floor(Math.random() * 1000000000);
     var role = "presenter";
     var currentUser;
     var isOwner = false;
-    
     if(authentication.isLoggedIn()) {
       currentUser = authentication.currentUser();
       username = currentUser.username;
       role = currentUser.role || "presenter";      
+    }
+
+    vm.AllowJoinRoom = function(isAllow,socketid){
+      if(isAllow == 1){
+        room.socket.emit('allowJoinRoom',{socket:socketid,isAllow:true});
+      } else {
+        room.socket.emit('allowJoinRoom',{socket:socketid,isAllow:false});
+      }
+
+      for (var index = 0; index < vm.UsersKnock.length; index++) {
+        var element = vm.UsersKnock[index];
+        if(element.socket === socketid){
+          vm.UsersKnock.splice(index,1);
+          break;
+        }
+      }// end for loop
     }
 
     svRooms.getRoomByID(roomID).then(function(success){
@@ -159,29 +173,6 @@
       return;
     }
 
-  }
-
-  vm.updateroom = function() {
-    if(isOwner) {
-      var title = 'Lock Room';
-      var mess = 'Do you want to lock this room!';
-      if(vm.roomJson.islock) {
-        title = "Unlock Room";
-        mess = 'Do you want to unlock this room!';
-      } 
-
-      alertify.confirm(title, mess, function(){ 
-          alertify.success('Ok');
-          vm.roomJson.islock = !vm.roomJson.islock;
-
-
-          setTimeout(function() { $scope.$apply(); }, 1000);
-        }
-        , function(){ alertify.error('Cancel')});
-
-    } else {
-      alertify.error("You dont have permisstion!");
-    }
   }
 
   vm.canlcepass = function() {
@@ -433,6 +424,14 @@ function InitLocalStream(username,roomID, token,isSpeaker,isCamera){
               //ThanhDC3: received event from Room.js
               room.addEventListener("knock-room",function(event){
                   console.log("------------Received Knock Knock:",event);
+                  var item = {username:event.message.username,socket:event.message.socket};
+                  vm.UsersKnock.push(item);
+                  $scope.$apply();
+              });
+
+              //ThanhDC3: received event allow-join-room
+              room.addEventListener("allow-join-room",function(event){
+                console.log("-------------------Received Allow-Join-Room:",event);
               });
 
               room.addEventListener("stream-subscribed", function(streamEvent) {

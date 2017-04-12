@@ -32,11 +32,11 @@
 <div class="container-fluid body-content main-page" style="padding: 0; margin: 0;">
   <div class="left-menu bottom-right" style="padding-top: 51px">      
       <div class="left-menu-top">
-          <b class="title">Room ABC</b> <span class="pull-right" title="{{vm.roomJson.islock ? 'Room locked. Click here to unlock!' : 'Room open. Click here to lock!'}}"> <i ng-click="vm.updateroom()" class="fa fa-{{vm.roomJson.islock ? 'lock' : 'unlock'}}"></i> </span>
+          <b class="title">{{vm.roomJson.name}}</b> <span class="pull-right" title="{{vm.roomJson.islock ? 'Room locked. Click here to unlock!' : 'Room open. Click here to lock!'}}"> <i ng-click="vm.updateroom()" class="fa fa-{{vm.roomJson.islock ? 'lock' : 'unlock'}}"></i> </span>
           <hr>
           <p>
             Owner<br>
-            <b class="left-un">Username</b>
+            <b class="left-un">{{vm.roomJson.user}}</b>
           </p>
           <p>
             Time<br>

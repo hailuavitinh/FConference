@@ -15,9 +15,8 @@
     }
     var vm = this;
     vm.UsersKnock=[];
-    console.log(window.location);
-
-    var room,screen_stream,localStream,userName;
+    
+    var screen_stream,localStream;
     svShare.showLoading(true, 'Join room');
 
     vm.my = {isShowVideoConfernce:false,isShowError:false,isShowEnterUserName:true,isShowShareScreen:false,isShowButtonShareScreen:false};
@@ -29,12 +28,13 @@
 
     var username = 'u' + Math.floor(Math.random() * 1000000000);
     var role = "presenter";
-    var currentUser;
+    vm.currentUser = [];
     var isOwner = false;
+
     if(authentication.isLoggedIn()) {
-      currentUser = authentication.currentUser();
-      username = currentUser.username;
-      role = currentUser.role || "presenter";      
+      vm.currentUser = authentication.currentUser();
+      username = vm.currentUser.username;
+      role = vm.currentUser.role || "presenter";      
     }
 
     vm.AllowJoinRoom = function(isAllow,socketid){
@@ -175,6 +175,28 @@
 
   }
 
+  vm.updateroom = function() {
+    if(isOwner) {
+      var title = 'Lock Room';
+      var mess = 'Do you want to lock this room!';
+      if(vm.roomJson.islock) {
+        title = "Unlock Room";
+        mess = 'Do you want to unlock this room!';
+      } 
+
+      alertify.confirm(title, mess, function(){ 
+        alertify.success('Ok');
+        vm.roomJson.islock = !vm.roomJson.islock;
+
+        setTimeout(function() { $scope.$apply(); }, 1000);
+      }
+      , function(){ alertify.error('Cancel')});
+
+    } else {
+      alertify.error("You dont have permisstion!");
+    }
+  }
+
   vm.canlcepass = function() {
     svShare.showLoading(false);
     $("#askPassword").modal('hide');
@@ -182,39 +204,38 @@
   }
 
   vm.Share = function(){
-        if(vm.my.isShowShareScreen == false){// Event Share Screen
-          vm.my.isShowError = false;
-          var isChrome = !!window.chrome && !!window.chrome.webstore; 
-          if(isChrome) {
-            InitShareScreenStream(userName);
-          } else {
-            vm.error = "Share Screen don't support this browser. Please switch Chrome to use it !";
-            vm.my.isShowError = true;
-          }
-        } else { // Event Stop Sharing Screen
-          screen_stream.close();
-          HiddenSharing()
-        }
+    if(vm.my.isShowShareScreen == false){// Event Share Screen
+      vm.my.isShowError = false;
+      var isChrome = !!window.chrome && !!window.chrome.webstore; 
+      if(isChrome) {
+        InitShareScreenStream(userName);
+      } else {
+        vm.error = "Share Screen don't support this browser. Please switch Chrome to use it !";
+        vm.my.isShowError = true;
       }
+    } else { // Event Stop Sharing Screen
+      screen_stream.close();
+      HiddenSharing()
+    }
+  }
 
 
-      vm.append =  function(){
-       vm.my.isShowVideoConfernce = true;
-       var div = document.createElement('div');
-       div.setAttribute("class", "itemStreamVideo itemRemoveStreamVideo");
-       $(".streamVideo").prepend(div);
-       autoResizeItemContainer();
-     }
+  vm.append =  function(){
+     vm.my.isShowVideoConfernce = true;
+     var div = document.createElement('div');
+     div.setAttribute("class", "itemStreamVideo itemRemoveStreamVideo");
+     $(".streamVideo").prepend(div);
+     autoResizeItemContainer();
+  }
 
 
-     $('#passToJoin').keyup(function(event) {
-      if ( event.which == 13 ) {
-        vm.verify();
-      }
-    });
+  $('#passToJoin').keyup(function(event) {
+    if ( event.which == 13 ) {
+      vm.verify();
+    }
+  });
 
-  //add method  
-
+  //add method 
   function LoadListUser()
   {
     svRooms.getListUser(roomID).then(function(ss) {
@@ -231,8 +252,8 @@
    if(vm.my.isShowShareScreen == true){
     $(".itemStreamVideo").css("width","13vw");
     $(".itemStreamVideo").css("height","20vh");
-  }
-  else{
+   }
+   else{
     if(i < 3){
       console.log("i<3: ",i);
       $(".itemStreamVideo").css("width","30vw");
@@ -351,12 +372,12 @@ function DetectHasCamera_Audio_Speaker(callback){
 }
 
 function InitLocalStream(username,roomID, token,isSpeaker,isCamera){
-    
-     var _isOwner = false;
-     if(username == roomJson.user) {
-        _isOwner = true;
-     }
-     localStream = Erizo.Stream({audio: isSpeaker, video: isCamera, data: true, attributes : {name: username, isOwner: _isOwner}});
+
+ var _isOwner = false;
+ if(username == roomJson.user) {
+  _isOwner = true;
+}
+localStream = Erizo.Stream({audio: isSpeaker, video: isCamera, data: true, attributes : {name: username, isOwner: _isOwner}});
      //localStream = Erizo.Stream({audio: isSpeaker, video: isCamera, url:"file:///tmp/true.mkv" });
 
      console.log("LocalStream Init:", localStream);
@@ -423,10 +444,10 @@ function InitLocalStream(username,roomID, token,isSpeaker,isCamera){
 
               //ThanhDC3: received event from Room.js
               room.addEventListener("knock-room",function(event){
-                  console.log("------------Received Knock Knock:",event);
-                  var item = {username:event.message.username,socket:event.message.socket};
-                  vm.UsersKnock.push(item);
-                  $scope.$apply();
+                console.log("------------Received Knock Knock:",event);
+                var item = {username:event.message.username,socket:event.message.socket};
+                vm.UsersKnock.push(item);
+                $scope.$apply();
               });
 
               //ThanhDC3: received event allow-join-room
@@ -490,7 +511,7 @@ function InitLocalStream(username,roomID, token,isSpeaker,isCamera){
                 console.log("Room-disconnected: ",event);
               });
             })
-      }
+}
 
 }
 

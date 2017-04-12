@@ -14,6 +14,7 @@
       window.location.href = '/#' + window.location.pathname;
     }
     var vm = this;
+    vm.UsersKnock=[];
     console.log(window.location);
 
     var room,screen_stream,localStream,userName;
@@ -34,6 +35,22 @@
       currentUser = authentication.currentUser();
       username = currentUser.username;
       role = currentUser.role || "presenter";      
+    }
+
+    vm.AllowJoinRoom = function(isAllow,socketid){
+      if(isAllow == 1){
+        room.socket.emit('allowJoinRoom',{socket:socketid,isAllow:true});
+      } else {
+        room.socket.emit('allowJoinRoom',{socket:socketid,isAllow:false});
+      }
+
+      for (var index = 0; index < vm.UsersKnock.length; index++) {
+        var element = vm.UsersKnock[index];
+        if(element.socket === socketid){
+          vm.UsersKnock.splice(index,1);
+          break;
+        }
+      }// end for loop
     }
 
     svRooms.getRoomByID(roomID).then(function(success){
@@ -407,6 +424,14 @@ function InitLocalStream(username,roomID, token,isSpeaker,isCamera){
               //ThanhDC3: received event from Room.js
               room.addEventListener("knock-room",function(event){
                   console.log("------------Received Knock Knock:",event);
+                  var item = {username:event.message.username,socket:event.message.socket};
+                  vm.UsersKnock.push(item);
+                  $scope.$apply();
+              });
+
+              //ThanhDC3: received event allow-join-room
+              room.addEventListener("allow-join-room",function(event){
+                console.log("-------------------Received Allow-Join-Room:",event);
               });
 
               room.addEventListener("stream-subscribed", function(streamEvent) {

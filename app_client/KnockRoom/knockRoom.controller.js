@@ -25,6 +25,10 @@
     function ConnectRoom(token){
          room = Erizo.Room({token: token});
          room.connect();
+         //ThanhDC3: received event allow-join-room
+        room.addEventListener("allow-join-room",function(event){
+        console.log("-------------------Received Allow-Join-Room:",event);
+        });
     }
 
     vm.knock = function(){
@@ -32,6 +36,9 @@
              console.log("Received socket:",msg);
          });
     }
+    
+
+
 
   } // end knockCtrl
 })();

@@ -38,6 +38,20 @@
           <li class="menu_header">Setting</li>
           <li ng-click="SwitchInputOpen()"><i class="fa fa-plug"></i> Camera/Audio setting </li>
           <li><i class="fa fa-unlock"></i> Log out</li>
+          <li class="menu_header">List User Knock</li>
+          <li>
+            <ul ng-repeat="item in vm.UsersKnock">
+                <li><i class="fa fa-bell-o">{{item.username}}</i>
+                    <span style="display:block">
+                        <button class="btn btn-success" ng-click="vm.AllowJoinRoom(1,item.socket)" style="font-size:12px; padding: 5px 6px; margin-right:5px;">Allow</button>
+                        <button class="btn btn-danger" ng-click="vm.AllowJoinRoom(0,item.socket)" style="font-size:12px; padding: 5px 6px; margin-right:5px;">Deny</button>
+                    </span> 
+                </li>
+            </ul>
+          </li>
+            
+          
+
       </ul>
   </div>
   <div class="col-sm-12 right-content" style="min-height: 500px">

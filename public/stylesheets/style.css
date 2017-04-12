@@ -199,12 +199,12 @@ button, control-btn {
 }
 .left-menu-bottom {
     /*margin-top: 50%;*/
-    background: rgba(220,240,240, 0.2);
+    background: rgba(210,240,240, 0.2);
     height: 49%;
     padding: 20px 10px;
 }
 .left-menu-top {
-    background: rgba(190,230,240, 0.2);
+    background: rgba(180,220,230, 0.2);
     height: 51%;
     padding: 20px 10px;
 }

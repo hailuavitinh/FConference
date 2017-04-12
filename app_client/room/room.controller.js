@@ -63,13 +63,8 @@
         isOwner = true;
       }
 
-      vm.roomJson = roomJson;
-      if(success.data.isPass) {          
-        askJoinPassword(true, success);
-
-      } else {
-        askJoinPassword(false, success);
-      }
+      vm.roomJson = roomJson;      
+      askJoinPassword(success.data.isPass);
 
     },function(error){
       console.log("API Room Error: ", error);
@@ -81,7 +76,7 @@
       $location.url('/#');
     });
 
-    function askJoinPassword(isask, success) {
+    function askJoinPassword(isask) {
       if(isask) {      
         $("#askPassword").modal('show');
 

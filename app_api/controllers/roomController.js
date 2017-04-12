@@ -136,6 +136,29 @@ var updateRoom = function (callback) {
     },  {data: {isPass: isPass, password: password, user: user}});
 }
 
+var setLockRoom = function (callback) {
+    var roomID = arguments[1];
+    var islock = arguments[2];    
+    var res = arguments[3];
+
+    console.log('function setlockRoom: ', roomID);
+    
+    if(roomID == null || roomID == undefined){
+        
+    }   
+    
+    
+    N.API.setLockRoom(roomID, islock, function(resp) {
+        console.log(resp);
+        //var room= JSON.parse(resp);
+        console.log('Room update with id: ', resp._id);
+        callback(resp);
+    }, function(err){
+        console.log("Error Nuve",err);
+        res.status(404).send(err);
+    });
+}
+
 var deleteRoom = function (callback) {
     var roomID = arguments[1];
     console.log('function deleteRoom: ', roomID);
@@ -211,6 +234,19 @@ module.exports = function(app) {
                 res.send(room);
             }
         },roomID, name, isPass, password, user, res);
+    });
+
+    app.post("/api/rooms/setlockroom/",function(req,res){
+        var roomID = req.body.id;
+        var islock = req.body.islock;
+        console.log("Acess API setlockroom/ ",roomID);
+        setLockRoom(function(room){
+            if(room == null || room == undefined){
+                res.status(404).send("Room doesn't have exists. Please check again !!");
+            } else{
+                res.send(room);
+            }
+        },roomID, islock, res);
     });
 
     app.post("/api/rooms/createroom/",function(req,res){

@@ -551,6 +551,11 @@ N.API = function(e) {
                 options: g
             }, "rooms/" + b, a)
         },
+        setLockRoom: function(b, e, c, d, a) {
+            f(c, d, "PUT", {
+                islock: e
+            }, "rooms/setlock/" + b, a)
+        },
         patchRoom: function(b, e, c, d, g, a) {
             f(c, d, "PATCH", {
                 name: e,

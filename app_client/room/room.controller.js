@@ -175,22 +175,31 @@
 
   }
 
-  vm.updateroom = function() {
+  vm.setLock = function() {
     if(isOwner) {
       var title = 'Lock Room';
       var mess = 'Do you want to lock this room!';
+
       if(vm.roomJson.islock) {
         title = "Unlock Room";
         mess = 'Do you want to unlock this room!';
       } 
 
       alertify.confirm(title, mess, function(){ 
-        alertify.success('Ok');
-        vm.roomJson.islock = !vm.roomJson.islock;
+        svShare.showLoading(true, "Change state");
+        svRooms.setLockRoom(!vm.roomJson.islock, vm.roomJson._id).then(function(success) {
+          alertify.success('Ok');
+          vm.roomJson.islock = !vm.roomJson.islock;
+          setTimeout(function() { $scope.$apply(); }, 1000);
 
-        setTimeout(function() { $scope.$apply(); }, 1000);
+          svShare.showLoading(false);
+        }, function (err) {
+          svShare.showLoading(false);
+          alertify.error(err.data);
+        });
+        
       }
-      , function(){ alertify.error('Cancel')});
+      , function(){ });
 
     } else {
       alertify.error("You dont have permisstion!");

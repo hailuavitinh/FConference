@@ -36,6 +36,13 @@ app.factory("svRooms",["$http",function($http){
             };
             return $http.post("/api/rooms/update", data);
         },
+        setLockRoom: function(islock, id) {
+            var data = {
+                islock: islock,
+                id: id
+            };
+            return $http.post("/api/rooms/setLockRoom", data);
+        },
         getListUser: function(id) {
             return $http.post('/api/rooms/listUser/', { id: id});
         }

@@ -30,29 +30,37 @@
 <navigation></navigation>
 
 <div class="container-fluid body-content main-page" style="padding: 0; margin: 0;">
-  <div class="left-menu bottom-right" style="padding-top: 51px">
-      <ul>
-          <li class="menu_header">User in group</li>
-          <!-- <li><i class="fa fa-user"></i> <i class="fa fa-map-marker text-success"></i> User <span ng-bind="userID"></span></li> -->
-          <li ng-repeat="user in vm.ListUser"><i class="fa fa-user"></i> User {{user.name}}</li>
-          <li class="menu_header">Setting</li>
-          <li ng-click="SwitchInputOpen()"><i class="fa fa-plug"></i> Camera/Audio setting </li>
-          <li><i class="fa fa-unlock"></i> Log out</li>
-          <li class="menu_header">List User Knock</li>
-          <li>
-            <ul ng-repeat="item in vm.UsersKnock">
-                <li><i class="fa fa-bell-o">{{item.username}}</i>
-                    <span style="display:block">
-                        <button class="btn btn-success" ng-click="vm.AllowJoinRoom(1,item.socket)" style="font-size:12px; padding: 5px 6px; margin-right:5px;">Allow</button>
-                        <button class="btn btn-danger" ng-click="vm.AllowJoinRoom(0,item.socket)" style="font-size:12px; padding: 5px 6px; margin-right:5px;">Deny</button>
-                    </span> 
-                </li>
-            </ul>
-          </li>
-            
-          
+  <div class="left-menu bottom-right" style="padding-top: 51px">      
+      <div class="left-menu-top">
+          <b class="title">{{vm.roomJson.name}}</b> <span class="pull-right" title="{{vm.roomJson.islock ? 'Room locked. Click here to unlock!' : 'Room open. Click here to lock!'}}"> <i ng-click="vm.updateroom()" class="fa fa-{{vm.roomJson.islock ? 'lock' : 'unlock'}}"></i> </span>
+          <hr>
+          <p>
+            Owner<br>
+            <b class="left-un">{{vm.roomJson.user}}</b>
+          </p>
+          <p>
+            Time<br>
+            <span class="left-time">10:10:10</span>
+          </p>
+      </div>
+      <div class="left-menu-bottom">
+        <b class="title">User</b> <span class="pull-right"> <i class="fa fa-angle-left"></i> <i class="fa fa-angle-right"></i> </span>
+        <hr>
+        <p class="user-list">
+          <ul>            
+            <li ng-repeat="user in vm.ListUser">User {{user.name}}</li>            
+          </ul>
 
-      </ul>
+        </p>
+
+        <!-- <ul>
+            <li class="menu_header">User in group</li>          
+            <li ng-repeat="user in vm.ListUser"><i class="fa fa-user"></i> User {{user.name}}</li>
+            <li class="menu_header">Setting</li>
+            <li ng-click="SwitchInputOpen()"><i class="fa fa-plug"></i> Camera/Audio setting </li>
+            <li><i class="fa fa-unlock"></i> Log out</li>
+          </ul> -->
+      </div>
   </div>
   <div class="col-sm-12 right-content" style="min-height: 500px">
           

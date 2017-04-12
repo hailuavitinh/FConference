@@ -42,7 +42,7 @@ body {
 }
 
 .left-menu {
-    background-color: #fdfdfd; /*rgba(128,128,128,0.2); #BCEAF7 */
+    background-color: transparent; /*rgba(128,128,128,0.2); #BCEAF7 */
     margin-left: -230px;
     left:0;
     width: 230px;
@@ -56,23 +56,15 @@ body {
 }
 .left-menu ul li{
     list-style: none;
-    padding:10px 10px;
+    padding:10px 0;
     cursor:pointer;
-    border-left: 2px solid #fdfdfd;
+    color: #0C4EA2;
+    font-size: 16px;
+    font-weight: bold;
 }
-.left-menu ul li:hover {
-    background-color: #efefef;
-    border-left: 3px solid #3c8dbc;
+.left-menu ul li:hover {    
 }
-.left-menu ul .menu_header {
-    border-top: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
-    font-weight: 700;
-    text-transform: uppercase;
-    background-color: #fafafa;
-    cursor: initial;
-    font-size:small;
-}
+
 .right-menu {
 	height: 100%;
 }
@@ -204,4 +196,39 @@ button, control-btn {
 .navbar-default {
     background: transparent;
     border: none;
+}
+.left-menu-bottom {
+    /*margin-top: 50%;*/
+    background: rgba(220,240,240, 0.2);
+    height: 49%;
+    padding: 20px 10px;
+}
+.left-menu-top {
+    background: rgba(190,230,240, 0.2);
+    height: 51%;
+    padding: 20px 10px;
+}
+.left-menu hr {
+    margin-top: 15px;
+    border-color: #ccc;
+}
+.left-menu b {
+    color: #0C4EA2;
+    font-size: 18px;
+}
+.left-menu .user-list b {
+    padding-bottom: 10px;
+}
+.left-menu .title {
+    font-size: 18px;
+    text-transform: uppercase;
+    color: #454545;
+}
+.left-menu .pull-right i {
+    font-size: 22px;
+    padding-right: 7px;
+    margin-right: 3px;
+    cursor: pointer;
+    color: #0C4EA2;
+    font-weight: bold;
 }

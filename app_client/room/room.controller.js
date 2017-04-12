@@ -13,23 +13,26 @@
     if (window.location.pathname !== '/') {
       window.location.href = '/#' + window.location.pathname;
     }
-    var vm = this;
-    console.log(window.location);
+    var vm = this;    
 
-    var room,screen_stream,localStream,userName;
+    var screen_stream, localStream;
+    
     svShare.showLoading(true, 'Join room');
 
-    vm.my = {isShowVideoConfernce:false,isShowError:false,isShowEnterUserName:true,isShowShareScreen:false,isShowButtonShareScreen:false};
+    vm.my = { isShowVideoConfernce:false, isShowError:false, isShowEnterUserName:true, isShowShareScreen:false, isShowButtonShareScreen:false};
     vm.ListUser = [];
+
     var roomID = $routeParams.roomID;
     
     console.log("Angular Join: ",roomID);
+    
     var roomJson;
 
     var username = 'u' + Math.floor(Math.random() * 1000000000);
     var role = "presenter";
     var currentUser;
     var isOwner = false;
+    
     if(authentication.isLoggedIn()) {
       currentUser = authentication.currentUser();
       username = currentUser.username;
@@ -156,6 +159,29 @@
       return;
     }
 
+  }
+
+  vm.updateroom = function() {
+    if(isOwner) {
+      var title = 'Lock Room';
+      var mess = 'Do you want to lock this room!';
+      if(vm.roomJson.islock) {
+        title = "Unlock Room";
+        mess = 'Do you want to unlock this room!';
+      } 
+
+      alertify.confirm(title, mess, function(){ 
+          alertify.success('Ok');
+          vm.roomJson.islock = !vm.roomJson.islock;
+
+
+          setTimeout(function() { $scope.$apply(); }, 1000);
+        }
+        , function(){ alertify.error('Cancel')});
+
+    } else {
+      alertify.error("You dont have permisstion!");
+    }
   }
 
   vm.canlcepass = function() {

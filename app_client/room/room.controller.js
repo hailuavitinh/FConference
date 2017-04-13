@@ -81,12 +81,19 @@
         $("#askPassword").modal('show');
 
       } else {
+
+        if(vm.roomJson.islock) {
+          alertify.alert('room locked');
+
+          return;
+        }
+
         alertify.success("Connect room successful");
         console.log("User name", username);
-      connectRoom(roomJson._id, username); //get user name from authen service
-      svShare.showLoading(false);
+        connectRoom(roomJson._id, username); //get user name from authen service
+        svShare.showLoading(false);
 
-      LoadListUser();
+        LoadListUser();
     }
   }
 
@@ -145,29 +152,33 @@
             setTimeout(function() { $scope.$apply(); }, 1500);
           });
         }
+  }
+
+  vm.verify = function() {
+
+    var pass = $('#passToJoin').val();
+    if(svShare.isNullOrEmpty(pass)) {
+      alertify.warning('Please enter password!');
+      return;
+    }
+    if(svShare.md5(pass) == roomJson.password) {          
+      $("#askPassword").modal('hide');
+
+      if(vm.roomJson.islock) {
+        alertify.alert('room locked');
+        return;
       }
-
-      vm.verify = function() {
-
-        var pass = $('#passToJoin').val();
-        if(svShare.isNullOrEmpty(pass)) {
-          alertify.warning('Please enter password!');
-          return;
-        }
-        if(svShare.md5(pass) == roomJson.password) {
-          alertify.success("Connect room successful");
-
+      alertify.success("Connect room successful");
       connectRoom(roomJson._id, username); //get user name from authen service
       svShare.showLoading(false);
 
       LoadListUser();
 
-      $("#askPassword").modal('hide');
+      
     } else {
       alertify.error('Wrong password!');
       return;
     }
-
   }
 
   vm.setLock = function() {

@@ -83,7 +83,7 @@
       } else {
 
         if(vm.roomJson.islock) {
-          alertify.alert('room locked');
+          alertify.alert('While accept', '<i class="fa fa-spinner fa-spin fa-fw"></i> Room locked. Please while accept form admin');
 
           return;
         }
@@ -161,11 +161,11 @@
       alertify.warning('Please enter password!');
       return;
     }
-    if(svShare.md5(pass) == roomJson.password) {          
+    if(svShare.md5(pass) == roomJson.password) {
       $("#askPassword").modal('hide');
 
       if(vm.roomJson.islock) {
-        alertify.alert('room locked');
+        alertify.alert('While accept', '<i class="fa fa-spinner fa-spin fa-fw"></i> Room locked. Please while accept form admin');
         return;
       }
       alertify.success("Connect room successful");
@@ -212,7 +212,7 @@
     }
   }
 
-  vm.canlcepass = function() {
+  vm.cancle = function() {
     svShare.showLoading(false);
     $("#askPassword").modal('hide');
     setTimeout(function() { window.location.href = '/#'; }, 500);    

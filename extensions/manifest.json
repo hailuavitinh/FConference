@@ -18,6 +18,6 @@
     "externally_connectable":{
         "matches":["https://localhost:3000/*","https://118.69.135.101:3000/*","https://thanhdc.xyz/*"]
     },
-    "key":""
+    "key":"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAokKwGIgdUEIcEtrdA4G1/y7qi8ZgRekH6eNb5iPOkDmvNyQtOvFUxlqYR3G4ucSBtW/JvQg3WX49ozeRmbm5WHwOp+0sCuzWFmzw/dJl8WHhLHRpnW1cEHaKFsfPXpk0uDF0YOgc3QaP6fa6cZk/dVRdyHFCmX8KuykzF7lebvDlEVsDnubR0SlG7AIlQzMFSJPxkjGi9xUK7FgY2zshOK6IPmivCRT8QlqKcx0MV6mD5IpHaOMSA08pA7+aWlfnBY0r3kv0qDtPevVFHstBTPhUCVKTJXt7dLoxuQot5ux3s/U6CUjvJGhDN5V1VX+BeYCaTQGw8cFzNfD7FCIHXwIDAQAB"
 
 }

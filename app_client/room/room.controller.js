@@ -63,13 +63,8 @@
         isOwner = true;
       }
 
-      vm.roomJson = roomJson;
-      if(success.data.isPass) {          
-        askJoinPassword(true, success);
-
-      } else {
-        askJoinPassword(false, success);
-      }
+      vm.roomJson = roomJson;      
+      askJoinPassword(success.data.isPass);
 
     },function(error){
       console.log("API Room Error: ", error);
@@ -81,17 +76,24 @@
       $location.url('/#');
     });
 
-    function askJoinPassword(isask, success) {
+    function askJoinPassword(isask) {
       if(isask) {      
         $("#askPassword").modal('show');
 
       } else {
+
+        if(vm.roomJson.islock) {
+          alertify.alert('While accept', '<i class="fa fa-spinner fa-spin fa-fw"></i> Room locked. Please while accept form admin');
+
+          return;
+        }
+
         alertify.success("Connect room successful");
         console.log("User name", username);
-      connectRoom(roomJson._id, username); //get user name from authen service
-      svShare.showLoading(false);
+        connectRoom(roomJson._id, username); //get user name from authen service
+        svShare.showLoading(false);
 
-      LoadListUser();
+        LoadListUser();
     }
   }
 
@@ -150,29 +152,33 @@
             setTimeout(function() { $scope.$apply(); }, 1500);
           });
         }
+  }
+
+  vm.verify = function() {
+
+    var pass = $('#passToJoin').val();
+    if(svShare.isNullOrEmpty(pass)) {
+      alertify.warning('Please enter password!');
+      return;
+    }
+    if(svShare.md5(pass) == roomJson.password) {
+      $("#askPassword").modal('hide');
+
+      if(vm.roomJson.islock) {
+        alertify.alert('While accept', '<i class="fa fa-spinner fa-spin fa-fw"></i> Room locked. Please while accept form admin');
+        return;
       }
-
-      vm.verify = function() {
-
-        var pass = $('#passToJoin').val();
-        if(svShare.isNullOrEmpty(pass)) {
-          alertify.warning('Please enter password!');
-          return;
-        }
-        if(svShare.md5(pass) == roomJson.password) {
-          alertify.success("Connect room successful");
-
+      alertify.success("Connect room successful");
       connectRoom(roomJson._id, username); //get user name from authen service
       svShare.showLoading(false);
 
       LoadListUser();
 
-      $("#askPassword").modal('hide');
+      
     } else {
       alertify.error('Wrong password!');
       return;
     }
-
   }
 
   vm.setLock = function() {
@@ -206,7 +212,7 @@
     }
   }
 
-  vm.canlcepass = function() {
+  vm.cancle = function() {
     svShare.showLoading(false);
     $("#askPassword").modal('hide');
     setTimeout(function() { window.location.href = '/#'; }, 500);    

@@ -86,8 +86,9 @@
                   <button ng-click="Vol(n)"><i class="fa fa-volume-up"></i></button>
               </div>
           </div> -->
-
+          
           <div class="col-sm-12" id="showShareScreen" ng-cloak ng-show="my.isShowShareScreen">
+              
               <div id="screen_stream" class="itemScreenStream">
                   
               </div>
@@ -97,7 +98,7 @@
                   <div id="localStream" style="border-color:#f4aa42 ; border-style: solid" class="itemStreamVideo"></div>
               </div> 
           </div>
-
+          <button id="btnShareScreen" type="button" ng-show="vm.my.isShowButtonShareScreen" ng-click="vm.Share()">Share Button</button>
     </div>  
 </div>
 

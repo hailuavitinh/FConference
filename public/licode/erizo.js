@@ -2491,7 +2491,7 @@ Erizo.GetUserMedia = function(b, a, c) {
             case "chrome-stable":
                 L.Logger.debug("Screen sharing in Chrome");
                 //f = "okeephmleflklcdebijnponpabbmmgeo";
-                f = "ealmfibiaadgogdlcmfamlfanbiephdj";
+                f = "nlnkamnpboeodabilfepbinpbnmdajdp";
                 b.extensionId && (L.Logger.debug("extensionId supplied, using " + b.extensionId), f = b.extensionId);
                 L.Logger.debug("Screen access on chrome stable, looking for extension");
                 try {

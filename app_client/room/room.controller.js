@@ -223,7 +223,7 @@
       vm.my.isShowError = false;
       var isChrome = !!window.chrome && !!window.chrome.webstore; 
       if(isChrome) {
-        InitShareScreenStream(userName);
+        InitShareScreenStream(vm.currentUser.username);
       } else {
         vm.error = "Share Screen don't support this browser. Please switch Chrome to use it !";
         vm.my.isShowError = true;

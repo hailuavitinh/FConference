@@ -169,7 +169,7 @@
                 LoadListUser();
 
             } else {
-                alertify.error('Wrong password!');
+                alertify.error('You dont have permisstion!');
                 return;
             }
         }
@@ -216,7 +216,7 @@
                 vm.my.isShowError = false;
                 var isChrome = !!window.chrome && !!window.chrome.webstore;
                 if (isChrome) {
-                    InitShareScreenStream(userName);
+                    InitShareScreenStream(vm.currentUser.userName);
                 } else {
                     vm.error = "Share Screen don't support this browser. Please switch Chrome to use it !";
                     vm.my.isShowError = true;

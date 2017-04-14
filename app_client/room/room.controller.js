@@ -79,13 +79,7 @@
             if (isask) {
                 $("#askPassword").modal('show');
 
-            } else {
-
-                // if(vm.roomJson.islock) {
-                //   alertify.alert('While accept', '<i class="fa fa-spinner fa-spin fa-fw"></i> Room locked. Please while accept from admin');
-
-                //   return;
-                // }
+            } else {               
 
                 alertify.success("Connect room successful");
                 console.log("User name", username);
@@ -159,10 +153,6 @@
             if (svShare.md5(pass) == vm.roomJson.password) {
                 $("#askPassword").modal('hide');
 
-                // if(vm.roomJson.islock) {
-                //   alertify.alert('While accept', '<i class="fa fa-spinner fa-spin fa-fw"></i> Room locked. Please while accept from admin');
-                //   return;
-                // }
                 alertify.success("Connect room successful");
                 connectRoom(vm.roomJson._id, username); //get user name from authen service
                 svShare.showLoading(false);
@@ -457,8 +447,8 @@
                               //if (isSpeaker === true || isCamera === true) {
                               //   room.publish(localStream);
                               //}
-                              console.log("room connected");
-                              console.log("Local Stream: ", localStream.getID())
+                              //console.log("room connected");
+                              //console.log("Local Stream: ", localStream.getID())
                               //showUserOnline(username, localStream.getID(), true);
                               //subscribeToStream(event.streams);
 
@@ -506,8 +496,20 @@
                 room.addEventListener("knock-room", function (event) {
                     console.log("------------Received Knock Knock:", event);
                     var item = { username: event.message.username, socket: event.message.socket };
-                    vm.UsersKnock.push(item);
-                    $scope.$apply();
+
+
+
+                    //check if user in ask array
+                    var added = false;
+                    $.map(vm.UsersKnock, function(elementOfArray, indexInArray) {
+                      if (elementOfArray.username == event.message.username) {                       
+                        added = true;
+                      }
+                    });
+                    if (!added) {
+                      vm.UsersKnock.push(item);
+                      $scope.$apply();
+                    }
 
                     alertify.warning('Someone knock room!');
                     vm.askJoinModal();
@@ -519,12 +521,15 @@
                     alertify.alert().close(); 
                     alertify.confirm().close(); 
                     if(event.message.isAllow) {
+                      
                       alertify.success("Allow from admin");
+                      
                       if (isSpeaker === true || isCamera === true) {
                         room.publish(localStream);
                       }
                       showUserOnline(username, localStream.getID(), true);
                       subscribeToStream(event.streams);
+                    
                     } else {
 
                       alertify.confirm('Denied from Admin', '<i class="fa fa-ban"></i> Denied from admin. Ask join again?', function () {

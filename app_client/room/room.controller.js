@@ -23,6 +23,7 @@
         vm.my = { isShowVideoConfernce: false, isShowError: false, isShowEnterUserName: true, isShowShareScreen: false, isShowButtonShareScreen: false };
         vm.ListUser = [];
         var roomID = $routeParams.roomID;
+        var room;
 
         console.log("Angular Join: ", roomID);
 
@@ -79,9 +80,8 @@
             if (isask) {
                 $("#askPassword").modal('show');
 
-            } else {               
-
-                alertify.success("Connect room successful");
+            } else {
+                
                 console.log("User name", username);
                 connectRoom(vm.roomJson._id, username); //get user name from authen service
                 svShare.showLoading(false);
@@ -152,8 +152,7 @@
             }
             if (svShare.md5(pass) == vm.roomJson.password) {
                 $("#askPassword").modal('hide');
-
-                alertify.success("Connect room successful");
+                
                 connectRoom(vm.roomJson._id, username); //get user name from authen service
                 svShare.showLoading(false);
                 LoadListUser();
@@ -236,6 +235,39 @@
                 vm.verify();
             }
         });
+
+        vm.askJoinKnock = function() {
+          if(vm.roomJson.islock && vm.roomJson.user != username) {
+            if(room !== undefined) {
+              room.socket.emit('knock',{ room: vm.roomJson._id, username: username}, function(msg){
+                  console.log(msg);
+                  if(msg.resType) {
+                              
+                      alertify.alert().close(); 
+
+                      //alertify.alert('While accept', '<i class="fa fa-spinner fa-spin fa-fw"></i> Room locked. Please while accept from admin');
+                      alertify.confirm('While accept', '<i class="fa fa-spinner fa-spin fa-fw"></i> Room locked. Please while accept from admin OR ask join again?', function () {
+                          vm.askJoinKnock();
+                        }
+                        , function () { alertify.warning("You dont connect to rom. Ask join on Knock button on left menu"); });
+                  } else {
+
+                    //close alert
+                    alertify.alert().close(); 
+                    
+                    alertify.confirm('While accept', '<i class="fa fa-ban"></i> Please while admin to join room. Ask join again?', function () {
+                       vm.askJoinKnock();
+
+                    }
+                    , function () { alertify.warning("You dont connect to rom. Ask join on Knock button on left menu"); });
+                  }
+
+              });
+              
+            }
+          }
+        }
+
 
         //add method 
         function LoadListUser() {
@@ -395,9 +427,6 @@
 
                 room.connect();
 
-
-
-
                 var subscribeToStream = function (streams) {
                     console.log("subscribeToStream Array Stream: ", streams);
                     for (var index in streams) {
@@ -443,20 +472,15 @@
                         room.socket.emit('knock',{ room: vm.roomJson._id, username: username}, function(msg){
                           console.log("Received socket:", msg);
                           if(msg.resType) {
-
-                              //if (isSpeaker === true || isCamera === true) {
-                              //   room.publish(localStream);
-                              //}
-                              //console.log("room connected");
-                              //console.log("Local Stream: ", localStream.getID())
-                              //showUserOnline(username, localStream.getID(), true);
-                              //subscribeToStream(event.streams);
-
-                              //close alert
+                              
                               alertify.alert().close(); 
 
-                              alertify.alert('While accept', '<i class="fa fa-spinner fa-spin fa-fw"></i> Room locked. Please while accept from admin');
-                          } else {                          
+                              //alertify.alert('While accept', '<i class="fa fa-spinner fa-spin fa-fw"></i> Room locked. Please while accept from admin');
+                              alertify.confirm('While accept', '<i class="fa fa-spinner fa-spin fa-fw"></i> Room locked. Please while accept from admin OR ask join again?', function () {
+                                  askJoinLock(event);
+                                }
+                                , function () { alertify.warning("You dont connect to rom. Ask join on Knock button on left menu"); });
+                          } else {
 
                             //close alert
                             alertify.alert().close(); 
@@ -465,7 +489,7 @@
                                askJoinLock(event);
 
                             }
-                            , function () { });
+                            , function () { alertify.warning("You dont connect to rom. Ask join on Knock button on left menu"); });
                           }
 
 
@@ -475,6 +499,7 @@
                         return;
                       }
 
+                      alertify.success("Connect room successful");
                       if (isSpeaker === true || isCamera === true) {
                           room.publish(localStream);
                       }
@@ -497,12 +522,10 @@
                     console.log("------------Received Knock Knock:", event);
                     var item = { username: event.message.username, socket: event.message.socket };
 
-
-
                     //check if user in ask array
                     var added = false;
                     $.map(vm.UsersKnock, function(elementOfArray, indexInArray) {
-                      if (elementOfArray.username == event.message.username) {                       
+                      if (elementOfArray.username == event.message.username) {
                         added = true;
                       }
                     });
@@ -529,6 +552,7 @@
                       }
                       showUserOnline(username, localStream.getID(), true);
                       subscribeToStream(event.streams);
+                      alertify.success("Connect room successful");
                     
                     } else {
 

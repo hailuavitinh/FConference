@@ -42,17 +42,19 @@
             Time<br>
             <span class="left-time">10/10 10:10</span>
           </p>
+          <p ng-if="vm.roomJson.user == vm.currentUser.username" > User Knock <br>
+          <button class="btn btn-sm" ng-click="vm.askJoinModal()">View knock request</button> </p>
       </div>
       <div class="left-menu-bottom">
         <b class="title">User</b> <span class="pull-right"> <i class="fa fa-angle-left"></i> <i class="fa fa-angle-right"></i> </span>
         <hr>
         <p class="user-list">
           <ul>            
-            <li ng-repeat="user in vm.ListUser">User {{user.name}}  <i class="fa fa-check"></i> <i class="fa fa-ban"></i> </li>            
+            <li ng-repeat="user in vm.ListUser">User {{user.name}}  </li>            
           </ul>
 
         </p>
-        <p> <button ng-click="vm.askJoinModal()">List user knock</button> </p>
+        
         <!-- <ul>
             <li class="menu_header">User in group</li>          
             <li ng-repeat="user in vm.ListUser"><i class="fa fa-user"></i> User {{user.name}}</li>
@@ -129,7 +131,7 @@
         <h4 class="modal-title"><i class="fa fa-lock"></i> User knock room </h4>
       </div>
       <div class="modal-body">
-        <p>This is list user want to join room, Please accept or denied &hellip;</p>
+        <p>This is list user want to join room, Please <i class="fa fa-check"></i> (accept) or  <i class="fa fa-ban"></i> (denied)</p>
         <p>
           <ul ng-repeat="item in vm.UsersKnock">
                 <li><i class="fa fa-bell-o">{{item.username}}</i>

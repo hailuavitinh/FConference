@@ -52,7 +52,7 @@
           </ul>
 
         </p>
-
+        <p> <button ng-click="vm.askJoinModal()">List user knock</button> </p>
         <!-- <ul>
             <li class="menu_header">User in group</li>          
             <li ng-repeat="user in vm.ListUser"><i class="fa fa-user"></i> User {{user.name}}</li>
@@ -117,6 +117,33 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-default" ng-click="vm.cancle()"> <i class="fa fa-reply"></i> Back</button>
         <button type="button" class="btn btn-primary" ng-click="vm.verify()"><i class="fa fa-check"></i> OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="askJoin" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">        
+        <h4 class="modal-title"><i class="fa fa-lock"></i> User knock room </h4>
+      </div>
+      <div class="modal-body">
+        <p>This is list user want to join room, Please accept or denied &hellip;</p>
+        <p>
+          <ul ng-repeat="item in vm.UsersKnock">
+                <li><i class="fa fa-bell-o">{{item.username}}</i>
+                    <span style="display:block">
+                        <button class="btn btn-success" ng-click="vm.AllowJoinRoom(1,item.socket)" style="font-size:12px; padding: 5px 6px; margin-right:5px;">Allow</button>
+                        <button class="btn btn-danger" ng-click="vm.AllowJoinRoom(0,item.socket)" style="font-size:12px; padding: 5px 6px; margin-right:5px;">Deny</button>
+                    </span> 
+                </li>
+            </ul>
+
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"> Close</button>        
       </div>
     </div>
   </div>

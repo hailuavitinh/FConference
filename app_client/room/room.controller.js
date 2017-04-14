@@ -227,6 +227,10 @@
             }
         }
 
+        vm.askJoinModal = function() {
+          console.log('askJoin');
+          $('#askJoin').modal('show');
+        }
 
         vm.append = function () {
             vm.my.isShowVideoConfernce = true;
@@ -450,22 +454,24 @@
                           console.log("Received socket:", msg);
                           if(msg.resType) {
 
-                              if (isSpeaker === true || isCamera === true) {
-                                  room.publish(localStream);
-                              }
+                              //if (isSpeaker === true || isCamera === true) {
+                              //   room.publish(localStream);
+                              //}
                               console.log("room connected");
                               console.log("Local Stream: ", localStream.getID())
-                              showUserOnline(username, localStream.getID(), true);
-                              subscribeToStream(event.streams);
+                              //showUserOnline(username, localStream.getID(), true);
+                              //subscribeToStream(event.streams);
 
                               //close alert
                               alertify.alert().close(); 
+
+                              alertify.alert('While accept', '<i class="fa fa-spinner fa-spin fa-fw"></i> Room locked. Please while accept from admin');
                           } else {                          
 
                             //close alert
                             alertify.alert().close(); 
                             
-                            alertify.confirm('Denide form admin', '<i class="fa fa-ban"></i> Denide from admin. Ask join again?', function () {
+                            alertify.confirm('While accept', '<i class="fa fa-ban"></i> Please while admin to join room. Ask join again?', function () {
                                askJoinLock(event);
 
                             }
@@ -483,7 +489,7 @@
                           room.publish(localStream);
                       }
                       console.log("room connected");
-                      console.log("Local Stream: ", localStream.getID())
+                      console.log("Local Stream: ", localStream.getID());
                       showUserOnline(username, localStream.getID(), true);
                       subscribeToStream(event.streams);
 
@@ -502,11 +508,31 @@
                     var item = { username: event.message.username, socket: event.message.socket };
                     vm.UsersKnock.push(item);
                     $scope.$apply();
+
+                    alertify.warning('Someone knock room!');
+                    vm.askJoinModal();
                 });
 
                 //ThanhDC3: received event allow-join-room
                 room.addEventListener("allow-join-room", function (event) {
-                    console.log("-------------------Received Allow-Join-Room:", event);
+                    console.log("-------------------Received Allow-Join-Room:", event.message.isAllow);
+                    alertify.alert().close(); 
+                    alertify.confirm().close(); 
+                    if(event.message.isAllow) {
+                      alertify.success("Allow from admin");
+                      if (isSpeaker === true || isCamera === true) {
+                        room.publish(localStream);
+                      }
+                      showUserOnline(username, localStream.getID(), true);
+                      subscribeToStream(event.streams);
+                    } else {
+
+                      alertify.confirm('Denied from Admin', '<i class="fa fa-ban"></i> Denied from admin. Ask join again?', function () {
+                         askJoinLock(event);
+                      }
+                      , function () { });
+                    }
+
                 });
 
                 room.addEventListener("stream-subscribed", function (streamEvent) {

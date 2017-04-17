@@ -63,7 +63,8 @@
             if (username == vm.roomJson.user) {
                 isOwner = true;
             }
-            
+
+
             askJoinPassword(success.data.isPass);
 
         }, function (error) {
@@ -537,6 +538,7 @@
                     }
 
                     alertify.warning('Someone knock room!');
+                    svShare.addNofify('User <b>' + event.message.username + '</b> ask you to join room!');
                     vm.askJoinModal();
                 });
 

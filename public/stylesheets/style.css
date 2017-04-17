@@ -232,3 +232,18 @@ button, control-btn {
     color: #0C4EA2;
     font-weight: bold;
 }
+.noti-icon {
+    font-size: 20px;
+    font-weight: bolder;
+    margin-left: -6px;
+    color: red;
+    display: none;
+}
+.close_noti {
+    padding: 5px;
+    position: absolute;
+    top: 0; right: 0;
+    font-weight: bold;
+    cursor: pointer;
+    color: red;
+}

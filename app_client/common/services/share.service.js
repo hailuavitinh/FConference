@@ -19,7 +19,24 @@ app.service("svShare",function(){
             $('.loading').hide();
         }
             
-    }    
+    }  
+
+    var addNofify = function(mess) {
+        var e = $('#mess_id_area');
+        e.prepend("<li><a>"+ mess +"</a></li>");
+        $('.noti-icon').show();
+        $('.close_noti').show();
+    }  
+
+    var readNotify = function() {
+        $('.noti-icon').hide();
+        //('#mess_id_area').html('');
+    }
+    var clearNotify = function() {
+        $('.noti-icon').hide();
+        $('.close_noti').hide();
+        $('#mess_id_area li').remove();
+    }
 
     var md5 = function (string) {
  
@@ -235,12 +252,16 @@ app.service("svShare",function(){
  
         return temp.toLowerCase();
     }
+    
 
+    
     return {
     showLoading: showLoading,
     isNullOrEmpty: checkEmpty,
-    md5: md5
-    
+    md5: md5,
+    addNofify: addNofify,
+    readNotify: readNotify,
+    clearNotify: clearNotify    
     };
 
 });

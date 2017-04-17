@@ -409,6 +409,7 @@
         function InitLocalStream(username, roomID, token, isSpeaker, isCamera) {
 
             var _isOwner = false;
+            var _streamlist;
             if (username == vm.roomJson.user) {
                 _isOwner = true;
             }
@@ -513,7 +514,8 @@
                 room.addEventListener("room-connected", function (event) {
                     console.log(' >> event:', event);
                     console.log('room-connected');
-                    
+                    _streamlist = event.streams;
+                    console.log(' ---------- _streamlist: ',_streamlist);
                     askJoinLock(event, _isOwner);
                 });
 
@@ -551,7 +553,10 @@
                         room.publish(localStream);
                       }
                       showUserOnline(username, localStream.getID(), true);
-                      subscribeToStream(event.streams);
+
+                      console.log(' event.streams',event.message);
+
+                      subscribeToStream(_streamlist);
                       alertify.success("Connect room successful");
                     
                     } else {

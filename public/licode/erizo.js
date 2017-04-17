@@ -2906,7 +2906,8 @@ Erizo.Room = function(b) {
         //ThanhDC3: socket allowJoinRoom
         a.socket.on("allowJoinRoom",function(b){
             var msg = {
-                isAllow: b.message
+                isAllow: b.message,
+                streams: b.streams
             };
             //If event is stream, use stream
             //if event is messafe, use message

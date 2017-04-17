@@ -47,6 +47,11 @@
 
           <p ng-if="vm.roomJson.user != vm.currentUser.username" > Knock Room <br>
           <button class="btn btn-sm" ng-click="vm.askJoinKnock()"> <i class="fa fa-bullhorn"></i> Knock</button> </p>
+          <p>
+            Share Screen <br>
+            <button id="btnShareScreen" type="button" class="btn btn-sm" ng-show="vm.my.isShowButtonShareScreen" ng-click="vm.Share()">Share Button</button>
+          </p>
+          
       </div>
       <div class="left-menu-bottom">
         <b class="title">User</b> <span class="pull-right"> <i class="fa fa-angle-left"></i> <i class="fa fa-angle-right"></i> </span>
@@ -73,7 +78,7 @@
                   <div id="localStream" style="border-color:#f4aa42 ; border-style: solid" class="itemStreamVideo"></div>
               </div> 
           </div>
-          <button id="btnShareScreen" type="button" ng-show="vm.my.isShowButtonShareScreen" ng-click="vm.Share()">Share Button</button>
+          
     </div>  
 </div>
 

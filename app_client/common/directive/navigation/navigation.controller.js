@@ -2,8 +2,8 @@
     angular.module("FConf")
         .controller("navigationCtrl",navigationCtrl);
 
-    navigationCtrl.$inject = ["$location","authentication","$uibModal","svLocalStream"];
-    function navigationCtrl($location,authentication,$uibModal,svLocalStream){
+    navigationCtrl.$inject = ["$location","authentication","$uibModal","svLocalStream", "svShare"];
+    function navigationCtrl($location,authentication,$uibModal,svLocalStream, svShare){
         var vm = this;
 
         vm.currentPath = $location.path();
@@ -56,7 +56,13 @@
             }
         }
 
-        
+        vm.readNotify = function() {
+            svShare.readNotify();
+        }
+
+        vm.clearNotify = function() {
+            svShare.clearNotify();
+        }
 
         vm.logOut = function(){
             authentication.logout();

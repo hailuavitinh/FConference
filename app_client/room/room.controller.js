@@ -214,6 +214,7 @@
                     InitShareScreenStream(vm.currentUser.userName);
                 } else {
                     vm.error = "Share Screen don't support this browser. Please switch Chrome to use it !";
+                    svShare.addNofify("Share Screen don't support", "error");
                     vm.my.isShowError = true;
                 }
             } else { // Event Stop Sharing Screen
@@ -326,8 +327,9 @@
                 room.publish(screen_stream);
                 screen_stream.play("screen_stream");
 
-                vm.isShowShareScreen = true;                
-                vm.isShowVideoConfernce= false;
+                //vm.isShowShareScreen = true;
+                //vm.isShowVideoConfernce= false;
+                //vm.my.isShowButtonShareScreen = false;
                 $scope.$apply();                
                 svShare.addNofify("Share screen enable", "info");
                 //for Click button "Stop Sharing" at the bottom of the screen
@@ -346,6 +348,7 @@
                 }
                 vm.error = "";
                 $("#errorDiv").html(content);
+                svShare.addNofify("Access to screen denied", "warning");
                 vm.my.isShowError = true;
                 TimeoutHidenErrorDiv();
                 $scope.$apply();

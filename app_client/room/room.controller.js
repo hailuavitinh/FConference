@@ -326,7 +326,10 @@
                 room.publish(screen_stream);
                 screen_stream.play("screen_stream");
 
-
+                vm.isShowShareScreen = true;                
+                vm.isShowVideoConfernce= false;
+                $scope.$apply();                
+                svShare.addNofify("Share screen enable", "info");
                 //for Click button "Stop Sharing" at the bottom of the screen
                 screen_stream.stream.getVideoTracks()[0].onended = function () {
                     screen_stream.close();

@@ -1,15 +1,9 @@
 {
     "manifest_version":2,
-    "name":"Share Sharing",
-    "version": "0.1",
-    // "content_scripts":[
-    //     {
-    //         "matches":["https://localhost:3000/*","https://118.69.135.101:3000/*","https://thanhdc.xyz/*"],
-    //         "js":["content.js"]
-    //     }
-    // ],
+    "name":"FConf Screen Sharing",
+    "version": "1.0",
     "browser_action":{
-        "default_icon":"FPT_logo.png"
+        "default_icon":"FConf_logo.png"
     },
     "background":{
         "scripts":["background.js"]
@@ -18,6 +12,5 @@
     "externally_connectable":{
         "matches":["https://localhost:3000/*","https://118.69.135.101:3000/*","https://thanhdc.xyz/*"]
     },
-    "key":"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAokKwGIgdUEIcEtrdA4G1/y7qi8ZgRekH6eNb5iPOkDmvNyQtOvFUxlqYR3G4ucSBtW/JvQg3WX49ozeRmbm5WHwOp+0sCuzWFmzw/dJl8WHhLHRpnW1cEHaKFsfPXpk0uDF0YOgc3QaP6fa6cZk/dVRdyHFCmX8KuykzF7lebvDlEVsDnubR0SlG7AIlQzMFSJPxkjGi9xUK7FgY2zshOK6IPmivCRT8QlqKcx0MV6mD5IpHaOMSA08pA7+aWlfnBY0r3kv0qDtPevVFHstBTPhUCVKTJXt7dLoxuQot5ux3s/U6CUjvJGhDN5V1VX+BeYCaTQGw8cFzNfD7FCIHXwIDAQAB"
-
+    //"key":"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAokKwGIgdUEIcEtrdA4G1/y7qi8ZgRekH6eNb5iPOkDmvNyQtOvFUxlqYR3G4ucSBtW/JvQg3WX49ozeRmbm5WHwOp+0sCuzWFmzw/dJl8WHhLHRpnW1cEHaKFsfPXpk0uDF0YOgc3QaP6fa6cZk/dVRdyHFCmX8KuykzF7lebvDlEVsDnubR0SlG7AIlQzMFSJPxkjGi9xUK7FgY2zshOK6IPmivCRT8QlqKcx0MV6mD5IpHaOMSA08pA7+aWlfnBY0r3kv0qDtPevVFHstBTPhUCVKTJXt7dLoxuQot5ux3s/U6CUjvJGhDN5V1VX+BeYCaTQGw8cFzNfD7FCIHXwIDAQAB"
 }

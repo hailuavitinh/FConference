@@ -21,9 +21,31 @@ app.service("svShare",function(){
             
     }  
 
-    var addNofify = function(mess) {
+    /*
+    * add notify to header top
+    * mess: message to add
+    * type: type of message: error, warning, info, success
+    */
+    var addNofify = function(mess, type) {
+        // <li><a> <i class="fa fa-warning text-warning"></i> Disconnect from admin</a></li>
+        // <li><a> <i class="fa fa-exclamation-circle text-danger"></i> Error from admin</a></li>
+        // <li><a> <i class="fa fa-check text-success"></i> Connect from admin</a></li>
+        // <li><a> <i class="fa fa-info text-info"></i> Connect from admin</a></li>
+
+        if (type === undefined)
+            type = 'info';
+
+        var content = '';
+        switch (type) {
+            case 'error': content = '<li><a> <i class="fa fa-exclamation-circle text-danger"></i> ' + mess + '</a></li>'; break;
+            case 'warning': content =  '<li><a> <i class="fa fa-warning text-warning"></i> ' + mess + '</a></li>'; break;
+            case 'success': content =  '<li><a> <i class="fa fa-check text-success"></i> ' + mess + '</a></li>'; break;
+            case 'info': content =  '<li><a> <i class="fa fa-info text-info"></i> ' + mess + '</a></li>'; break;
+            default: content =  '<li><a> <i class="fa fa-info text-info"></i> ' + mess + '</a></li>';
+        }
+
         var e = $('#mess_id_area');
-        e.prepend("<li><a>"+ mess +"</a></li>");
+        e.prepend(content);
         $('.noti-icon').show();
         $('.close_noti').show();
     }  

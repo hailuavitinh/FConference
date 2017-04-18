@@ -247,3 +247,19 @@ button, control-btn {
     cursor: pointer;
     color: red;
 }
+
+#mess_id_area li a {
+    padding: 8px 20px 8px 12px;
+}
+#mess_id_area li a i {
+    margin-right: 8px;
+    width: 20px;
+    text-align: center;
+}
+#mess_id_area li:nth-child(odd) {
+background-color: #f8f8f8;  
+}
+
+#mess_id_area li:nth-child(even) {
+background-color: #fff;  
+}

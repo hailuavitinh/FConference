@@ -64,6 +64,9 @@
                 isOwner = true;
             }
 
+            // for (var i = 0; i <= 5; i++) {
+            //   svShare.addNofify('notify in top ' + i);
+            // }
 
             askJoinPassword(success.data.isPass);
 
@@ -79,7 +82,8 @@
 
         function askJoinPassword(isask) {
             if (isask) {
-                $("#askPassword").modal('show');
+              svShare.addNofify("This room protect by password", "warning");
+              $("#askPassword").modal('show');
 
             } else {
                 
@@ -149,6 +153,7 @@
             var pass = $('#passToJoin').val();
             if (svShare.isNullOrEmpty(pass)) {
                 alertify.warning('Please enter password!');
+
                 return;
             }
             if (svShare.md5(pass) == vm.roomJson.password) {
@@ -496,12 +501,14 @@
 
 
                         });
+                        svShare.addNofify("This room is locked", "warning");
                         alertify.alert('While accept', '<i class="fa fa-spinner fa-spin fa-fw"></i> Room locked. Please while accept from admin');
                         
                         return;
                       }
 
                       alertify.success("Connect room successful");
+                      svShare.addNofify("Connect room successful", "success");
                       if (isSpeaker === true || isCamera === true) {
                           room.publish(localStream);
                       }
@@ -538,6 +545,7 @@
                     }
 
                     alertify.warning('Someone knock room!');
+                    //svShare.addNofify("Someone knock room", "warning");
                     svShare.addNofify('User <b>' + event.message.username + '</b> ask you to join room!');
                     vm.askJoinModal();
                 });
@@ -550,7 +558,7 @@
                     if(event.message.isAllow) {
                       
                       alertify.success("Allow from admin");
-                      
+                      svShare.addNofify("Allow from admin");
                       if (isSpeaker === true || isCamera === true) {
                         room.publish(localStream);
                       }
@@ -560,9 +568,10 @@
 
                       subscribeToStream(_streamlist);
                       alertify.success("Connect room successful");
+                      svShare.addNofify("Connect room successful", "success");
                     
                     } else {
-
+                      svShare.addNofify("Denied from Admin", "error");
                       alertify.confirm('Denied from Admin', '<i class="fa fa-ban"></i> Denied from admin. Ask join again?', function () {
                          askJoinLock(event);
                       }

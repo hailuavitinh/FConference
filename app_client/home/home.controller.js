@@ -18,7 +18,8 @@
     console.log(window.location);
     
     var roomID = $routeParams.roomID;
-    $('#roomID').val(roomID);
+    if(roomID !== undefined) 
+      $('#roomID').val(roomID);
 
 
     vm.Join = function() {

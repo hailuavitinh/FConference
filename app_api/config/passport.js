@@ -8,6 +8,7 @@ var request = require("request");
 
 passport.use(new LocalStrategy(
   function(username, password, done) {
+    /*
     var query = "?q={'username':'"+username+"','pass':'"+password+"'}&fo=true&";
     var path = "https://api.mlab.com/api/1/databases/db_thanhdc/collections/FConf_User" +query+"apiKey=sAWxZ3DyE8JtE3_IrtaN4IuEtiQphe93";
     console.log("quey Mlab:",path);
@@ -27,7 +28,35 @@ passport.use(new LocalStrategy(
       } else {
         return done(null,false,{message:err})
       }
-    });//end requestOptions
+    });//end requestOptions*/
+
+
+    var isAuthenticate = false;
+    var user;
+    if(username === 'u1'){
+      if(password === 'abc@123'){
+        isAuthenticate = true;
+        user = {
+          username: username,
+          pass: password,
+          permission: 'admin'
+        };
+      } 
+    } else {
+      if (username === password){
+        isAuthenticate = true;
+        user = {
+          username: username,
+          pass: password
+        };
+      }
+    } 
+
+    if(isAuthenticate == true){
+      return done(null,user);
+    } else {
+      return done(null,false,{message:"Login failed"});
+    }
   }
 ));
 

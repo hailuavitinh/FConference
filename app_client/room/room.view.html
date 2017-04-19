@@ -47,9 +47,9 @@
 
           <p ng-if="vm.roomJson.user != vm.currentUser.username" > Knock Room <br>
           <button class="btn btn-sm" ng-click="vm.askJoinKnock()"> <!-- <i class="fa fa-bullhorn"></i> --> Knock</button> </p>
-          <p>
+          <p ng-show="vm.my.isShowButtonShareScreen">
             Share Screen <br>
-            <button id="btnShareScreen" type="button" class="btn btn-sm" ng-show="vm.my.isShowButtonShareScreen" ng-click="vm.Share()">Share Button</button>
+            <button id="btnShareScreen" type="button" class="btn btn-sm"  ng-click="vm.Share()">Share Button</button>
           </p>
           
       </div>

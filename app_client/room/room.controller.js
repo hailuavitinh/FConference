@@ -634,6 +634,7 @@
                 room.addEventListener("stream-added", function (streamEvent) {
                     console.log('stream-added');
                     var streams = [];
+                    svShare.addNofify("New stream added", "info");
                     streams.push(streamEvent.stream);
                     subscribeToStream(streams);
                 });
@@ -642,7 +643,7 @@
                     console.log('stream-removed', streamEvent);
 
                     LoadListUser();
-                    svShare.addNofify("stream-removed", "warning");
+                    svShare.addNofify("Some stream removed", "warning");
                     var stream = streamEvent.stream;
                     if (stream.elementID !== undefined) {
                         remoteDiv_RemoteStream(stream.elementID, stream.getID(), stream.hasScreen());

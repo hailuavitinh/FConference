@@ -19,6 +19,8 @@
 
         var screen_stream, localStream;
         svShare.showLoading(true, 'Join room');
+        
+        //$(".user-list").mCustomScrollbar( { setHeight: 250 });
 
         vm.my = { isShowVideoConfernce: false, isShowError: false, isShowEnterUserName: true, isShowShareScreen: false, isShowButtonShareScreen: false };
         vm.ListUser = [];
@@ -281,7 +283,20 @@
             svRooms.getListUser(roomID).then(function (ss) {
                 console.log('ListUser: ', ss);
                 vm.ListUser = ss.data;
-                setTimeout(function () { $scope.$apply(); }, 1500);
+                if(vm.ListUser.length > 0)
+                    $('.count_user').html("(" + vm.ListUser.length + ")");
+                else 
+                    $('.count_user').html("");
+
+                setTimeout(function () {
+                    $scope.$apply();
+                    var h = $('.left-menu-bottom').height() - 55;
+                    if(h < 150)
+                        h = 150;
+                    $('.user-list').mCustomScrollbar("destroy");
+                    $(".user-list").mCustomScrollbar( { setHeight: h });
+                 }, 
+                 1500);
             }, function (error) { });
         }
 
@@ -624,10 +639,10 @@
                 });
 
                 room.addEventListener("stream-removed", function (streamEvent) {
-                    console.log('stream-removed');
+                    console.log('stream-removed', streamEvent);
 
                     LoadListUser();
-
+                    svShare.addNofify("stream-removed", "warning");
                     var stream = streamEvent.stream;
                     if (stream.elementID !== undefined) {
                         remoteDiv_RemoteStream(stream.elementID, stream.getID(), stream.hasScreen());

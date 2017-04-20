@@ -6,7 +6,7 @@ var path = require('path'),
 	fs = require('fs');
 
 
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 3001);
 
 var options = {
     key: fs.readFileSync(path.join(__dirname, '../certs/privatekey.pem')),
@@ -19,7 +19,7 @@ var options = {
 //   debug('Express server listening on port ' + server.address().port);
 //   console.log('running on port: ' + server.address().port);
 // });
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 3001;
 var server = https.createServer(options, app).listen(port, function(){
     console.log("Server HTTPS listening with port ....",port);
     console.log("Process ENV:",process.env.JWT_SECRET);

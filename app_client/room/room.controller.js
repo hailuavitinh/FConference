@@ -19,8 +19,12 @@
 
         var screen_stream, localStream;
         svShare.showLoading(true, 'Join room');
+
+        var chatboxShow = false;
         
         //$(".user-list").mCustomScrollbar( { setHeight: 250 });
+        $(".chat-content").mCustomScrollbar( { setHeight: 285 });
+        $(".chat-content").mCustomScrollbar("scrollTo","bottom");
 
         vm.my = { isShowVideoConfernce: false, isShowError: false, isShowEnterUserName: true, isShowShareScreen: false, isShowButtonShareScreen: false };
         vm.ListUser = [];
@@ -277,6 +281,18 @@
           }
         }
 
+
+        vm.openChat = function() {
+            if(!chatboxShow) {
+                chatboxShow = true;
+                $('.chat-box').fadeIn();
+                $(".chat-content").mCustomScrollbar("scrollTo","bottom");
+            }
+            else {
+                chatboxShow = false;
+                $('.chat-box').fadeOut();
+            }
+        }
 
         //add method 
         function LoadListUser() {

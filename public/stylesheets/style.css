@@ -80,7 +80,7 @@ body {
 
 a, i, span, .item-video, .open_left_menu,
 .item-video-expand, .item-video-control, ul, li,
-button, control-btn {
+button, .control-btn, .chat-btn, .chat-btn i {
     -webkit-transition: all 0.3s ease-in-out;
     -moz-transition: all 0.3s ease-in-out;
     -o-transition: all 0.3s ease-in-out;
@@ -262,4 +262,89 @@ background-color: #f8f8f8;
 
 #mess_id_area li:nth-child(even) {
 background-color: #fff;  
+}
+
+.chat-btn {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    padding: 7px 10px;
+    font-size: 26px;
+    background: rgba(200,200,200,0.4);
+    cursor: pointer;
+}
+
+.chat-btn:hover {    
+    padding-top: 6px;
+    padding-bottom: 8px;
+    background: rgba(180,180,180,0.4);
+}
+
+.chat-box {
+    width: 250px;
+    height: 400px;
+    background: rgba(220,220,220,0.4);   
+    position: absolute;
+    bottom: 55px;
+    right: 0px;
+} 
+.chat-box h3{
+    margin-top: 10px;
+    padding-left: 10px;
+    color: #0C4EA2;
+}
+.chat-box hr{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.chat-input {
+    position: absolute;
+    bottom: 10px; left: 5px; right: 5px;
+}
+.chat-input input {
+    width: 200px;
+    padding: 7px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+.chat-box .chat-content {
+    width: 100%;
+    height: 285px;
+    padding: 2px 10px;
+}
+.chat-box .chat-content .chat-panner {
+    margin-bottom: 10px;
+}
+.chat-box .chat-content .chat-panner span {
+    font-weight: bold;
+    color: #0C4EA2;
+}
+.chat-box .chat-content .chat-panner small {
+    font-style: italic;
+}
+.chat-box .chat-content .chat-panner .chat-mess {
+    margin-right: 25px;
+    background: rgba(200,200,200,0.4);
+    padding: 5px;
+}
+
+
+.chat-box .chat-content .chat-me {
+    margin-bottom: 10px;
+}
+.chat-box .chat-content .chat-me small {
+    font-style: italic;
+    float: right;
+}
+.chat-box .chat-content .chat-me .chat-mess {
+    margin-left: 25px;
+    background: rgba(170,200,162,0.4);
+    padding: 5px;
+}
+#chat_notify {
+    font-size: 12px;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: red;
 }

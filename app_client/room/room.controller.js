@@ -286,6 +286,7 @@
 
         vm.openChat = function() {
             $('#chat_notify').hide();
+            $('#txtText').focus();
             if(!chatboxShow) {
                 chatboxShow = true;
                 $('.chat-box').fadeIn();

@@ -484,10 +484,11 @@
             if(msg.username == username) {
                 str += '<div class="chat-me"><small>' + msg.time + '</small><br><div class="chat-mess">' + msg.message + '</div></div>';
             }
-            else {
+            else { 
+                $('#chat_notify').show();
                 str += '<div class="chat-panner"><span>' + msg.username + ' </span> <small>'+ msg.time +'</small>: <br><div class="chat-mess">' + msg.message + '</div></div>';
             }
-            $('#chat_notify').show();
+           
             $('.chat-content .mCSB_container').append(str);
             $(".chat-content").mCustomScrollbar("update");
             $(".chat-content").mCustomScrollbar("scrollTo","bottom");

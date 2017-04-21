@@ -272,6 +272,7 @@ background-color: #fff;
     font-size: 26px;
     background: rgba(200,200,200,0.4);
     cursor: pointer;
+    color: #0C4EA2;
 }
 
 .chat-btn:hover {    
@@ -348,4 +349,7 @@ background-color: #fff;
     right: 5px;
     color: red;
     display: none;
+}
+.navbar-default .navbar-nav > li > a {
+    color: #0C4EA2;
 }

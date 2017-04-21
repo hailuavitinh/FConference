@@ -38,6 +38,8 @@
         vm.currentUser = [];
         var isOwner = false;
 
+        var streamID = '';
+
         if (authentication.isLoggedIn()) {
             vm.currentUser = authentication.currentUser();
             username = vm.currentUser.username;
@@ -283,6 +285,7 @@
 
 
         vm.openChat = function() {
+            $('#chat_notify').hide();
             if(!chatboxShow) {
                 chatboxShow = true;
                 $('.chat-box').fadeIn();
@@ -293,6 +296,34 @@
                 $('.chat-box').fadeOut();
             }
         }
+
+        vm.sendChat = function() {
+            if(room != undefined) {
+
+                var mes = $('#txtText').val();
+                if(svShare.isNullOrEmpty(mes)) {
+                    return;
+                }
+
+                console.log( "sendMessageChat", vm.roomJson._id, username );
+                var datasend = {
+                    room: vm.roomJson._id, 
+                    message: mes, 
+                    username: username
+                };
+                room.socket.emit("sendMessageChat", datasend, function(res) {
+                    console.log('send message success!', res);
+                    $('#txtText').val('');
+                    $('#txtText').focus();
+                    //onDataStream
+                });
+            }
+        }
+        $('#txtText').keyup(function(e) {
+            if (e.keyCode === 13) {
+               vm.sendChat();
+            }
+        });
 
         //add method 
         function LoadListUser() {
@@ -447,7 +478,20 @@
             });
         }
 
-        
+        function AppendChat(msg) {
+            var str = '';
+            if(msg.username == username) {
+                str += '<div class="chat-me"><small>' + msg.time + '</small><br><div class="chat-mess">' + msg.message + '</div></div>';
+            }
+            else {
+                str += '<div class="chat-panner"><span>' + msg.username + ' </span> <small>'+ msg.time +'</small>: <br><div class="chat-mess">' + msg.message + '</div></div>';
+            }
+            $('#chat_notify').show();
+            $('.chat-content .mCSB_container').append(str);
+            $(".chat-content").mCustomScrollbar("update");
+            $(".chat-content").mCustomScrollbar("scrollTo","bottom");
+
+        }
 
         function InitLocalStream(username, roomID, token, isSpeaker, isCamera) {
 
@@ -477,6 +521,7 @@
                         var stream = streams[index];
                         console.log("subscribeToStream Stream :", stream);
                         console.log("subscribeToStream StreamID :", stream.getID());
+                        streamID = stream.getID();
                         if (localStream.getID() !== stream.getID()) {
                             if (screen_stream) {
                                 if (screen_stream.getID() !== stream.getID()) {
@@ -562,6 +607,16 @@
                     _streamlist = event.streams;
                     console.log(' ---------- _streamlist: ',_streamlist);
                     askJoinLock(event, _isOwner);
+                });
+
+                room.addEventListener("stream-data", function (event) {
+                    console.log(' >> event: onDataStream', event);
+                });
+
+                //receive-message-chat datnhh
+                room.addEventListener("receive-message-chat", function (event) {
+                    console.log(' >> event: receive-message-chat', event);
+                    AppendChat(event.message);
                 });
 
                 //ThanhDC3: received event from Room.js

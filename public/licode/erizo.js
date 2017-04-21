@@ -2915,6 +2915,18 @@ Erizo.Room = function(b) {
             a.dispatchEvent(allowJoinRoomEvent);
         });
 
+        //datnhh
+        a.socket.on("onSendMessageChat",function(b){
+            var msg = {
+                username:b.username,
+                room:b.room,
+                message: b.message,
+                time: b.time
+            };           
+            var s = Erizo.RoomEvent({type: 'receive-message-chat', message: msg});
+            a.dispatchEvent(s);
+        });
+
         a.socket.on("onUpdateAttributeStream", function(b) {
             var d = a.remoteStreams[b.id],
                 e = Erizo.StreamEvent({

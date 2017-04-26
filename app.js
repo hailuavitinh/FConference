@@ -7,8 +7,7 @@ var bodyParser = require('body-parser');
 var appRoot = require('app-root-path');
 var passport = require("passport");
 
-
-var roomController = require(appRoot+"/app_api/controllers/roomController");
+//var roomController = require(appRoot+"/app_api/controllers/roomController");
 
 //requre model
 //require('./app_api/models/db');
@@ -36,7 +35,7 @@ app.use(express.static(path.join(__dirname, 'app_client')));
 app.use(passport.initialize());
 
 //api
-roomController(app);
+//roomController(app);
 
 
 app.use('/', routes);
@@ -72,5 +71,6 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
+
 
 module.exports = app;

@@ -774,7 +774,7 @@
             stage.add(layer);
 
             var canvas = document.createElement("canvas");
-            canvas.width = stage.width();
+            canvas.width = stage.width() + 15;
             canvas.height = stage.height();
 
             var image = new Konva.Image({
@@ -957,7 +957,7 @@
                 //var randY = Math.random() * stage.getHeight();
                 var data = {
                   x: 100 + (_i *10),
-                  y: 100 + (_i *10),
+                  y: 30 + (_i *10),
                   text: text,
                   fontSize: 30,
                   fontFamily: 'Calibri',

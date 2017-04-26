@@ -298,6 +298,7 @@ background-color: #fff;
     position: absolute;
     bottom: 55px;
     right: 0px;
+    z-index: 6;
 } 
 .chat-box h3{
     margin-top: 10px;
@@ -366,7 +367,7 @@ background-color: #fff;
 
 .wb-box {
     position: absolute;
-    top: 52px;
+    top: 51px;
     left: 46px;
     bottom: 55px; right: 0px;
     background-color: white;

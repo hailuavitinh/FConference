@@ -757,7 +757,7 @@
                 //width = $('#containerCanvas').width(),
                 //height = $('#containerCanvas').height();
                 width = $(window).width() - 46 - 70,
-                height = $(window).height() - 52 - 55;
+                height = $(window).height() - 51 - 55;
 
             console.log(width, height);
 

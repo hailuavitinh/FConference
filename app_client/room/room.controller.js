@@ -20,7 +20,7 @@
         var screen_stream, localStream;
         svShare.showLoading(true, 'Join room');
 
-        var chatboxShow = false;
+        var chatboxShow = false, wbShow = false;
         
         //$(".user-list").mCustomScrollbar( { setHeight: 250 });
         $(".chat-content").mCustomScrollbar( { setHeight: 285 });
@@ -283,6 +283,18 @@
           }
         }
 
+        vm.openWhiteBoard = function() {
+            $('#wb_notify').hide();
+            if(!wbShow) {
+                wbShow = true;
+                $('.wb-box').fadeIn();
+                $('.wb-btn').addClass('wb-btn-active');
+            } else {
+                wbShow = false;
+                $('.wb-btn').removeClass('wb-btn-active');
+                $('.wb-box').fadeOut();
+            }
+        }
 
         vm.openChat = function() {
             $('#chat_notify').hide();
@@ -731,6 +743,337 @@
                     console.log("Room-disconnected: ", event);
                 });
             })
+        }
+
+        /*
+        * Konva Section
+        *
+        */
+
+        angular.element(document).ready(function () {
+           var isPaint = false,
+                lastPointerPosition,
+                chooseColor = 'red',
+                //width = $('#containerCanvas').width(),
+                //height = $('#containerCanvas').height();
+                width = $(window).width() - 46 - 70,
+                height = $(window).height() - 52 - 55;
+
+            console.log(width, height);
+
+            var stage = new Konva.Stage({
+                container:'containerCanvas',
+                width:width,
+                height:height,
+                //draggable: true
+            });
+            var numberStageWidth = stage.width();
+            var numberStageHeigh = stage.height();
+            var offsetContainerCanvas = $('#containerCanvas').offset();
+            var layer = new Konva.Layer();
+            stage.add(layer);
+
+            var canvas = document.createElement("canvas");
+            canvas.width = stage.width();
+            canvas.height = stage.height();
+
+            var image = new Konva.Image({
+                image:canvas,
+                x:0,
+                y:0,
+                stroke: 'gray'
+            });
+            layer.add(image);
+            stage.draw();
+
+            var socket = io.connect("192.168.1.17:3001",{secure:true,transport:["websocket"]});
+
+            socket.on("messageKonva",function(data){
+                console.log("Socket message: ",data);
+                ReceivedSocketDraw(data);
+            });
+
+            socket.on("connection_failed",function(data){
+                console.log("Socket failed: ",data);
+            });
+
+            socket.on("error",function(data){
+                console.log("Socket Error: ",data);
+            });
+
+            socket.on("drawingKonva",function(data){
+                $('#wb_notify').show();
+                console.log("Drawing: ",data);
+
+                var oldPos = MultiplicationPercentCor(data.oldPointerPosition);
+
+                var newPos = MultiplicationPercentCor(data.newPointerPosition);
+
+                Drawing(oldPos,newPos,data.color);   
+            });
+
+            socket.on("clearBoard", function(data) {
+                $('#wb_notify').hide();
+                console.log("clearBoard", data);
+                content.clearRect(0,0,content.canvas.width,content.canvas.height);
+                layer.draw();
+                lastPointerPosition={};
+            });
+
+            socket.on("addText", function(data) {        
+                $('#wb_notify').show();
+                var simpleText = new Konva.Text({
+                  x: data.x,
+                  y: data.y,
+                  text: data.text,
+                  fontSize: data.fontSize,
+                  fontFamily: data.fontFamily,
+                  fill: data.fill,
+                  id: data.id,
+                  draggable: true
+                });
+                _i++;
+                layer.add(simpleText);
+                layer.draw();
+                simpleText.on("mouseover", function() {
+                    document.body.style.cursor = "pointer";
+                    //console.log('mouseover');
+                });
+                simpleText.on("mouseout", function() {
+                    document.body.style.cursor = "default";
+                    //console.log('mouseout');
+                });
+
+            });
+
+            socket.on("moveText", function(data) {
+                $('#wb_notify').show();
+                console.log("moveText", data);
+                var shape = stage.find('#' + data.id)[0];
+                if(shape !== undefined) {
+                   shape.position(data.pos);
+                   shape.moveToTop();
+                   layer.draw();
+                }
+            });
+
+            socket.on("deleteText", function(data) {
+                $('#wb_notify').show();
+                var shape = stage.find(data.id)[0];
+                if(shape !== undefined) {
+                    _i--;
+                    console.log('shape remove');
+                    shape.remove();//.destroy();
+                    layer.draw();
+                }
+            });
+
+
+            var content = canvas.getContext('2d');
+            content.lineJoin = 'round';
+            content.lineWidth = 5;
+
+            //Event mouseDown 
+            stage.on('contentMousedown.proto touchstart',function(evt){
+                //console.log('mousedown touchstart', evt);
+                $('.wb-color').hide();
+                $('.wb-text').hide();
+                $('.wb-control').hide();
+
+                if (document.body.style.cursor == "pointer") {
+                    var circle = evt.target;
+                    layer.draw();            
+                } else {
+                    isPaint = true;
+                    lastPointerPosition = stage.getPointerPosition();
+                }
+            });
+
+            //Event mouseUp
+            stage.on('contentMouseup.proto touchend',function(evt){
+                isPaint = false;
+                if (document.body.style.cursor == "pointer") {
+                    var _text = evt.evt.dragEndNode;
+                    var n = _text.id();
+                    console.log(n);
+                    socket.emit("moveText", {id: n, pos: stage.getPointerPosition()});
+                    //console.log(stage.getPointerPosition());
+                }
+
+            });
+
+            //Event Mousemove
+            stage.on('contentMousemove.proto touchmove',function(){
+                if(!isPaint){
+                    return;
+                }
+                var oldPos = lastPointerPosition;
+                var newPos = stage.getPointerPosition();
+                
+                Drawing(oldPos,newPos,chooseColor);
+
+                lastPointerPosition = newPos;
+                var PercentOldPos = DivisionPercentCor(oldPos);
+                var PercentNewPos = DivisionPercentCor(newPos);
+                //option: Realtime when mouse move
+                socket.emit("drawKonva",{
+                    oldPointerPosition:PercentOldPos,
+                    newPointerPosition:PercentNewPos,
+                    color:chooseColor
+                });
+            });
+
+
+            
+            //Button chose Color
+            $(".btnColor").click(function(e){
+                chooseColor = $(this).attr('data-value');
+            });
+
+            //Button Clear
+            $("#btnClear").click(function(e){
+                content.clearRect(0,0,content.canvas.width,content.canvas.height);
+                layer.draw();
+                lastPointerPosition={};
+                socket.emit("clearBoard",{
+                    isClear:true
+                });
+            });
+
+            $('#btnAddImage').click(function(e){
+                // console.log("Layer",layer);
+                // var image2 = new Konva.Image({
+
+                // });
+            });
+
+            $('#btnDownload').click(function(e){
+                Canvas2Image.saveAsImage(canvas, content.canvas.width, content.canvas.height, 'png');
+            });
+            var _i = 1;
+            $('#btnAddText').click(function(e) {
+                var text = $('#txtAddText').val();
+                //var randX = Math.random() * stage.getWidth();
+                //var randY = Math.random() * stage.getHeight();
+                var data = {
+                  x: 100 + (_i *10),
+                  y: 100 + (_i *10),
+                  text: text,
+                  fontSize: 30,
+                  fontFamily: 'Calibri',
+                  fill: 'green',
+                  id: 'text_' + _i,
+                  draggable: true
+                };
+                var simpleText = new Konva.Text(data);
+                _i++;
+                layer.add(simpleText);
+                layer.draw();
+                simpleText.on("mouseover", function() {   
+                    document.body.style.cursor = "pointer";
+                    //console.log('mouseover');
+                });
+                simpleText.on("mouseout", function() {
+                    document.body.style.cursor = "default";
+                    //console.log('mouseout');
+                });
+
+                socket.emit("addText",data);
+            });
+            
+            $('#btnCText').click(function(e) {
+                var id = '#text_' + (_i-1);
+                var shape = stage.find(id)[0];
+                if(shape !== undefined) {
+                    _i--;
+                    console.log('shape remove');
+                    shape.remove();//.destroy();
+                    layer.draw();
+                }
+                socket.emit("deleteText", {id: id });
+            });
+
+            
+
+
+            //Function drawing
+            function Drawing(oldPointerPosition,newPointerPosition,color){
+                if(color == "#fff") {
+                     content.lineWidth = 20;
+                } else {
+                     content.lineWidth = 5;
+                }
+
+                content.beginPath();
+                var localPos = {
+                    x: oldPointerPosition.x - image.x(),
+                    y:oldPointerPosition.y - image.y()
+                };
+
+                content.moveTo(localPos.x,localPos.y);
+                
+                localPos = {
+                    x: newPointerPosition.x - image.x(),
+                    y:newPointerPosition.y - image.y()
+                };
+                content.lineTo(localPos.x,localPos.y);
+                content.strokeStyle = color;
+                content.closePath();
+                content.stroke();
+                layer.draw();
+            };
+
+            //function received Socket and draw
+            function ReceivedSocketDraw(data){
+                //var socketPosition = data.konvaPosition;
+                for(var i = 0; i < data.konvaPosition.length;i++){
+
+                    var oldPos = MultiplicationPercentCor(data.konvaPosition[i].oldPointerPosition);
+
+                    var newPos = MultiplicationPercentCor(data.konvaPosition[i].newPointerPosition);
+
+                    Drawing(oldPos, newPos, data.konvaPosition[i].color);   
+                    
+                }
+            } //end function
+
+            function DivisionPercentCor(coor){
+                return {
+                    //làm tròn theo đơn vị của stage.width và heigh
+                    x: Math.round(coor.x / stage.width() * numberStageWidth)/numberStageWidth,
+                    y: Math.round(coor.y / stage.height() * numberStageHeigh)/numberStageHeigh 
+                };
+            }// end function DividePercentCor
+
+            function MultiplicationPercentCor(coor){
+                return {
+                    //làm tròn theo đơn vị của stage.width và heigh
+                    x: Math.round(coor.x * stage.width() * numberStageWidth)/numberStageWidth,
+                    y: Math.round(coor.y * stage.height() * numberStageHeigh)/numberStageHeigh 
+                };
+            }// end function DividePercentCor    
+
+        });
+
+        vm.showWbControl = function(tool) {
+            
+            switch (tool) {
+                case 1: 
+                    $('.wb-color').show();
+                    $('.wb-text').hide();
+                    $('.wb-control').hide();
+                    break;
+                case 2: 
+                    $('.wb-color').hide();
+                    $('.wb-text').hide();
+                    $('.wb-control').show();
+                    break;
+                case 3:                    
+                    $('.wb-color').hide();
+                    $('.wb-text').show();
+                    $('.wb-control').hide();
+                    break;
+            }
         }
 
     }

@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var appRoot = require('app-root-path');
 var passport = require("passport");
 
+
 var roomController = require(appRoot+"/app_api/controllers/roomController");
 
 //requre model
@@ -71,6 +72,5 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
-
 
 module.exports = app;

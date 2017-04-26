@@ -9,11 +9,22 @@ var auth = jwt({
   userProperty: 'payload'
 });	
 
-//var ctrlRoom = require('../controllers/roomComtroller');
+var ctrlRoom = require('../controllers/roomController');
 var ctrlAuth = require('../controllers/authentication');
 
-//router.post('/api/rooms/', ctrlRoom.getRooms);
+
 
 //router.post('/register', ctrlAuth.register);
 router.post('/login', ctrlAuth.login);
+
+/* Room Controller */
+router.get('/rooms',auth,ctrlRoom.GetRooms);
+router.get('/rooms/:id',auth,ctrlRoom.GetRoomById);
+router.get('/rooms/create/:id',auth,ctrlRoom.CreateRoomById);
+router.post('/rooms/update/',auth,ctrlRoom.UpdateRoom);
+router.post('/rooms/setlockroom/',auth,ctrlRoom.SetLockRoom);
+router.post('/rooms/createroom/',auth,ctrlRoom.CreateRoom);
+router.get('/rooms/delete/:id',auth,ctrlRoom.DeleteRoom);
+router.post('/createToken/',auth,ctrlRoom.CreateToken);
+router.post('/rooms/listUser/',auth,ctrlRoom.ListUser);
 module.exports = router;

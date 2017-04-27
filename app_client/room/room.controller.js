@@ -822,7 +822,8 @@
 
             socket.on("addText", function(data) {        
                 $('#wb_notify').show();
-                var simpleText = new Konva.Text({
+                console.log(data);
+                var _data = {
                   x: data.x,
                   y: data.y,
                   text: data.text,
@@ -831,18 +832,9 @@
                   fill: data.fill,
                   id: data.id,
                   draggable: true
-                });
+                };                
                 _i++;
-                layer.add(simpleText);
-                layer.draw();
-                simpleText.on("mouseover", function() {
-                    document.body.style.cursor = "pointer";
-                    //console.log('mouseover');
-                });
-                simpleText.on("mouseout", function() {
-                    document.body.style.cursor = "default";
-                    //console.log('mouseout');
-                });
+                creatText(_data);
 
             });
 
@@ -859,7 +851,7 @@
 
             socket.on("deleteText", function(data) {
                 $('#wb_notify').show();
-                var shape = stage.find(data.id)[0];
+                var shape = stage.find('#' + data.id)[0];
                 if(shape !== undefined) {
                     _i--;
                     console.log('shape remove');
@@ -893,11 +885,13 @@
             stage.on('contentMouseup.proto touchend',function(evt){
                 isPaint = false;
                 if (document.body.style.cursor == "pointer") {
-                    var _text = evt.evt.dragEndNode;
-                    var n = _text.id();
-                    console.log(n);
-                    socket.emit("moveText", {id: n, pos: stage.getPointerPosition()});
-                    //console.log(stage.getPointerPosition());
+                    if(evt.evt.dragEndNode !== undefined) {
+                        var _text = evt.evt.dragEndNode;
+                        var n = _text.id();
+                        console.log(n);
+                        socket.emit("moveText", {id: n, pos: stage.getPointerPosition()});
+                        console.log(stage.getPointerPosition());
+                    }
                 }
 
             });
@@ -950,6 +944,7 @@
             $('#btnDownload').click(function(e){
                 Canvas2Image.saveAsImage(canvas, content.canvas.width, content.canvas.height, 'png');
             });
+
             var _i = 1;
             $('#btnAddText').click(function(e) {
                 var text = $('#txtAddText').val();
@@ -965,33 +960,23 @@
                   id: 'text_' + _i,
                   draggable: true
                 };
-                var simpleText = new Konva.Text(data);
+                creatText(data);
                 _i++;
-                layer.add(simpleText);
-                layer.draw();
-                simpleText.on("mouseover", function() {   
-                    document.body.style.cursor = "pointer";
-                    //console.log('mouseover');
-                });
-                simpleText.on("mouseout", function() {
-                    document.body.style.cursor = "default";
-                    //console.log('mouseout');
-                });
 
                 socket.emit("addText",data);
             });
             
-            $('#btnCText').click(function(e) {
-                var id = '#text_' + (_i-1);
-                var shape = stage.find(id)[0];
-                if(shape !== undefined) {
-                    _i--;
-                    console.log('shape remove');
-                    shape.remove();//.destroy();
-                    layer.draw();
-                }
-                socket.emit("deleteText", {id: id });
-            });
+            // $('#btnCText').click(function(e) {
+            //     var id = '#text_' + (_i-1);
+            //     var shape = stage.find(id)[0];
+            //     if(shape !== undefined) {
+            //         _i--;
+            //         console.log('shape remove');
+            //         shape.remove();//.destroy();
+            //         layer.draw();
+            //     }
+            //     socket.emit("deleteText", {id: id });
+            // });
 
             
 
@@ -1035,6 +1020,12 @@
                     Drawing(oldPos, newPos, data.konvaPosition[i].color);   
                     
                 }
+                _i = data.indexText;
+
+                for (var j = 0; j < data.textArray.length; j++) {
+                    console.log('data.textArray[i]',data.textArray[j]);
+                    creatText(data.textArray[j]);
+                }
             } //end function
 
             function DivisionPercentCor(coor){
@@ -1051,7 +1042,30 @@
                     x: Math.round(coor.x * stage.width() * numberStageWidth)/numberStageWidth,
                     y: Math.round(coor.y * stage.height() * numberStageHeigh)/numberStageHeigh 
                 };
-            }// end function DividePercentCor    
+            }// end function DividePercentCor 
+
+            function creatText(data) {
+
+                var simpleText = new Konva.Text(data);
+                layer.add(simpleText);
+                layer.draw();              
+
+                simpleText.on("mouseover", function() {   
+                    document.body.style.cursor = "pointer";
+                    //console.log('mouseover');
+                });
+                simpleText.on("mouseout", function() {
+                    document.body.style.cursor = "default";
+                    //console.log('mouseout');
+                });        
+
+                simpleText.on("dblclick dbltap", function() {
+                    //console.log(this.attrs.id);
+                    this.destroy();
+                    layer.draw();
+                    socket.emit("deleteText", {id: this.attrs.id });
+                });
+            }   
 
         });
 
@@ -1072,6 +1086,7 @@
                     $('.wb-color').hide();
                     $('.wb-text').show();
                     $('.wb-control').hide();
+                    $('#txtAddText').focus();
                     break;
             }
         }

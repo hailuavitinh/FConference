@@ -33,6 +33,7 @@ var clickDrag = [];
 var colorArray = [];
 var konvaPosition = [];
 var textArray = [];
+var _i = 0;
 
 var io = socket.listen(server);
 
@@ -52,7 +53,7 @@ io.sockets.on('connection',function(socket){
         socket.broadcast.emit('drawing',data);
     });
 
-    socket.emit("messageKonva",{konvaPosition:konvaPosition});
+    socket.emit("messageKonva",{konvaPosition:konvaPosition, indexText: _i, textArray: textArray});
 
     socket.on("drawKonva",function(data){
         var item = {
@@ -70,16 +71,26 @@ io.sockets.on('connection',function(socket){
     });
 
     socket.on("addText", function(data) {
+    	data.id = 'text_' + _i;
         textArray.push(data);
+        _i++;
         socket.broadcast.emit('addText',data);
     });
     
     socket.on("deleteText", function(data) {
-        //textArray.push(data);
+        textArray = textArray.filter(function(el) {
+            return el.id != data.id;
+        });
         socket.broadcast.emit('deleteText', data);
     });
 
     socket.on("moveText", function(data) {
+    	textArray.forEach(function(item, index) {
+		    if (item.id == data.id) {
+		        item.x = data.pos.x;
+		        item.y = data.pos.y;
+		    }
+		});    	
         socket.broadcast.emit('moveText', data);
     });
 

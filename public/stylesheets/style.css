@@ -424,7 +424,10 @@ background-color: #fff;
     border: 1px solid #ccc;
 }
 
-#txtAddText {
+#txtAddText, #txtTextSize {
     line-height: 30px;
     padding-left: 5px;
+}
+#txtTextSize {
+    height: 36px;
 }

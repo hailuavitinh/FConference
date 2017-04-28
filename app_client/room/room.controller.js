@@ -868,9 +868,7 @@
             //Event mouseDown 
             stage.on('contentMousedown.proto touchstart',function(evt){
                 //console.log('mousedown touchstart', evt);
-                $('.wb-color').hide();
-                $('.wb-text').hide();
-                $('.wb-control').hide();
+                hideTool();
 
                 if (document.body.style.cursor == "pointer") {
                     var circle = evt.target;
@@ -921,11 +919,13 @@
             
             //Button chose Color
             $(".btnColor").click(function(e){
+                hideTool();
                 chooseColor = $(this).attr('data-value');
             });
 
             //Button Clear
             $("#btnClear").click(function(e){
+                hideTool();
                 content.clearRect(0,0,content.canvas.width,content.canvas.height);
                 layer.draw();
                 lastPointerPosition={};
@@ -935,6 +935,7 @@
             });
 
             $('#btnAddImage').click(function(e){
+                hideTool();
                 // console.log("Layer",layer);
                 // var image2 = new Konva.Image({
 
@@ -942,19 +943,27 @@
             });
 
             $('#btnDownload').click(function(e){
+                hideTool();
                 Canvas2Image.saveAsImage(canvas, content.canvas.width, content.canvas.height, 'png');
             });
 
             var _i = 1;
             $('#btnAddText').click(function(e) {
+                hideTool();
                 var text = $('#txtAddText').val();
+                var size = $('#txtTextSize').val();
+
+                if(svShare.isNullOrEmpty(text)) {
+                    alertify.error("Empty text.");
+                    return;
+                }
                 //var randX = Math.random() * stage.getWidth();
                 //var randY = Math.random() * stage.getHeight();
                 var data = {
                   x: 100 + (_i *10),
                   y: 30 + (_i *10),
                   text: text,
-                  fontSize: 30,
+                  fontSize: size,
                   fontFamily: 'Calibri',
                   fill: 'green',
                   id: 'text_' + _i,
@@ -1089,6 +1098,12 @@
                     $('#txtAddText').focus();
                     break;
             }
+        }
+
+        function hideTool() {
+            $('.wb-color').hide();
+            $('.wb-text').hide();
+            $('.wb-control').hide();
         }
 
     }

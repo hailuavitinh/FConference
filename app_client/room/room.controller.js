@@ -777,6 +777,17 @@
             canvas.width = stage.width() + 15;
             canvas.height = stage.height();
 
+            var box = new Konva.Rect({
+                x: 0,
+                y: 0,
+                fill: 'white',
+                stroke: "black",
+                strokeWidth: 0,
+                draggable: false,
+                width: numberStageWidth,
+                height: numberStageHeigh
+            });
+            layer.add(box);
             var image = new Konva.Image({
                 image:canvas,
                 x:0,
@@ -921,6 +932,8 @@
             $(".btnColor").click(function(e){
                 hideTool();
                 chooseColor = $(this).attr('data-value');
+                $(".btnColor").removeClass('btn-color-active');
+                $(this).addClass('btn-color-active');
             });
 
             //Button Clear
@@ -944,7 +957,9 @@
 
             $('#btnDownload').click(function(e){
                 hideTool();
-                Canvas2Image.saveAsImage(canvas, content.canvas.width, content.canvas.height, 'png');
+                //Canvas2Image.convertToPNG(canvas, content.canvas.width, content.canvas.height);
+                var dataURL = stage.toDataURL();
+                window.open(dataURL);
             });
 
             var _i = 1;
@@ -965,7 +980,7 @@
                   text: text,
                   fontSize: size,
                   fontFamily: 'Calibri',
-                  fill: 'green',
+                  fill: chooseColor,
                   id: 'text_' + _i,
                   draggable: true
                 };

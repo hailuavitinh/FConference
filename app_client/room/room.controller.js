@@ -803,7 +803,7 @@
 
             socket.on("drawingKonva",function(data){
                 $('#wb_notify').show();
-                console.log("Drawing: ",data);
+                //console.log("Drawing: ",data);
 
                 var oldPos = MultiplicationPercentCor(data.oldPointerPosition);
 

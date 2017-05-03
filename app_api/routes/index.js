@@ -15,7 +15,7 @@ var ctrlAuth = require('../controllers/authentication');
 
 
 //router.post('/register', ctrlAuth.register);
-router.post('/login', ctrlAuth.login);
+router.post('/login',ctrlAuth.login);
 
 /* Room Controller */
 router.get('/rooms',auth,ctrlRoom.GetRooms);
@@ -27,4 +27,5 @@ router.post('/rooms/createroom/',auth,ctrlRoom.CreateRoom);
 router.get('/rooms/delete/:id',auth,ctrlRoom.DeleteRoom);
 router.post('/createToken/',auth,ctrlRoom.CreateToken);
 router.post('/rooms/listUser/',auth,ctrlRoom.ListUser);
+router.post('/rooms/test/',auth,ctrlRoom.TestRoom);
 module.exports = router;

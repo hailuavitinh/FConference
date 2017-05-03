@@ -302,3 +302,7 @@ module.exports.ListUser = function(req,res){
         res.send(users);
     }, roomID, res);
 }
+
+module.exports.TestRoom = function(req,res){
+    res.send(JSON.stringify({Name: "Dang Chi Thanh"}));
+}

@@ -4,8 +4,8 @@
         .module('FConf')
         .controller("loginModalCtrl",loginModalCtrl);
 
-    loginModalCtrl.$inject=['$uibModalInstance','authentication'];
-    function loginModalCtrl($uibModalInstance,authentcation){
+    loginModalCtrl.$inject=['$uibModalInstance','authentication','$cookies'];
+    function loginModalCtrl($uibModalInstance,authentcation,$cookies){
         var vm = this;
         $('#username').focus();
         vm.modal = {
@@ -34,6 +34,8 @@
             };
 
             authentcation.login(user).then(function(success){
+                console.log('Cookies Access-Token:',$cookies.get('access-token'));
+                console.log('Cookies All:',$cookies.getAll());
                 authentcation.saveToken(success.data.token);
                 vm.modal.close(true);
             },function(err){

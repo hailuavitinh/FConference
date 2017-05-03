@@ -2,7 +2,7 @@
 
 (function () {
 
-  angular.module('FConf', ['ngRoute','ui.bootstrap']);
+  angular.module('FConf', ['ngRoute','ui.bootstrap','ngCookies']);
 
   function config ($routeProvider, $locationProvider) {
     $routeProvider

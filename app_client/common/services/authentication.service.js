@@ -16,6 +16,7 @@
     };
 
     var isLoggedIn = function() {
+      return false;
       var token = getToken();
 
       if(token){

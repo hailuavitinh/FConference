@@ -3,6 +3,8 @@ var jwt = require("jsonwebtoken");
 var appRoot = require('app-root-path');
 var config = require(appRoot+"/configs/config");
 
+//var csrfProtection = csrf({cookie: true});
+
 var sendJSONresponse = function(res, status, content) {
   res.status(status);
   res.json(content);
@@ -45,9 +47,13 @@ module.exports.login = function(req, res) {
 
     if(user){
       token = generateJwt(user);
-      sendJSONresponse(res, 200, {
-        "token" : token
-      });
+      res.status(200);
+      res.cookie("access-token",token,{httpOnly:true,secure:true});
+      res.cookie("x-xsrf-token",req.csrfToken());
+      res.json("OK")
+      // sendJSONresponse(res, 200, {
+      //   "token" : token
+      // });
     } else {
       sendJSONresponse(res, 401, info);
     }

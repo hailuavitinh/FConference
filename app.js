@@ -7,6 +7,8 @@ var bodyParser = require('body-parser');
 var appRoot = require('app-root-path');
 var passport = require("passport");
 
+var csrf = require("csurf");
+var csrfProtection = csrf({cookie: true});
 //var roomController = require(appRoot+"/app_api/controllers/roomController");
 
 //requre model
@@ -15,6 +17,7 @@ require('./app_api/config/passport');
 
 var routes = require('./app_server/routes/index');
 var routesApi = require('./app_api/routes/index');
+//var routesApiAuth = require('./app_api/routes/routeAuthentication');
 
 
 var app = express();
@@ -33,6 +36,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'app_client')));
 
 app.use(passport.initialize());
+
+
+//app.use('/api/auth',routesApiAuth);
+
+
+
+app.use(csrfProtection);
+app.use(function(req, res, next) {
+    res.cookie('XSRF-TOKEN', req.csrfToken());
+    next();
+});
+
 
 //api
 //roomController(app);

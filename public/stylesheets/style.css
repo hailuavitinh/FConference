@@ -267,14 +267,24 @@ background-color: #fff;
 .chat-btn {
     position: absolute;
     bottom: 10px;
-    right: 10px;
+    right: 0px;
     padding: 7px 10px;
     font-size: 26px;
     background: rgba(200,200,200,0.4);
     cursor: pointer;
     color: #0C4EA2;
+    z-index: 10;
 }
-
+.wb-btn {
+    top: 50%;
+    right: 0px;
+    bottom: initial;
+    left: initial;
+}
+.wb-btn-active {    
+    left: 0px !important;
+    right: initial;
+}
 .chat-btn:hover {    
     padding-top: 6px;
     padding-bottom: 8px;
@@ -288,6 +298,7 @@ background-color: #fff;
     position: absolute;
     bottom: 55px;
     right: 0px;
+    z-index: 6;
 } 
 .chat-box h3{
     margin-top: 10px;
@@ -342,7 +353,7 @@ background-color: #fff;
     background: rgba(170,200,162,0.4);
     padding: 5px;
 }
-#chat_notify {
+#wb_notify, #chat_notify {
     font-size: 12px;
     position: absolute;
     top: 5px;
@@ -352,4 +363,78 @@ background-color: #fff;
 }
 .navbar-default .navbar-nav > li > a {
     color: #0C4EA2;
+}
+
+.wb-box {
+    position: absolute;
+    top: 51px;
+    left: 46px;
+    bottom: 55px; right: 0px;
+    background-color: white;
+    display: none;
+}
+.wb-box .wb-tool {
+    height: 100%;
+    width: 70px;
+    background-color: rgb(222,229,230);
+    padding: 20px 10px;
+}
+.wb-box .wb-board {
+    position: absolute;
+    top: 0; left: 70px; right: 0; bottom: 0;
+    z-index: 5;
+}
+.wb-box .btn-wb {
+    width: 48px;
+    height: 48px;
+    line-height: 50px;
+    text-align: center;
+    border: 1px solid #666;
+    border-radius: 4px;
+    background-color: #aaa;
+    color: white;
+    margin-bottom: 20px;
+}
+.wb-box .btn-wb:hover {
+    background-color: #999;
+    color: #fefefe;
+}
+
+.wb-box .wb-tool .block-wb-tool {
+    position: absolute;
+    margin-left: 60px;
+    height: 70px;    
+    line-height: 50px;
+    padding: 10px;
+    background-color: rgb(222,229,230);
+    z-index: 10;
+    display: none;
+}
+.wb-box .wb-tool .wb-color {
+    top: 10px;
+}
+.wb-box .wb-tool .wb-text {
+    top: 80px;
+}
+.wb-box .wb-tool .wb-control {
+    top: 150px;
+}
+
+.block-wb-tool, .block-wb-tool button {
+    border: 1px solid #ccc;
+}
+
+#txtAddText, #txtTextSize {
+    line-height: 30px;
+    padding-left: 5px;
+}
+#txtTextSize {
+    height: 36px;
+}
+.btn-color-active {
+    border-width: 5px !important;
+    border-color: white !important;
+    width: 40px !important;
+    height: 40px !important;    
+    box-shadow: 4px 5px 3px #ccc;
 }

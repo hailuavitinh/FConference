@@ -4,6 +4,7 @@ var debug = require('debug')('Express4'),
 var app = require('../app');
 var path = require('path'),
 	fs = require('fs');
+var socket = require("socket.io");
 
 
 app.set('port', process.env.PORT || 3001);
@@ -23,4 +24,74 @@ var port = process.env.PORT || 3001;
 var server = https.createServer(options, app).listen(port, function(){
     console.log("Server HTTPS listening with port ....",port);
     console.log("Process ENV:",process.env.JWT_SECRET);
+});
+
+
+var clickX = [];
+var clickY = [];
+var clickDrag = [];
+var colorArray = [];
+var konvaPosition = [];
+var textArray = [];
+var _i = 0;
+
+var io = socket.listen(server);
+
+io.sockets.on('connection',function(socket){
+    
+    socket.emit("message",{message:"Welcome to Whiteboard",
+                            clickX:clickX,
+                            clickY:clickY,
+                            clickDrag:clickDrag,
+                            colorArray:colorArray });
+
+    socket.on("draw",function(data){
+        clickX = data.clickX;
+        clickY = data.clickY;
+        clickDrag = data.clickDrag;
+        colorArray =data.colorArray;
+        socket.broadcast.emit('drawing',data);
+    });
+
+    socket.emit("messageKonva",{konvaPosition:konvaPosition, indexText: _i, textArray: textArray});
+
+    socket.on("drawKonva",function(data){
+        var item = {
+            oldPointerPosition:data.oldPointerPosition,
+            newPointerPosition:data.newPointerPosition,
+            color:data.color
+        };
+        konvaPosition.push(item);
+        socket.broadcast.emit('drawingKonva',item);
+    });
+
+    socket.on("clearBoard", function(data) {
+        konvaPosition = [];
+        socket.broadcast.emit('clearBoard',{isClear: true});
+    });
+
+    socket.on("addText", function(data) {
+    	data.id = 'text_' + _i;
+        textArray.push(data);
+        _i++;
+        socket.broadcast.emit('addText',data);
+    });
+    
+    socket.on("deleteText", function(data) {
+        textArray = textArray.filter(function(el) {
+            return el.id != data.id;
+        });
+        socket.broadcast.emit('deleteText', data);
+    });
+
+    socket.on("moveText", function(data) {
+    	textArray.forEach(function(item, index) {
+		    if (item.id == data.id) {
+		        item.x = data.pos.x;
+		        item.y = data.pos.y;
+		    }
+		});    	
+        socket.broadcast.emit('moveText', data);
+    });
+
 });

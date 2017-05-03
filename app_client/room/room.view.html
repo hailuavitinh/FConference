@@ -81,41 +81,57 @@
           </div>
   </div>  
 
+  <div class="chat-btn wb-btn" ng-click="vm.openWhiteBoard()"> <i class="fa fa-pencil-square-o"></i> <i id="wb_notify" class="fa fa-asterisk"></i> </div>
+  <div class="wb-box">
+    <div class="wb-tool">
+      
+      <button class="btn-wb" ng-click="vm.showWbControl(1)"> <i class="fa fa-paint-brush"></i> </button>
+      <div class="block-wb-tool wb-color">
+        <button type="button" data-value="#ff0000" style="background-color: #ff0000;width: 34px;height: 34px;border-radius: 50%" class="btnColor btn btn-color-active"></button>
+        <button type="button" data-value="#000000" style="background-color: #000000;width: 34px;height: 34px;border-radius: 50%" class="btnColor btn"></button>
+        <button type="button" data-value="#ffff00" style="background-color: #ffff00;width: 34px;height: 34px;border-radius: 50%" class="btnColor btn"></button>
+        <button type="button" data-value="#00bfff" style="background-color: #00bfff;width: 34px;height: 34px;border-radius: 50%"  class="btnColor btn"></button>
+        <button type="button" data-value="#8000ff" style="background-color: #8000ff;width: 34px;height: 34px;border-radius: 50%"  class="btnColor btn"></button>
+        <button type="button" data-value="#808080" style="background-color: #808080;width: 34px;height: 34px;border-radius: 50%"  class="btnColor btn"></button>
+      </div>
+
+      <button class="btn-wb" ng-click="vm.showWbControl(3)"> <i class="fa fa-font"></i> </button>
+      <div class="block-wb-tool wb-text">
+        <select id="txtTextSize">
+          <option value="12">12</option>
+          <option value="14">14</option>
+          <option value="18">18</option>
+          <option value="20">20</option>
+          <option value="24">24</option>
+          <option selected="" value="32">32</option>
+          <option value="48">48</option>
+          <option value="60">60</option>
+        </select>
+        <input type="text" id="txtAddText" value="text add" placeholder="Enter text here.." />
+        <button class="btn" id="btnAddText" title="Add Text"> <i class="fa fa-plus-circle"></i> </button> 
+        <!-- <button class="btn" id="btnCText" title="Undo Add Text"> <i class="fa fa-undo"></i> </button> -->
+      </div>
+
+      <button class="btn-wb" ng-click="vm.showWbControl(2)"> <i class="fa fa-cogs"></i> </button>
+      <div class="block-wb-tool wb-control">     
+        <button type="button" data-value="#fff"  class="btnColor btn" title="Eraser"> <i class="fa fa-eraser"></i> </button>
+        <button type="button" class="btn" id="btnAddImage" title="Add Image"> <i class="fa fa-plus-square"></i> </button>   
+        <button type="button" class="btn" id="btnDownload" title="Download Image"> <i class="fa fa-download"></i> </button>        
+        <button type="button" class="btn" id="btnClear" title="Clear All"> <i class="fa fa-times"></i> </button>       
+      </div>
+
+    </div>
+    <div class="wb-board" id="containerCanvas">
+      
+    </div>
+  </div>
+
   <div class="chat-btn" ng-click="vm.openChat()"> <i class="fa fa-commenting"></i> <i id="chat_notify" class="fa fa-asterisk"></i> </div>
+
   <div class="chat-box" style="display: none;">
     <h3>Chat box</h3>
     <hr>
     <div class="chat-content">
-      
-      <!-- <div class="chat-panner">
-        <span>ThanhDC </span> <small>10:20:20</small>: <br>
-        <div class="chat-mess">what time is it?</div>
-      </div>
-      <div class="chat-panner">
-        <span>ThanhDC </span> <small>10:20:20</small>: <br>
-        <div class="chat-mess">what you name? what you name? what you name? what you name?</div>
-      </div>
-      <div class="chat-me">
-        <small>10:20:20</small> <br>
-        <div class="chat-mess">you name? you name? you name? you name?</div>
-      </div>
-      <div class="chat-me">
-        <small>10:20:20</small> <br>
-        <div class="chat-mess">you name? you name? you name? you name?</div>
-      </div>
-      <div class="chat-me">
-        <small>10:20:20</small> <br>
-        <div class="chat-mess">you name? you name? you name? you name?</div>
-      </div>
-      <div class="chat-panner">
-        <span>ThanhDC </span> <small>10:20:20</small>: <br>
-        <div class="chat-mess">what time is it?</div>
-      </div>
-      <div class="chat-panner">
-        <span>ThanhDC </span> <small>10:20:20</small>: <br>
-        <div class="chat-mess">what you name? what you name? what you name? what you name?</div>
-      </div> -->
-
     </div>
     <div class="chat-input">
       <input type="text" id="txtText" placeholder="Enter here.." /> <button class="btn btn-sm" ng-click="vm.sendChat()"> <i class="fa fa-send"></i> </button>
